@@ -1,6 +1,6 @@
 import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
+import { UserService } from '../user/user.service'
 
 @Component({
   selector: 'app-map',
@@ -9,9 +9,12 @@ import { Observable } from 'rxjs/Observable';
 })
 export class MapComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+
+  ) { }
 
   ngOnInit() {
+
   }
 
 }
