@@ -12,12 +12,28 @@ export class UserComponent implements OnInit {
   username="";
   password="";
   loggedInUser = "";
+  title = "";
+  description="";
+  posts = [];
   constructor(
     private userService: UserService,
   ) { }
 
   ngOnInit() {
+
   }
+
+  createPost(){
+    let post ={
+      title: this.title,
+      description: this.description,
+    }
+    this.userService.createPost(this.loggedInUser,post)
+    .subscribe((res)=>{
+      this.posts.push(res.json());
+    });
+  }
+
   registerUser(){
     let newUser = {
       username : this.username,
@@ -42,6 +58,9 @@ export class UserComponent implements OnInit {
       if(res.json().length >0 )
       this.loggedInUser = res.json()[0];
     });
+  }
+  editPost(id){
+    console.log(id);
   }
 
 }

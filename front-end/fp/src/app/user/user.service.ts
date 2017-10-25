@@ -18,4 +18,10 @@ export class UserService {
     return this.http.post(`${this.baseUrl}/api/users/login`, inputUser);
   }
 
+  createPost(user, post){
+    post.user_id = user._id
+    console.log('submitting post', post, 'for user ', user);
+    return this.http.post(`${this.baseUrl}/api/posts`,post);
+  }
+
 }

@@ -31,17 +31,17 @@ router.delete('/api/users/:user_id', usersController.destroy);
 
 //Post Routes//
 // All posts from all users
-router.get('/api/users/posts', postsController.index);
+router.get('/api/posts', postsController.index);
 // create
-router.post('/api/users/:user_id/posts', postsController.create);
+router.post('/api/posts/', postsController.create);
 // show all posts from a user
-router.get('/api/users/:user_id/posts', postsController.showAllPostsFromAUser);
+router.get('/api/posts/user/:user_id', postsController.showAllPostsFromAUser);
 // show a specific post
-router.get('/api/users/posts/:post_id', postsController.show);
+router.get('/api/posts/:post_id', postsController.show);
 // update a specific post
-router.put('/api/users/posts/:post_id', postsController.update);
+router.put('/api/posts/:post_id', postsController.update);
 // destroy a specific post
-router.delete('/api/users/posts/:post_id', postsController.destroy);
+router.delete('/api/posts/:post_id', postsController.destroy);
 
 
 module.exports = router;

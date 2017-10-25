@@ -1,5 +1,7 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
+var Comment = require('./comment');
+
 
 var PostSchema = new Schema({
   title: String,
@@ -8,10 +10,10 @@ var PostSchema = new Schema({
   created_date: {type: Date, default: Date.now},
   updated_date: Date,
   comments: [Comment.schema],
-  user_id: [{
+  user_id: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-  }]
+  }
 });
 
 var Post = mongoose.model('Post', PostSchema);

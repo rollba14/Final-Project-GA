@@ -10,6 +10,22 @@
   <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
   <button type="button" (click)="loginUser()">Login</button>
 </div>
+
 <div *ngIf="loggedInUser">
   <p>Logged in as: {{loggedInUser.username}}</p>
+</div>
+<h4>Add post</h4>
+<div>
+  <p>Title:<input [(ngModel)]="title" type="text" placeholder="title" required></p>
+  <p>Description:<input [(ngModel)]="description" type="text" placeholder="description" required></p>
+  <button type="button" (click)="createPost()">Add Post</button>
+</div>
+
+
+
+<div *ngIf="posts">
+  <ul *ngFor="let post of posts">
+    <li>{{post.title}}</li>
+    <li><button type="button" (click)="editPost(post._id)">Edit</button>
+  </ul>
 </div>
