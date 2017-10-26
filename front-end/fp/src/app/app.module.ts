@@ -8,17 +8,19 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 
 import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MapComponent
+    MapComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     UserModule,
     HttpModule,
+    PostModule,
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDxS0WfhuJFYdqmPYgfJgt6L1PJ-ffJQ8k&libraries=places'}),
   ],
   providers: [],

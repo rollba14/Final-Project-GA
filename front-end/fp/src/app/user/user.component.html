@@ -1,8 +1,8 @@
 <!-- <div>
-  <h4>Register</h4>
-  <p>Username:<input [(ngModel)]="username" type="text" placeholder="username" required></p>
-  <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
-  <button type="button" (click)="registerUser()">Register</button>
+<h4>Register</h4>
+<p>Username:<input [(ngModel)]="username" type="text" placeholder="username" required></p>
+<p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
+<button type="button" (click)="registerUser()">Register</button>
 </div> -->
 <div *ngIf="!loggedInUser">
   <h4>Login</h4>
@@ -23,9 +23,21 @@
 
 
 
-<div *ngIf="posts">
+<div *ngIf="posts && loggedInUser">
   <ul *ngFor="let post of posts">
     <li>{{post.title}}</li>
-    <li><button type="button" (click)="editPost(post._id)">Edit</button>
+    <li>
+      <button type="button" (click)="deletePost(post._id)">Delete</button>
+    </li>
+    <li *ngIf="post._id != editable">
+      <div>{{post.title }} {{post.description}}</div>
+      <button type="button" (click)="toggleEditable(post._id)">Edit</button>
+    </li>
+    <li *ngIf="post._id === editable">
+      <input [(ngModel)]="tempTitle" type="text" placeholder="title">
+      <input [(ngModel)]="tempDescription" type="text" placeholder="description">
+      <button type="button" (click)="toggleEditable(post._id)">Cancel</button>
+      <button type="button" (click)="updatePost(post,tempTitle,tempDescription)">Update</button>
+    </li>
   </ul>
 </div>

@@ -56,16 +56,24 @@ function create(req, res) {
 
 function update(req, res) {
   Post.findByIdAndUpdate(req.params.post_id,
-    {$set: req.body}, function(err, user){
+    {$set: req.body}, function(err, post){
     if (err) res.send(err);
-    else res.json(user);
+    else {
+      console.log('updated post is ', post);
+      res.json(post);
+    }
   });
 }
 
 function destroy(req, res) {
-  Post.findByIdAndRemove(req.params.post_id, function(err, user){
+  Post.findByIdAndRemove(req.params.post_id, function(err, post){
     if (err) res.send(err);
-    else res.send("user deleted");
+    else {
+      Post.find({user_id: post.user_id}, function(err, posts){
+        if (err) res.send(err);
+        else res.json(posts);
+      });
+    }
   });
 }
 
