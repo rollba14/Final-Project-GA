@@ -2,11 +2,12 @@ var express = require('express');
 // var router = express.Router();
 var usersController = require('../controllers/users.js');
 var postsController = require('../controllers/posts.js');
-// var passport = require('passport');
-////////////////////////////////////////
+
+////////////////////////////////////////////
 // Testing of passport
 module.exports = function(app, passport){
 
+  ///////////// Passport Paths /////////////
   // default path
   app.get('/',function(req,res){
     res.render('index.ejs');
@@ -33,8 +34,21 @@ module.exports = function(app, passport){
     res.redirect('/');
   });
 
+  // process the signup form
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect : '/profile', // redirect to the secure profile section
+    failureRedirect : '/signup', // redirect back to the signup page if there is an error
+    failureFlash : true // allow flash messages
+  }));
 
-  ////////////////////////////////////////
+  // process login form
+  app.post('/login', passport.authenticate('local-login', {
+    successRedirect : '/profile', // redirect to the secure profile section
+    failureRedirect : '/login', // redirect back to the signup page if there is an error
+    failureFlash : true // allow flash messages
+  }));
+
+  //////////////////////////////////////////
 
 
 
