@@ -1,47 +1,82 @@
 var express = require('express');
-var router = express.Router();
+// var router = express.Router();
 var usersController = require('../controllers/users.js');
 var postsController = require('../controllers/posts.js');
+// var passport = require('passport');
+////////////////////////////////////////
+// Testing of passport
+module.exports = function(app, passport){
 
-// register
-router.get('/register', function(req,res){
-  res.render('register');
-});
-// Login
-router.get('/login', function(req,res){
-  res.render('login');
-})
+  // default path
+  app.get('/',function(req,res){
+    res.render('index.ejs');
+  });
 
-// default path
-router.get('/',usersController.index);
+  // Login
+  app.get('/login', function(req,res){
+    res.render('login.ejs',{message:req.flash('loginMessage')});
+  });
 
-// User Routes
-//temporary login
-router.post('/api/users/login', usersController.login);
-// index
-router.get('/api/users', usersController.index);
-// create
-router.post('/api/users', usersController.create);
-// show
-router.get('/api/users/:user_id', usersController.show);
-// update
-router.put('/api/users/:user_id', usersController.update);
-// destroy
-router.delete('/api/users/:user_id', usersController.destroy);
+  // signup
+  app.get('/signup', function(req,res){
+    res.render('signup.ejs', { message: req.flash('signupMessage') });
+  });
 
-//Post Routes//
-// All posts from all users
-router.get('/api/posts', postsController.index);
-// create
-router.post('/api/posts/', postsController.create);
-// show all posts from a user
-router.get('/api/posts/user/:user_id', postsController.showAllPostsFromAUser);
-// show a specific post
-router.get('/api/posts/:post_id', postsController.show);
-// update a specific post
-router.put('/api/posts/:post_id', postsController.update);
-// destroy a specific post
-router.delete('/api/posts/:post_id', postsController.destroy);
+  app.get('/profile', isLoggedIn, function(req,res){
+    res.render('profile.ejs',{
+      user: req.user // get the user out of session and pass to template
+    })
+  })
+
+  app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+  });
 
 
-module.exports = router;
+  ////////////////////////////////////////
+
+
+
+  // User Routes
+  //temporary login
+  // app.post('/api/users/login', usersController.login);
+  // index
+  app.get('/api/users', usersController.index);
+  // create
+  // app.post('/api/users', usersController.create);
+  // show
+  app.get('/api/users/:user_id', usersController.show);
+  // update
+  // app.put('/api/users/:user_id', usersController.update);
+  // destroy
+  // app.delete('/api/users/:user_id', usersController.destroy);
+
+  //Post Routes//
+  // All posts from all users
+  app.get('/api/posts', postsController.index);
+  // create
+  // app.post('/api/posts/', postsController.create);
+  // show all posts from a user
+  app.get('/api/posts/user/:user_id', postsController.showAllPostsFromAUser);
+  // show a specific post
+  app.get('/api/posts/:post_id', postsController.show);
+  // update a specific post
+  // app.put('/api/posts/:post_id', postsController.update);
+  // destroy a specific post
+  // app.delete('/api/posts/:post_id', postsController.destroy);
+
+}
+
+function isLoggedIn(req, res, next) {
+
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated())
+  return next();
+
+  // if they aren't redirect them to the home page
+  res.redirect('/');
+}
+
+
+// module.exports = router;
