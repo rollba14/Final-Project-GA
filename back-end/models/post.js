@@ -9,6 +9,7 @@ var PostSchema = new Schema({
   tags: Array,
   created_date: {type: Date, default: Date.now},
   updated_date: Date,
+  author: String,
   comments: [Comment.schema],
   user_id: {
     type: Schema.Types.ObjectId,

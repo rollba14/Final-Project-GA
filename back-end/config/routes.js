@@ -31,54 +31,75 @@ module.exports = function(app, passport){
 
   app.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('http://localhost:4200/');
   });
 
   // process the signup form
-  app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect : '/profile', // redirect to the secure profile section
-    failureRedirect : '/signup', // redirect back to the signup page if there is an error
-    failureFlash : true // allow flash messages
-  }));
+  app.post('/signup', function(req,res,next){
+  passport.authenticate('local-signup', function(err, user, info){
+    // successRedirect : '/profile', // redirect to the secure profile section
+    // failureRedirect : '/signup', // redirect back to the signup page if there is an error
+    // failureFlash : true // allow flash messages
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/signup'); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      console.log('req is', req);
+      console.log('user is ', req.user);
+      return res.redirect('http://localhost:4200/');
+    });
+  })(req, res, next);
 
-  // process login form
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/profile', // redirect to the secure profile section
-    failureRedirect : '/login', // redirect back to the signup page if there is an error
-    failureFlash : true // allow flash messages
-  }));
+});
 
-  //////////////////////////////////////////
+// process login form
+app.post('/login', function(req,res,next){
+passport.authenticate('local-login', function(err, user, info){
+  // successRedirect : '/profile', // redirect to the secure profile section
+  // failureRedirect : '/login', // redirect back to the signup page if there is an error
+  // failureFlash : true // allow flash messages
+  if (err) { return next(err); }
+    if (!user) { return res.redirect('/login'); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      console.log('req is', req);
+      console.log('user is ', req.user);
+      return res.redirect('http://localhost:4200/');
+    });
+  })(req, res, next);
+});
+
+//////////////////////////////////////////
 
 
 
-  // User Routes
-  //temporary login
-  // app.post('/api/users/login', usersController.login);
-  // index
-  app.get('/api/users', usersController.index);
-  // create
-  // app.post('/api/users', usersController.create);
-  // show
-  app.get('/api/users/:user_id', usersController.show);
-  // update
-  // app.put('/api/users/:user_id', usersController.update);
-  // destroy
-  // app.delete('/api/users/:user_id', usersController.destroy);
+// User Routes
+//temporary login
+// app.post('/api/users/login', usersController.login);
+// index
+app.get('/api/users', usersController.index);
+// create
+app.post('/api/users', usersController.create);
+// show
+app.get('/api/users/:user_id', usersController.show);
+// update
+app.put('/api/users/:user_id',isLoggedIn,usersController.update);
+// destroy
+app.delete('/api/users/:user_id',isLoggedIn, usersController.destroy);
 
-  //Post Routes//
-  // All posts from all users
-  app.get('/api/posts', postsController.index);
-  // create
-  // app.post('/api/posts/', postsController.create);
-  // show all posts from a user
-  app.get('/api/posts/user/:user_id', postsController.showAllPostsFromAUser);
-  // show a specific post
-  app.get('/api/posts/:post_id', postsController.show);
-  // update a specific post
-  // app.put('/api/posts/:post_id', postsController.update);
-  // destroy a specific post
-  // app.delete('/api/posts/:post_id', postsController.destroy);
+//Post Routes//
+// All posts from all users
+app.get('/api/posts', postsController.index);
+// create
+app.post('/api/posts/',isLoggedIn, postsController.create);
+// show all posts from a user
+app.get('/api/posts/user/:user_id', postsController.showAllPostsFromAUser);
+// show a specific post
+app.get('/api/posts/:post_id', postsController.show);
+// update a specific post
+app.put('/api/posts/:post_id', isLoggedIn, postsController.update);
+// destroy a specific post
+app.delete('/api/posts/:post_id',isLoggedIn, postsController.destroy);
 
 }
 
@@ -89,7 +110,7 @@ function isLoggedIn(req, res, next) {
   return next();
 
   // if they aren't redirect them to the home page
-  res.redirect('/');
+  res.redirect('http://localhost:4200/');
 }
 
 

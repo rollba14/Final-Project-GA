@@ -10,71 +10,103 @@ function index(req, res) {
     }
     else {
       console.log('all posts with comments: ', posts);
-      res.json(posts);
+      let ps = posts.map(p=>{
+        return formatPost(p)
+      })
+      res.json(ps);
     }
   });
 }
 
 
 function showAllPostsFromAUser(req, res) {
-  Post.find({user_id: req.params.user_id}, function(err, user){
+  Post.find({user_id: req.params.user_id}, function(err, posts){
     if (err) res.send(err);
-    else res.json(user);
+    else{
+      let ps = posts.map(p=>{
+        return formatPost(p)
+      })
+      res.json(ps);
+    }
   });
 }
 function show(req, res) {
   Post.findById(req.params.post_id, function(err, post){
     if (err) res.send(err);
-    else res.json(post);
+    else res.json(formatPost(post));
   });
 }
 
+// REQUIRE AUTH //
 function create(req, res) {
-  // User.findById({_id: req.params.user_id}, function(err, user){
-  //   if (err) res.send(err);
-  //   if(user.length === 0) {
-  //     console.log('Cannot find this user');
-  //     res.json({});
-  //   }else{
-  //     var body = req.body
-  //     body.user_id = user._id
-  //     Post.create(body, function(err, post){
-  //       if (err) res.end(err);
-  //       else {
-  //         console.log('Created post: ', post, ' for user', user);
-  //         res.json(post);
-  //       }
-  //     });
-  //   }
-  //
-  // })
-  Post.create(req.body, function(err, post){
-    if (err) res.end(err);
-    else res.json(post);
-  });
+  if(allowedUser(req.body.author)){
+    Post.create(req.body, function(err, post){
+      if (err) res.end(err);
+      else {
+        var p = formatPost(post);
+        res.json(p);
+        }
+    });
+  }else{
+    res.send({message:"You are unauthorized."})
+  }
 }
 
+// REQUIRE AUTH //
 function update(req, res) {
-  Post.findByIdAndUpdate(req.params.post_id,
-    {$set: req.body}, function(err, post){
-    if (err) res.send(err);
-    else {
-      console.log('updated post is ', post);
-      res.json(post);
-    }
-  });
+  if(allowedUser(req.body.author)){
+    Post.findByIdAndUpdate(req.params.post_id,
+      {$set: req.body}, function(err, post){
+      if (err) res.send(err);
+      else {
+        console.log('updated post is ', post);
+        var p = formatPost(post);
+        res.json(p);
+      }
+    });
+  }else{
+    res.send({message:"You are unauthorized."})
+  }
 }
 
+// REQUIRE AUTH //
 function destroy(req, res) {
-  Post.findByIdAndRemove(req.params.post_id, function(err, post){
+  if(allowedUser(req.body.author)){
+    Post.findByIdAndRemove(req.params.post_id, function(err, post){
+      if (err) res.send(err);
+      else {
+        var p = formatPost(post);
+        res.json(p);
+      }
+    });
+  } else{
+    res.send({message:"You are unauthorized."})
+  }
+}
+
+function allowedUser(post_author){
+  User.find({username: post_author},function(err,user){
     if (err) res.send(err);
     else {
-      Post.find({user_id: post.user_id}, function(err, posts){
-        if (err) res.send(err);
-        else res.json(posts);
-      });
+      // check if user is same as the post they want modify.
+      if(user._id !== req.session.passport.user){
+        return false;
+      }else
+      return true;
     }
   });
+};
+
+function formatPost(post){
+  return  {
+    title: post.title,
+    description: post.description,
+    tags: post.tags,
+    created_date: post.created_date,
+    updated_date: post.updated_date,
+    author: post.author,
+    comments: post.comments,
+  }
 }
 
 module.exports.showAllPostsFromAUser = showAllPostsFromAUser;
