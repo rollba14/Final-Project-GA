@@ -6,12 +6,19 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PostService {
-  baseUrl = "http://localhost:3000";
-  constructor(private http: Http) { }
+  private baseUrl = "http://localhost:3000";
+  private allPosts = "";
+  constructor(private http: Http) {
+    // this.getAllPosts().subscribe(res=>{
+    //   this.allPosts = res.json();
+    // })
+  }
 
-  createPost(user, post){
-    post.user_id = user._id
-    console.log('submitting post', post, 'for user ', user);
+  getAllPosts(){
+    return this.http.get(`${this.baseUrl}/api/posts`);
+  }
+
+  createPost(post){
     return this.http.post(`${this.baseUrl}/api/posts`,post);
   }
 

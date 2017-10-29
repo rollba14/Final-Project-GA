@@ -1,3 +1,28 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-map></app-map>
-<app-user></app-user>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/about">About</a></li>
+        <li><a routerLink="/post">Events</a></li>
+        <li><a routerLink="/user">User</a></li>
+
+
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <footer>
+
+  </footer>
+</body>
+</html>

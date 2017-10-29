@@ -15,9 +15,9 @@ export class UserService {
   }
 
   loginUser(inputUser){
-    return this.http.post(`${this.baseUrl}/api/users/login`, inputUser);
+    var user = JSON.stringify(inputUser);
+    return this.http.post(`${this.baseUrl}/login`,
+      // {withCredentials: true},
+      user);
   }
-
-
-
 }

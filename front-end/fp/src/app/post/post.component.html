@@ -1,3 +1,34 @@
-<p>
-  post works!
-</p>
+<section class="searchBar">
+  <label for="geoSearch">Location:</label>
+  <input id="geoSearch" types="text"/>
+  <label for="title">Title:</label>
+  <input [(ngModel)]="title" type="text" id="title" required>
+  <label for="image_url">Image Url:</label>
+  <input [(ngModel)]="image_url" id="image_url" type="text" required>
+  <label for="description">Description:</label>
+  <input [(ngModel)]="description" id="description" type="text" required>
+  <button type="button" (click)="createPost()">Add Post</button>
+</section>
+
+<ngui-map
+(mapReady$)="onMapReady($event)"
+center="San Francisco, California"
+zoom="12"
+>
+<div *ngIf="posts">
+  <marker *ngFor="let post of posts"
+  position="{{post.place.geometry.location.lat}},{{post.place.geometry.location.lng}}"
+  (initialized$)=
+  "onMarkerInit($event,post.title,post.image_url)"
+  draggable="false"
+  animation="DROP"
+  >
+</marker>
+</div>
+
+</ngui-map>
+<div id="infowindow-content">
+  <img src="" width="16" height="16" id="place-icon">
+  <span id="place-name"  class="title"></span><br>
+  <span id="place-address"></span>
+</div>
