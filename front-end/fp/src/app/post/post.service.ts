@@ -34,4 +34,8 @@ export class PostService {
     return this.http.put(`${this.baseUrl}/api/posts/${post_id}`,post);
   }
 
+  addComment(post_id,comment){
+    return this.http.post(`${this.baseUrl}/api/posts/${post_id}/comment`,comment);
+  }
+
 }

@@ -17,22 +17,62 @@ zoom="12"
 >
 <div id="markers">
   <div *ngIf="posts">
-    <div *ngFor="let post of posts" id="{{post._id}}">
-      
-      <div class="markerInfoWindow">
+    <div *ngFor="let post of posts" >
+
+      <div class="markerInfoWindow" id="{{post._id}}">
         <div *ngIf="post._id != editable">
-          <img src="{{post.place.icon}}" width="16" height="16" id="place-icon">
-          <span class="place-title">{{post.title }}</span><br>
+          <div><img src="{{post.place.icon}}" width="16" height="16" id="place-icon">
+          <span class="place-title">{{post.title }}</span>
+          </div>
           <span class="place-description">{{post.description}}</span><br>
           <span class="place-address">{{formatAddress(post.place.address_components)}}</span>
-          <p>
-            <button type="button" (click)="toggleEditable(post)">Edit</button>
-            <button type="button" (click)="deletePost(post._id)">Delete</button>
-          </p>
+          <div *ngIf="post._id != displayComments">
+            <p>
+              <button type="button" (click)="toggleComments(post)">
+                <img class="icon" src="../../assets/comment.png">
+              </button>
+              <button type="button" (click)="toggleEditable(post)">
+                <img class="icon" src="../../assets/pencil.png">
+              </button>
+              <button type="button" (click)="deletePost(post._id)">
+                <img class="icon" src="../../assets/bin.png">
+              </button>
+            </p>
+          </div>
+          <div *ngIf="post._id === displayComments">
+            <textarea type="text" [(ngModel)]="tempComment" placeholder="Add comment">
+            </textarea>
+            <p>
+              <button type="button" (click)="addComment(post,tempComment)">Submit</button>
+              <button type="button" (click)="toggleComments(post)">Cancel</button>
+            </p>
+            <span *ngIf="post.comments != []">Comments:</span> <br>
+            <div *ngFor="let comment of post.comments">
+              <p>
+                <span *ngIf="comment.user_id === this.loggedInUser._id">
+
+                  <span *ngIf="comment._id !== this.displaySubComment && !this.editing">
+                    {{comment.content}}
+                    <button type="button" (click)="toggleSubComment(comment)">
+                      <img class="icon" src="../../assets/pencil.png">
+                    </button>
+                    <button type="button" (click)="deleteSubComment(comment)">
+                      <img class="icon" src="../../assets/bin.png">
+                    </button>
+                  </span>
+                  <span *ngIf="comment._id === this.displaySubComment && this.editing">
+                    <input [(ngModel)]="tempSubComment" type="text" placeholder="title">
+                    <button type="button" (click)="toggleSubComment(post)">Cancel</button>
+                    <button type="button" (click)="updateSubComment(post,tempSubComment)">Update</button>
+                  </span>
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
         <div *ngIf="post._id === editable">
-          <p><input [(ngModel)]="tempTitle" type="text" placeholder="title"></p>
-          <p><textarea [(ngModel)]="tempDescription" placeholder="description"></textarea></p>
+          <p>Title: <input [(ngModel)]="tempTitle" type="text" placeholder="title"></p>
+          <p> <textarea [(ngModel)]="tempDescription" placeholder="description"></textarea></p>
           <button type="button" (click)="toggleEditable(post)">Cancel</button>
           <button type="button" (click)="updatePost(post,tempTitle,tempDescription)">Update</button>
         </div>
@@ -55,5 +95,4 @@ zoom="12"
   <img src="" width="16" height="16" id="place-icon">
   <span id="place-name"  class="title"></span><br>
   <span id="place-address"></span>
-  <button type="button" (click)="testing($event)">Click Me</button>
 </div>

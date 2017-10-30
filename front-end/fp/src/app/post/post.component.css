@@ -1,3 +1,12 @@
 ngui-map{
   height: calc(100vh - 90px);
 }
+
+.markerInfoWindow{
+  display: none;
+}
+
+.icon{
+  width: 13px;
+  height: 13px;
+}

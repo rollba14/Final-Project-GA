@@ -2,6 +2,7 @@ var express = require('express');
 // var router = express.Router();
 var usersController = require('../controllers/users.js');
 var postsController = require('../controllers/posts.js');
+var commentsController = require('../controllers/comments.js');
 var cors = require('cors');
 
 var jwt = require('express-jwt');
@@ -154,6 +155,12 @@ module.exports = function(app, passport){
   app.put('/api/posts/:post_id', postsController.update);
   // destroy a specific post
   app.delete('/api/posts/:post_id', postsController.destroy);
+
+  //Comment Routes//
+  //
+  app.get('/api/posts/:post_id/comment', commentsController.show);
+  // create a comment for a post
+  app.post('/api/posts/:post_id/comment', commentsController.create);
 
 }
 
