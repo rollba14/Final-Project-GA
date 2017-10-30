@@ -151,9 +151,9 @@ module.exports = function(app, passport){
   // show a specific post
   app.get('/api/posts/:post_id', postsController.show);
   // update a specific post
-  app.put('/api/posts/:post_id', isLoggedIn, postsController.update);
+  app.put('/api/posts/:post_id', postsController.update);
   // destroy a specific post
-  app.delete('/api/posts/:post_id',isLoggedIn, postsController.destroy);
+  app.delete('/api/posts/:post_id', postsController.destroy);
 
 }
 

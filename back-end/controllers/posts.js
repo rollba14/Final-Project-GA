@@ -65,34 +65,50 @@ function create(req, res) {
 
 // REQUIRE AUTH //
 function update(req, res) {
-  if(allowedUser(req.body.author)){
-    Post.findByIdAndUpdate(req.params.post_id,
-      {$set: req.body}, function(err, post){
-      if (err) res.send(err);
-      else {
-        console.log('updated post is ', post);
-        var p = formatPost(post);
-        res.json(p);
-      }
-    });
-  }else{
-    res.send({message:"You are unauthorized."})
-  }
+  // if(allowedUser(req.body.author)){
+  //   Post.findByIdAndUpdate(req.params.post_id,
+  //     {$set: req.body}, function(err, post){
+  //     if (err) res.send(err);
+  //     else {
+  //       console.log('updated post is ', post);
+  //       var p = formatPost(post);
+  //       res.json(p);
+  //     }
+  //   });
+  // }else{
+  //   res.send({message:"You are unauthorized."})
+  // }
+
+  Post.findByIdAndUpdate(req.params.post_id,
+    {$set: req.body}, function(err, post){
+    if (err) res.send(err);
+    else {
+      res.json(post);
+    }
+  });
 }
 
 // REQUIRE AUTH //
 function destroy(req, res) {
-  if(allowedUser(req.body.author)){
-    Post.findByIdAndRemove(req.params.post_id, function(err, post){
-      if (err) res.send(err);
-      else {
-        var p = formatPost(post);
-        res.json(p);
-      }
-    });
-  } else{
-    res.send({message:"You are unauthorized."})
-  }
+  // if(allowedUser(req.body.author)){
+  //   Post.findByIdAndRemove(req.params.post_id, function(err, post){
+  //     if (err) res.send(err);
+  //     else {
+  //       var p = formatPost(post);
+  //       res.json(p);
+  //     }
+  //   });
+  // } else{
+  //   res.send({message:"You are unauthorized."})
+  // }
+
+  Post.findByIdAndRemove(req.params.post_id, function(err, post){
+    if (err) res.send(err);
+    else {
+      res.json(post);
+    }
+  });
+
 }
 
 function allowedUser(post_author){
