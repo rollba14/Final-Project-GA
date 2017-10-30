@@ -16,6 +16,8 @@ export class PostComponent implements OnInit {
   posts = [];
   private post;
   private title = "";
+  private tempTitle = "";
+  private tempDescription = "";
   private description="";
   private image_url;
   private mapInstance;
@@ -36,45 +38,6 @@ export class PostComponent implements OnInit {
     this.postService.getAllPosts()
     .subscribe(res=>{
       this.posts = res.json();
-      // this.posts.push(
-      //   {
-      //     place: {
-      //       geometry: {
-      //         location: {
-      //           lat: 37.7694208,
-      //           lng: -122.48621379999997,
-      //         }
-      //       }
-      //     },
-      //     title: "Hello HA",
-      //     image_url: "https://lh3.googleusercontent.com/ez8pDFoxU2ZqDmyfeIjIba6dWisd8MY_6choHhZNpO0WwLhICu0v0s5eV2WHOhuhKw=w170",
-      //
-      //   },
-      //   {
-      //     place: {
-      //       geometry: {
-      //         location: {
-      //           lat: 37.7988737,
-      //           lng: -122.46619370000002,
-      //         }
-      //       }
-      //     },
-      //     title: "What chu looking at?",
-      //     image_url: "http://icons.iconarchive.com/icons/martin-berube/flat-animal/256/frog-icon.png",
-      //   },
-      //   {
-      //     place: {
-      //       geometry: {
-      //         location: {
-      //           lat: 37.8060532,
-      //           lng: -122.41033110000001,
-      //         }
-      //       }
-      //     },
-      //     title: "A nice day to fish some fishy",
-      //     image_url: "https://images-na.ssl-images-amazon.com/images/I/41f4HriR3lL.png",
-      //   }
-      // )
     })
 
     this.loggedInUser = {
@@ -148,18 +111,12 @@ export class PostComponent implements OnInit {
   testing(){
     console.log('hello');
   }
-  btnClick(e){
-    console.log(e.target.closest('.markerInfoWindow'));
+  btnClick(post){
+    console.log(post);
   }
 
   onMarkerInit(marker,post) {
-    // var markerInfoWinElement = document.getElementsByClassName('markerInfoWindow');
     var markerInfoWinElement = document.getElementById(`${post._id}`);
-    console.log(markerInfoWinElement);
-    markerInfoWinElement.children['place-icon'].src = post.place.icon;
-    markerInfoWinElement.children['place-name'].textContent = post.title;
-    markerInfoWinElement.children['place-address'].textContent = this.formatAddress(post.place.address_components);
-
     var markerInfoWindow = new google.maps.InfoWindow();
     if(post.image_url){
       marker.setIcon({
@@ -169,20 +126,6 @@ export class PostComponent implements OnInit {
     }
     markerInfoWindow.setContent(markerInfoWinElement);
 
-    // google.maps.event.addListener(markerInfoWindow, 'domready', ()=> {
-    //   // whatever you want to do once the DOM is ready
-    //   console.log('Inside Marker Init');
-    //   google.maps.event.addDomListener(document.getElementById('${post._id}'),
-    //   'click',this.testing
-    //   )
-    //   // var markerInfoWinElement = document.getElementById('${post._id}');
-    //   // console.log(markerInfoWinElement);
-    //   // markerInfoWindow.addListener('click',this.testing);
-    // });
-    // markerInfoWindow.open(this.mapInstance, marker);
-
-    // // markerElement[0].addEventListener('click', 'button',this.testing);
-    // console.log(markerInfoWinElement);
     marker.addListener('click', ()=> {
       if(this.lastMarker === undefined || this.lastMarker === marker){
         marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -196,8 +139,6 @@ export class PostComponent implements OnInit {
       if(this.lastInfoWindow === undefined){
         this.lastInfoWindow = markerInfoWindow;
         markerInfoWindow.open(this.mapInstance, marker);
-        // var markerInfoWinElement = document.getElementById('${post._id}');
-        // console.log(markerInfoWinElement)
       }else if(this.lastInfoWindow !== markerInfoWindow){
         this.lastInfoWindow.close();
         this.lastInfoWindow = markerInfoWindow;
@@ -317,9 +258,17 @@ export class PostComponent implements OnInit {
     ].join(' ');
   }
 
-  toggleEditable(post_id){
-    if(this.editable) this.editable = "";
-    else this.editable = post_id;
+  toggleEditable(post){
+    if(this.editable){
+      this.editable = "";
+      this.tempTitle = "";
+      this.tempDescription = "";
+    }
+    else {
+      this.editable = post._id;
+      this.tempTitle = post.title;
+      this.tempDescription = post.description;
+    }
   }
 
 }

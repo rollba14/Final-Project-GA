@@ -19,25 +19,30 @@ zoom="12"
   <div *ngIf="posts">
     <div *ngFor="let post of posts">
       <div class="markerInfoWindow" id={{post._id}}>
-        <div>
-          
+        <div *ngIf="post._id != editable">
+          <img src="{{post.place.icon}}" width="16" height="16" id="place-icon">
+          <span id="place-name"  class="title">{{post.title }}</span><br>
+          <span id="place-address">{{formatAddress(post.place.address_components)}}</span>
+          <button type="button" (click)="toggleEditable(post)">Edit</button>
         </div>
-        <img src="" width="16" height="16" id="place-icon">
-        <span id="place-name"  class="title"></span><br>
-        <span id="place-address"></span>
-        <button type="button" (click)="btnClick($event)">Click Me</button>
+        <div *ngIf="post._id === editable">
+          <p><input [(ngModel)]="tempTitle" type="text" placeholder="title"></p>
+          <p><textarea [(ngModel)]="tempDescription" placeholder="description"></textarea></p>
+          <button type="button" (click)="toggleEditable(post)">Cancel</button>
+          <button type="button" (click)="updatePost(post,tempTitle,tempDescription)">Update</button>
+        </div>
       </div>
-          <marker
-          position="{{post.place.geometry.location.lat}},{{post.place.geometry.location.lng}}"
-          (initialized$)=
-          "onMarkerInit($event,post)"
-          draggable="false"
-          animation="DROP"
-          >
-        </marker>
-    </div>
-
+      <marker
+      position="{{post.place.geometry.location.lat}},{{post.place.geometry.location.lng}}"
+      (initialized$)=
+      "onMarkerInit($event,post)"
+      draggable="false"
+      animation="DROP"
+      >
+    </marker>
   </div>
+
+</div>
 </div>
 
 </ngui-map>
