@@ -10,10 +10,10 @@ function index(req, res) {
     }
     else {
       console.log('all posts with comments: ', posts);
-      let ps = posts.map(p=>{
-        return formatPost(p)
-      })
-      res.json(ps);
+      // let ps = posts.map(p=>{
+      //   return formatPost(p)
+      // })
+      res.json(posts);
     }
   });
 }
@@ -39,17 +39,28 @@ function show(req, res) {
 
 // REQUIRE AUTH //
 function create(req, res) {
-  if(allowedUser(req.body.author)){
-    Post.create(req.body, function(err, post){
-      if (err) res.end(err);
-      else {
-        var p = formatPost(post);
-        res.json(p);
-        }
-    });
-  }else{
-    res.send({message:"You are unauthorized."})
-  }
+  // PASSPORT VERSION
+  // if(allowedUser(req.body.author)){
+  //   Post.create(req.body, function(err, post){
+  //     if (err) res.end(err);
+  //     else {
+  //       var p = formatPost(post);
+  //       res.json(p);
+  //       }
+  //   });
+  // }else{
+  //   res.send({message:"You are unauthorized."})
+  // }
+
+  // Nonsecured version
+  Post.create(req.body, function(err, post){
+    if (err) res.end(err);
+    else {
+      let p = post;
+      p.post_id = ""
+      res.json(p);
+      }
+  });
 }
 
 // REQUIRE AUTH //
@@ -101,6 +112,8 @@ function formatPost(post){
   return  {
     title: post.title,
     description: post.description,
+    image_url: post.image_url,
+    place: post.place,
     tags: post.tags,
     created_date: post.created_date,
     updated_date: post.updated_date,

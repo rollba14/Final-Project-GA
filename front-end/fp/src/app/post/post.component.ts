@@ -36,45 +36,45 @@ export class PostComponent implements OnInit {
     this.postService.getAllPosts()
     .subscribe(res=>{
       this.posts = res.json();
-      this.posts.push(
-        {
-          place: {
-            geometry: {
-              location: {
-                lat: 37.7694208,
-                lng: -122.48621379999997,
-              }
-            }
-          },
-          title: "Hello HA",
-          image_url: "https://lh3.googleusercontent.com/ez8pDFoxU2ZqDmyfeIjIba6dWisd8MY_6choHhZNpO0WwLhICu0v0s5eV2WHOhuhKw=w170",
-
-        },
-        {
-          place: {
-            geometry: {
-              location: {
-                lat: 37.7988737,
-                lng: -122.46619370000002,
-              }
-            }
-          },
-          title: "What chu looking at?",
-          image_url: "http://icons.iconarchive.com/icons/martin-berube/flat-animal/256/frog-icon.png",
-        },
-        {
-          place: {
-            geometry: {
-              location: {
-                lat: 37.8060532,
-                lng: -122.41033110000001,
-              }
-            }
-          },
-          title: "A nice day to fish some fishy",
-          image_url: "https://images-na.ssl-images-amazon.com/images/I/41f4HriR3lL.png",
-        }
-      )
+      // this.posts.push(
+      //   {
+      //     place: {
+      //       geometry: {
+      //         location: {
+      //           lat: 37.7694208,
+      //           lng: -122.48621379999997,
+      //         }
+      //       }
+      //     },
+      //     title: "Hello HA",
+      //     image_url: "https://lh3.googleusercontent.com/ez8pDFoxU2ZqDmyfeIjIba6dWisd8MY_6choHhZNpO0WwLhICu0v0s5eV2WHOhuhKw=w170",
+      //
+      //   },
+      //   {
+      //     place: {
+      //       geometry: {
+      //         location: {
+      //           lat: 37.7988737,
+      //           lng: -122.46619370000002,
+      //         }
+      //       }
+      //     },
+      //     title: "What chu looking at?",
+      //     image_url: "http://icons.iconarchive.com/icons/martin-berube/flat-animal/256/frog-icon.png",
+      //   },
+      //   {
+      //     place: {
+      //       geometry: {
+      //         location: {
+      //           lat: 37.8060532,
+      //           lng: -122.41033110000001,
+      //         }
+      //       }
+      //     },
+      //     title: "A nice day to fish some fishy",
+      //     image_url: "https://images-na.ssl-images-amazon.com/images/I/41f4HriR3lL.png",
+      //   }
+      // )
     })
 
     this.loggedInUser = {
@@ -83,7 +83,11 @@ export class PostComponent implements OnInit {
       password: "123",
     }
 
-
+    var markersDiv = document.getElementById('markers');
+    document.addEventListener('click',function(e: any){
+      if(e.target && e.target.id=='markers')
+      console.log('hello');
+    })
     console.log(this.posts);
   }
 
@@ -125,25 +129,60 @@ export class PostComponent implements OnInit {
         address = this.formatAddress(place.address_components);
       }
 
-      infowindowContent.children['place-icon'].src = place.icon;
-      infowindowContent.children['place-name'].textContent = place.name;
-      infowindowContent.children['place-address'].textContent = address;
-      infowindow.open(map, helperMarker);
+      // infowindowContent.children['place-icon'].src = place.icon;
+      // infowindowContent.children['place-name'].textContent = place.name;
+      // infowindowContent.children['place-address'].textContent = address;
+      // infowindow.open(map, helperMarker);
+    });
+    google.maps.event.addListener(infowindow, 'domready', ()=> {
+      // whatever you want to do once the DOM is ready
+      console.log('working');
+
+      var markerInfoWinElement = document.getElementById('${post._id}');
+      console.log(markerInfoWinElement);
+      infowindow.addListener('click',this.testing);
     });
   }
 
-  onMarkerInit(marker,title,image_url) {
-    var markerInfoWindow = new google.maps.InfoWindow({
-      content: '<div class="icon">' +
-      title + '</div>' +
-      '<div>' + '<input type="text"> <button type="button">click me</button>' + '</div>'
-    });
-    if(image_url){
+
+  testing(){
+    console.log('hello');
+  }
+  btnClick(e){
+    console.log(e.target.closest('.markerInfoWindow'));
+  }
+
+  onMarkerInit(marker,post) {
+    // var markerInfoWinElement = document.getElementsByClassName('markerInfoWindow');
+    var markerInfoWinElement = document.getElementById(`${post._id}`);
+    console.log(markerInfoWinElement);
+    markerInfoWinElement.children['place-icon'].src = post.place.icon;
+    markerInfoWinElement.children['place-name'].textContent = post.title;
+    markerInfoWinElement.children['place-address'].textContent = this.formatAddress(post.place.address_components);
+
+    var markerInfoWindow = new google.maps.InfoWindow();
+    if(post.image_url){
       marker.setIcon({
-        url: image_url,
+        url: post.image_url,
         scaledSize: new google.maps.Size(40, 40),
       });
     }
+    markerInfoWindow.setContent(markerInfoWinElement);
+
+    // google.maps.event.addListener(markerInfoWindow, 'domready', ()=> {
+    //   // whatever you want to do once the DOM is ready
+    //   console.log('Inside Marker Init');
+    //   google.maps.event.addDomListener(document.getElementById('${post._id}'),
+    //   'click',this.testing
+    //   )
+    //   // var markerInfoWinElement = document.getElementById('${post._id}');
+    //   // console.log(markerInfoWinElement);
+    //   // markerInfoWindow.addListener('click',this.testing);
+    // });
+    // markerInfoWindow.open(this.mapInstance, marker);
+
+    // // markerElement[0].addEventListener('click', 'button',this.testing);
+    // console.log(markerInfoWinElement);
     marker.addListener('click', ()=> {
       if(this.lastMarker === undefined || this.lastMarker === marker){
         marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -157,6 +196,8 @@ export class PostComponent implements OnInit {
       if(this.lastInfoWindow === undefined){
         this.lastInfoWindow = markerInfoWindow;
         markerInfoWindow.open(this.mapInstance, marker);
+        // var markerInfoWinElement = document.getElementById('${post._id}');
+        // console.log(markerInfoWinElement)
       }else if(this.lastInfoWindow !== markerInfoWindow){
         this.lastInfoWindow.close();
         this.lastInfoWindow = markerInfoWindow;
@@ -168,22 +209,7 @@ export class PostComponent implements OnInit {
     });
   }
 
-
   createPost(){
-    // console.log('createPost');
-    // if(this.title == "" || this.description ==""){
-    //   alert("Title or description cannot be empty");
-    //   return
-    // }
-    // let post ={
-    //   _id: this.loggedInUser._id,
-    //   title: this.title,
-    //   description: this.description,
-    // }
-    // this.postService.createPost(post)
-    // .subscribe((res)=>{
-    //   this.posts.push(res.json());
-    // });
     let place = this.inputPlace;
     if(!place){
       window.alert('Its an unrecognized place, please choose from autocomplete');
