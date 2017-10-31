@@ -2,6 +2,7 @@ import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../user/user.service';
 import { PostService } from '../post/post.service';
+import { CommentService } from '../comment/comment.service';
 
 // import { NguiMapModule} from '@ngui/map';
 
@@ -34,15 +35,30 @@ export class PostComponent implements OnInit {
   private displayComments;
   private displaySubComment;
 
+  clearTempStates(){
+    this.tempTitle = "";
+    this.tempDescription = "";
+    this.tempComment = "";
+    this.tempSubComment = "";
+    this.displayComments = "";
+    this.displaySubComment = "";
+    this.editable = "";
+    this.editing = false;
+    this.displayComments="";
+    this.displaySubComment="";
+  }
+
   constructor(
     private userService: UserService,
     private postService: PostService,
+    private commentService: CommentService,
   ) { }
 
   ngOnInit() {
     this.postService.getAllPosts()
     .subscribe(res=>{
       this.posts = res.json();
+        console.log(this.posts);
     })
 
     this.loggedInUser = {
@@ -51,12 +67,6 @@ export class PostComponent implements OnInit {
       password: "123",
     }
 
-    var markersDiv = document.getElementById('markers');
-    document.addEventListener('click',function(e: any){
-      if(e.target && e.target.id=='markers')
-      console.log('hello');
-    })
-    console.log(this.posts);
   }
 
   onMapReady(map) {
@@ -97,17 +107,17 @@ export class PostComponent implements OnInit {
       if (place.address_components) {
         address = this.formatAddress(place.address_components);
       }
-      if(infowindowContent.children){
-        infowindowContent.children['place-icon'].src = place.icon;
-        infowindowContent.children['place-name'].textContent = place.name;
-        infowindowContent.children['place-address'].textContent = address;
-        infowindow.open(map, helperMarker);
-      }
+      // if(infowindowContent.children){
+      //   infowindowContent.children['place-icon'].src = place.icon;
+      //   infowindowContent.children['place-name'].textContent = place.name;
+      //   infowindowContent.children['place-address'].textContent = address;
+      //   infowindow.open(map, helperMarker);
+      // }
     });
   }
 
   onMarkerInit(marker,post) {
-    var markerInfoWinElement = document.getElementById(`${post._id}`);
+    var markerInfoWinElement: any = document.getElementById(`${post._id}`);
     if(post.image_url){
       marker.setIcon({
         url: post.image_url,
@@ -118,14 +128,14 @@ export class PostComponent implements OnInit {
       var markerInfoWindow = new google.maps.InfoWindow();
       markerInfoWindow.setContent(markerInfoWinElement);
     }else{
-      var markerInfoWindow = new google.maps.InfoWindow({
-        content: '<div class="icon">' +
-        post.title + '</div>' +
-        '<div>' + '<input type="text"> <button type="button">click me</button>' + '</div>'
-      });
+      let windows = document.getElementsByClassName(`markerInfoWindow`);
+      markerInfoWinElement = windows[windows.length-1];
+      markerInfoWinElement.id= post._id;
+      var markerInfoWindow = new google.maps.InfoWindow();
+      markerInfoWindow.setContent(markerInfoWinElement);
     }
-
     marker.addListener('click', ()=> {
+      this.clearTempStates();
       if(this.lastMarker === undefined || this.lastMarker === marker){
         marker.setAnimation(google.maps.Animation.BOUNCE);
         this.lastMarker = marker;
@@ -137,16 +147,22 @@ export class PostComponent implements OnInit {
 
       if(this.lastInfoWindow === undefined){
         this.lastInfoWindow = markerInfoWindow;
-        markerInfoWinElement.style.display ="block";
+        if(markerInfoWinElement){
+          markerInfoWinElement.style.display ="block";
+        }
         markerInfoWindow.open(this.mapInstance, marker);
       }else if(this.lastInfoWindow !== markerInfoWindow){
         this.lastInfoWindow.close();
         this.lastInfoWindow = markerInfoWindow;
-        markerInfoWinElement.style.display ="block";
+        if(markerInfoWinElement){
+          markerInfoWinElement.style.display ="block";
+        }
         markerInfoWindow.open(this.mapInstance, marker);
       }else {
         this.lastInfoWindow = markerInfoWindow;
-        markerInfoWinElement.style.display ="block";
+        if(markerInfoWinElement){
+          markerInfoWinElement.style.display ="block";
+        }
         markerInfoWindow.open(this.mapInstance, marker);
       }
     });
@@ -176,7 +192,7 @@ export class PostComponent implements OnInit {
     this.postService.createPost(post)
     .subscribe((post)=>{
       let newPost = post.json()
-      // console.log('post came back is',newPost);
+      console.log('post came back is',newPost);
       // this.editable = newPost._id;
       this.posts.push(newPost);
       // console.log('new posts are', this.posts);
@@ -207,32 +223,18 @@ export class PostComponent implements OnInit {
   deletePost(post_id){
     this.postService.deletePost(post_id)
     .subscribe((post)=>{
-      let index = this.posts.indexOf(post.json());
-      this.posts.slice(index-1);
+      let index = this.posts.findIndex(function(p){
+        return p._id == post.json()._id;
+      });
+      this.posts.splice(index,1);
       this.lastMarker.setVisible(false);
       this.lastInfoWindow.close();
     });
   }
 
-  addComment(post,comment){
-    console.log(comment);
-    let com = {
-      user_id : this.loggedInUser._id,
-      content : comment,
-    }
-    this.postService.addComment(post._id,com)
-    .subscribe(newComment=>{
-      console.log('new comment came back is', newComment.json());
-      let toBeUpdatePost = this.posts.find(p=>{
-        return p._id === post._id
-      });
-      console.log('toBeUpdatePost', toBeUpdatePost);
-      toBeUpdatePost.comments.push(newComment.json());
-      console.log('new post is', toBeUpdatePost);
-      console.log('all posts are', this.posts);
-    })
-    this.tempComment = "";
-  }
+  //////////////////////////////////////
+  ///////// POST HELPER STUFF //////////
+  //////////////////////////////////////
 
   clearInputFields(){
     var input = <HTMLInputElement>(document.getElementById('geoSearch'));
@@ -254,6 +256,7 @@ export class PostComponent implements OnInit {
       if(this.helperInfoWindow) this.helperInfoWindow.close();
       if(this.lastMarker) this.lastMarker.setAnimation(null);
     })
+    this.clearTempStates();
   }
 
   createNewMarker(){
@@ -289,6 +292,10 @@ export class PostComponent implements OnInit {
     }
   }
 
+  ///////////////////////////////////
+  ///////// COMMENTS STUFF //////////
+  ///////////////////////////////////
+
   toggleComments(post){
     if(this.displayComments){
       this.displayComments = "";
@@ -313,5 +320,53 @@ export class PostComponent implements OnInit {
       this.editing = true;
     }
   }
+
+  addComment(post,comment){
+    console.log(comment);
+    let com = {
+      user_id : this.loggedInUser._id,
+      content : comment,
+    }
+    this.commentService.addComment(post._id,com)
+    .subscribe(newComment=>{
+      console.log('new comment came back is', newComment.json());
+      let toBeUpdatePost = this.posts.find(p=>{
+        return p._id === post._id
+      });
+      console.log('toBeUpdatePost', toBeUpdatePost);
+      toBeUpdatePost.comments.push(newComment.json());
+      console.log('new post is', toBeUpdatePost);
+      console.log('all posts are', this.posts);
+    })
+    this.tempComment = "";
+  }
+
+  deleteSubComment(post,comment){
+    console.log('post is', post);
+    console.log('comment is ',comment);
+    console.log('posts are before request', this.posts);
+    this.commentService.deleteSubComment(post._id,comment._id)
+    .subscribe(updatedComments=>{
+      console.log('posts are', this.posts);
+      let postIndex = this.posts.findIndex(p=>{
+        return p._id == post._id
+      });
+      console.log('index is',postIndex);
+
+      // let commentIndex =this.posts[postIndex].findIndex(c=>{
+      //   return c._id = comment._id;
+      // });
+
+      this.posts[postIndex].comments = updatedComments.json();
+      console.log(this.posts);
+    });
+
+  }
+
+  updateSubComment(post,comment){
+
+  }
+
+
 
 }

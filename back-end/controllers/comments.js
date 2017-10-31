@@ -58,11 +58,27 @@ function update(req, res) {
 
 // REQUIRE AUTH //
 function destroy(req, res) {
-
-  Post.findByIdAndRemove(req.params.post_id, function(err, post){
+  console.log('inside comment controller');
+  Post.findById(req.params.post_id, function(err, post){
     if (err) res.send(err);
     else {
-      res.json(post);
+      let index = post.comments.findIndex(c=>{
+        return c._id == req.params.comment_id
+      });
+      console.log(index);
+
+      // post.comments.findByIdAndRemove(req.params.comment_id, function(err, newPost){
+      //   if (err) res.send(err);
+      //   else{
+      //     console.log(post.comments);
+      //     res.json(post);
+      //   }
+      // })
+
+      post.comments.splice(index,1);
+      post.save();
+      console.log(post.comments);
+      res.json(post.comments);
     }
   });
 

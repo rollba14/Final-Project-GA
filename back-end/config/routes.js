@@ -161,6 +161,8 @@ module.exports = function(app, passport){
   app.get('/api/posts/:post_id/comment', commentsController.show);
   // create a comment for a post
   app.post('/api/posts/:post_id/comment', commentsController.create);
+  // delete a comment for a post
+  app.delete('/api/posts/:post_id/comment/:comment_id', commentsController.destroy);
 
 }
 

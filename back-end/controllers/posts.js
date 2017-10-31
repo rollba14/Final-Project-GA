@@ -99,7 +99,7 @@ function destroy(req, res) {
   // } else{
   //   res.send({message:"You are unauthorized."})
   // }
-
+  console.log('inside post controller');
   Post.findByIdAndRemove(req.params.post_id, function(err, post){
     if (err) res.send(err);
     else {
