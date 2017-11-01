@@ -4,11 +4,9 @@ var bcrypt   = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 
 var UserSchema = new Schema({
-  local: {
-    username: String,
-    password: String,
-    image_url: String,
-  }
+  username: String,
+  password: String,
+  image_url: String,
 });
 
 UserSchema.methods.generateJwt = function() {
@@ -29,7 +27,7 @@ UserSchema.methods.generateHash = function(password) {
 
 // checking if password is valid
 UserSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.password);
 };
 
 var User = mongoose.model('User', UserSchema);

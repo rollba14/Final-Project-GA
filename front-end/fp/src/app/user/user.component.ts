@@ -13,6 +13,7 @@ import { ActivatedRoute }   from '@angular/router';
 export class UserComponent implements OnInit {
   username="";
   password="";
+
   loggedInUser = "";
   title = "";
   description="";
@@ -26,21 +27,24 @@ export class UserComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.route.params.forEach( param => {
-    //   console.log('param is', param);
-    //
-    // });
+    this.userService.getSessionUser()
+    .subscribe(user=>{
+      console.log('User was logged in');
+      this.loggedInUser = user.json().username;
+    },err=>{
+      console.log('User is not signed in');
+    })
   }
 
   registerUser(){
-    let newUser = {
-      username : this.username,
-      password : this.password,
-    }
-    console.log('registering');
-    this.userService.registerUser(newUser).subscribe((user)=>{
-      console.log(user.json());
-      this.loggedInUser = user.json();
+    this.userService.registerUser(this.username,this.password).subscribe(
+      (res)=>{
+      console.log(res);
+      this.loggedInUser = this.username;
+      this.username = "";
+    },(err)=>{
+      console.log('Error');
+      window.alert('Username could be taken');
     });
   }
 
@@ -50,18 +54,16 @@ export class UserComponent implements OnInit {
       password : this.password,
     }
     console.log('new user is ', inputUser);
-    this.userService.loginUser(inputUser).subscribe((res)=>{
-      console.log('res is ', res);
-      // console.log(res.json());
-      // if(res.json().length >0 ){
-      //   this.loggedInUser = res.json()[0];
-      //   this.postService.getUserPosts(this.loggedInUser)
-      //   .subscribe((posts)=>{
-      //     console.log(posts.json());
-      //     this.posts = posts.json();
-      //   })
-      // }
-      // console.log(this.editable);
+    this.userService.loginUser(inputUser).subscribe(
+      (res)=>{
+      console.log('succssfully logged in');
+      this.loggedInUser = this.username;
+      this.username = "";
+    },(err)=>{
+      console.log('err is', err);
+      this.username = "";
+      this.password = "";
+      window.alert('Invalid credentials');
     });
   }
 

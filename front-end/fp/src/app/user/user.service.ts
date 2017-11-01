@@ -9,15 +9,23 @@ export class UserService {
   baseUrl = "http://localhost:3000";
   constructor(private http: Http) { }
 
-  registerUser(newUser){
-    console.log(newUser);
-    return this.http.post(`${this.baseUrl}/signup`, newUser);
+  getSessionUser(){
+    return this.http.get(`${this.baseUrl}/login/user`,
+    {withCredentials: true});
+  }
+
+  registerUser(username, pw){
+    return this.http.post(`${this.baseUrl}/signup`,
+      {username: username,
+        password: pw,},
+        {withCredentials: true});
   }
 
   loginUser(inputUser){
-    var user = JSON.stringify(inputUser);
+    // var user = JSON.stringify(inputUser);
+    console.log('logging in');
     return this.http.post(`${this.baseUrl}/login`,
-      // {withCredentials: true},
-      user);
+      {username: inputUser.username, password: inputUser.password},
+      {withCredentials: true});
   }
 }

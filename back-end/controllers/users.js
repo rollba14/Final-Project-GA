@@ -1,24 +1,21 @@
 var db = require('../models');
 var User = db.User;
 
-
-function profileRead(req, res) {
-
-  // If no user ID exists in the JWT return a 401
-  if (!req.payload._id) {
-    res.status(401).json({
-      "message" : "UnauthorizedError: private profile"
-    });
-  } else {
-    // Otherwise continue
-    User
-      .findById(req.payload._id)
-      .exec(function(err, user) {
-        res.status(200).json(user);
-      });
+function findSessionUser(req,res){
+  if(!req.isAuthenticated()){
+    res.status(401).send("Please log in to continue");
   }
-
-};
+  else{
+    User.findById(req.session.passport.user,function(err,user){
+      if(err) res.send(err);
+      let formatedUser = {
+        username: user.username,
+        image_url: user.image_url,
+      }
+      res.json(formatedUser);
+    })
+  }
+}
 
 function index(req, res) {
 
@@ -86,9 +83,8 @@ function destroy(req, res) {
 //     }
 //   });
 // };
-
+module.exports.findSessionUser = findSessionUser;
 module.exports.index = index;
-module.exports.profileRead = profileRead;
 module.exports.show = show;
 module.exports.create = create;
 module.exports.update = update;
