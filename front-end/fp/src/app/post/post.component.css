@@ -3,7 +3,7 @@ ngui-map{
 }
 
 .markerInfoWindow{
-  /*display: none;*/
+  display: none;
 }
 
 .icon{
