@@ -21,5 +21,9 @@ export class CommentService {
     return this.http.delete(`${this.baseUrl}/api/posts/${post_id}/comment/${comment_id}`,);
   }
 
+  updateSubComment(post_id,comment_id,content){
+    return this.http.put(`${this.baseUrl}/api/posts/${post_id}/comment/${comment_id}`,content);
+  }
+
 
 }

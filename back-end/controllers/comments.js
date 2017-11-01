@@ -47,11 +47,26 @@ function create(req, res) {
 
 // REQUIRE AUTH //
 function update(req, res) {
-  Post.findByIdAndUpdate(req.params.post_id,
-    {$set: req.body}, function(err, post){
+  Post.findById(req.params.post_id, function(err, post){
     if (err) res.send(err);
     else {
-      res.json(post);
+      let index = post.comments.findIndex(c=>{
+        return c._id = req.params.comment_id
+      })
+      console.log('post is', post);
+      console.log('index is', index);
+      let newComment = new db.Comment(req.body)
+      post.comments[index] = newComment;
+
+      post.save(function(err,newPost){
+        if (err) res.send(err);
+      });
+      console.log('new post is', post);
+      let comment = {
+        index: index,
+        content: newComment.content,
+      }
+      res.json(comment);
     }
   });
 }
