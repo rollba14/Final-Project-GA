@@ -14,7 +14,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 // note that these are also defined in the models/index.js
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/fp_models");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fp_models");
 var db = mongoose.connection;
 
 var favicon = require('serve-favicon');

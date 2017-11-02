@@ -1,6 +1,10 @@
+require('dotenv').config();
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+const path = require('path');
+
 var cors = require('cors')
 var router = require('./config/routes.js');
 
@@ -47,6 +51,13 @@ app.use(session({ secret: 'pandaexpressishorrible'} )); //session secret
 app.use(passport.initialize());
 app.use(passport.session()); //persisten login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+
+app.use(express.static(__dirname + '/dist'));
+
+ app.get('/*', function(req, res) {
+   res.sendFile(path.join(__dirname + '/dist/index.html'));
+ });
 
 // error handlers
 // Catch unauthorised errors

@@ -135,7 +135,7 @@ export class PostComponent implements OnInit {
             var newlyAddedMarker = this.mapInstance.markers[this.mapInstance.markers.length-1];
             google.maps.event.clearListeners(newlyAddedMarker,'click');
             groupInfoWindowContent.className += " "+newPost.place.geometry.location.lat.toString()+newPost.place.geometry.location.lng.toString();
-        
+
             groupInfoWindowContent.prepend(newlyAddedInfoContent);
             var groupInfoWindow = new google.maps.InfoWindow();
             groupInfoWindow.setContent(groupInfoWindowContent);
@@ -151,12 +151,9 @@ export class PostComponent implements OnInit {
                   }
                 })
 
-
               } // end of overlay if
-
             }
           }
-
         }
 
 
@@ -190,7 +187,7 @@ export class PostComponent implements OnInit {
               map.fitBounds(place.geometry.viewport);
             } else {
               map.setCenter(place.geometry.location);
-              map.setZoom(20);  // Why 17? Because it looks good.
+              map.setZoom(20);
             }
             helperMarker.setPosition(place.geometry.location);
 
@@ -198,12 +195,7 @@ export class PostComponent implements OnInit {
             if (place.address_components) {
               address = this.formatAddress(place.address_components);
             }
-            // if(infowindowContent.children){
-            //   infowindowContent.children['place-icon'].src = place.icon;
-            //   infowindowContent.children['place-name'].textContent = place.name;
-            //   infowindowContent.children['place-address'].textContent = address;
-            //   infowindow.open(map, helperMarker);
-            // }
+            // there was setting children null field;
           });
         }
 
@@ -311,7 +303,7 @@ export class PostComponent implements OnInit {
             });
             this.posts.splice(index,1);
             this.lastMarker.setVisible(false);
-            this.lastInfoWindow.close();
+            // this.lastInfoWindow.close();
           },err=>{
             console.log('error deleting a post');
             window.alert('Sorry, theres an error for processing your delete.');
@@ -329,9 +321,13 @@ export class PostComponent implements OnInit {
           this.description = "";
           this.image_url = "";
           var infowindowContent = document.getElementById('infowindow-content');
-          infowindowContent.children['place-icon'].src = "";
-          infowindowContent.children['place-name'].textContent = "";
-          infowindowContent.children['place-address'].textContent = "";
+          if(infowindowContent){
+            if(infowindowContent.children){
+              infowindowContent.children['place-icon'].src = "";
+              infowindowContent.children['place-name'].textContent = "";
+              infowindowContent.children['place-address'].textContent = "";
+            }
+          }
         }
 
         addCloseInfoWindowOnMapClickEvent(){

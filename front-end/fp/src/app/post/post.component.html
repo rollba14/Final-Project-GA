@@ -1,3 +1,14 @@
+<div class="top-section">
+  <nav>
+    <ul>
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/about">About</a></li>
+      <li><a routerLink="/post">Events</a></li>
+      <li><a routerLink="/user">User</a></li>
+    </ul>
+  </nav>
+</div>
+
 <section class="searchBar">
   <label for="geoSearch">Location:</label>
   <input id="geoSearch" types="text"/>
@@ -28,21 +39,21 @@ zoom="12"
           <span class="place-address">{{formatAddress(post.place.address_components)}}</span>
           <div *ngIf="post._id != displayComments && loggedInUser">
             <p>
-              <button type="button" (click)="toggleComments(post)">
+              <button type="button" (click)="toggleComments(post)" class="iconBtn">
                 <img class="icon" src="../../assets/comment.png">
               </button>
               <span *ngIf="post.author == loggedInUser.username">
-                <button type="button" (click)="toggleEditable(post)">
+                <button type="button" (click)="toggleEditable(post)" class="iconBtn">
                   <img class="icon" src="../../assets/pencil.png">
                 </button>
-                <button type="button" (click)="deletePost(post._id)">
+                <button type="button" (click)="deletePost(post._id)" class="iconBtn">
                   <img class="icon" src="../../assets/bin.png">
                 </button>
               </span>
             </p>
           </div>
           <div *ngIf="post._id === displayComments && loggedInUser">
-            <textarea type="text" [(ngModel)]="tempComment" placeholder="Add comment">
+            <textarea type="text" [(ngModel)]="tempComment" placeholder="Add a comment">
             </textarea>
             <p>
               <button type="button" (click)="addComment(post,tempComment)">Submit</button>
@@ -54,10 +65,10 @@ zoom="12"
                 <span>
                   <span *ngIf="!this.editing">{{comment.content}}</span>
                   <span *ngIf="comment._id !== this.displaySubComment && !this.editing && comment.user_id == loggedInUser._id">
-                    <button type="button" (click)="toggleSubComment(comment)">
+                    <button type="button" (click)="toggleSubComment(comment)" class="iconBtn">
                       <img class="icon" src="../../assets/pencil.png">
                     </button>
-                    <button type="button" (click)="deleteSubComment(post,comment)">
+                    <button type="button" (click)="deleteSubComment(post,comment)" class="iconBtn">
                       <img class="icon" src="../../assets/bin.png">
                     </button>
                   </span>
@@ -72,7 +83,6 @@ zoom="12"
           </div>
         </div>
         <div *ngIf="post._id === editable">
-          <p>Title: </p>
           <input [(ngModel)]="tempPost.title" type="text" placeholder="title">
           <p> <textarea [(ngModel)]="tempPost.description" placeholder="description"></textarea></p>
           <button type="button" (click)="toggleEditable(tempPost)">Cancel</button>
