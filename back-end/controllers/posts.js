@@ -10,6 +10,9 @@ function index(req, res) {
     }
     else {
       console.log('all posts with comments: ', posts);
+      // let ps = posts.map(p=>{
+      //   return formatPost(p)
+      // })
       res.json(posts);
     }
   });
@@ -17,65 +20,72 @@ function index(req, res) {
 
 
 function showAllPostsFromAUser(req, res) {
-  Post.find({user_id: req.params.user_id}, function(err, user){
+  Post.find({user_id: req.params.user_id}, function(err, posts){
     if (err) res.send(err);
-    else res.json(user);
+    else{
+      let ps = posts.map(p=>{
+        return formatPost(p)
+      })
+      res.json(ps);
+    }
   });
 }
 function show(req, res) {
   Post.findById(req.params.post_id, function(err, post){
     if (err) res.send(err);
-    else res.json(post);
+    else res.json(formatPost(post));
   });
 }
 
 function create(req, res) {
-  // User.findById({_id: req.params.user_id}, function(err, user){
-  //   if (err) res.send(err);
-  //   if(user.length === 0) {
-  //     console.log('Cannot find this user');
-  //     res.json({});
-  //   }else{
-  //     var body = req.body
-  //     body.user_id = user._id
-  //     Post.create(body, function(err, post){
-  //       if (err) res.end(err);
-  //       else {
-  //         console.log('Created post: ', post, ' for user', user);
-  //         res.json(post);
-  //       }
-  //     });
-  //   }
-  //
-  // })
   Post.create(req.body, function(err, post){
     if (err) res.end(err);
-    else res.json(post);
-  });
-}
-
-function update(req, res) {
-  Post.findByIdAndUpdate(req.params.post_id,
-    {$set: req.body}, function(err, post){
-    if (err) res.send(err);
     else {
-      console.log('updated post is ', post);
       res.json(post);
-    }
+      }
   });
 }
 
+// REQUIRE AUTH //
+function update(req, res) {
+  if(req.body.user_id == req.session.passport.user){
+    Post.findByIdAndUpdate(req.params.post_id,
+      {$set: req.body}, function(err, post){
+      if (err) res.send(err);
+      else {
+        res.json(post);
+      }
+    });
+  }else{
+    res.status(401).send("You are unauthorized update this post.");
+  }
+}
+
+// REQUIRE AUTH //
 function destroy(req, res) {
   Post.findByIdAndRemove(req.params.post_id, function(err, post){
     if (err) res.send(err);
-    else {
-      Post.find({user_id: post.user_id}, function(err, posts){
-        if (err) res.send(err);
-        else res.json(posts);
-      });
+    if(post.user_id == req.session.passport.user){
+      res.json(post);
+    }else{
+      res.status(401).send("You are unauthorized to delete this post");
     }
   });
 }
+
+function allowedUser(post_author,session_user){
+  User.find({username: post_author},function(err,user){
+    if (err) res.send(err);
+    else {
+      // check if user is same as the post they want modify.
+      if(user._id != session_user){
+        return false;
+      }else
+      return true;
+    }
+  });
+};
+
 
 module.exports.showAllPostsFromAUser = showAllPostsFromAUser;
 module.exports.index = index;

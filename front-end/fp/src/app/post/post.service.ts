@@ -6,13 +6,20 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PostService {
-  baseUrl = "http://localhost:3000";
-  constructor(private http: Http) { }
+  private baseUrl = "http://localhost:3000";
+  private allPosts = "";
+  constructor(private http: Http) {
+    // this.getAllPosts().subscribe(res=>{
+    //   this.allPosts = res.json();
+    // })
+  }
 
-  createPost(user, post){
-    post.user_id = user._id
-    console.log('submitting post', post, 'for user ', user);
-    return this.http.post(`${this.baseUrl}/api/posts`,post);
+  getAllPosts(){
+    return this.http.get(`${this.baseUrl}/api/posts`);
+  }
+
+  createPost(post){
+    return this.http.post(`${this.baseUrl}/api/posts`,post,{withCredentials: true});
   }
 
   getUserPosts(user){
@@ -20,11 +27,11 @@ export class PostService {
   }
 
   deletePost(post_id){
-    return this.http.delete(`${this.baseUrl}/api/posts/${post_id}`);
+    return this.http.delete(`${this.baseUrl}/api/posts/${post_id}`,{withCredentials: true});
   }
 
-  updatePost(post_id,post){
-    return this.http.put(`${this.baseUrl}/api/posts/${post_id}`,post);
+  updatePost(post){
+    return this.http.put(`${this.baseUrl}/api/posts/${post._id}`,post,{withCredentials: true});
   }
 
 }
