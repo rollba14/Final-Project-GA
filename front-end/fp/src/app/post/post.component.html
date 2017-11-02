@@ -26,33 +26,34 @@ zoom="12"
           </div>
           <span class="place-description">{{post.description}}</span><br>
           <span class="place-address">{{formatAddress(post.place.address_components)}}</span>
-          <div *ngIf="post._id != displayComments">
+          <div *ngIf="post._id != displayComments && loggedInUser">
             <p>
               <button type="button" (click)="toggleComments(post)">
                 <img class="icon" src="../../assets/comment.png">
               </button>
-              <button type="button" (click)="toggleEditable(post)">
-                <img class="icon" src="../../assets/pencil.png">
-              </button>
-              <button type="button" (click)="deletePost(post._id)">
-                <img class="icon" src="../../assets/bin.png">
-              </button>
+              <span *ngIf="post.author == loggedInUser.username">
+                <button type="button" (click)="toggleEditable(post)">
+                  <img class="icon" src="../../assets/pencil.png">
+                </button>
+                <button type="button" (click)="deletePost(post._id)">
+                  <img class="icon" src="../../assets/bin.png">
+                </button>
+              </span>
             </p>
           </div>
-          <div *ngIf="post._id === displayComments">
+          <div *ngIf="post._id === displayComments && loggedInUser">
             <textarea type="text" [(ngModel)]="tempComment" placeholder="Add comment">
             </textarea>
             <p>
               <button type="button" (click)="addComment(post,tempComment)">Submit</button>
               <button type="button" (click)="toggleComments(post)">Cancel</button>
             </p>
-            <span *ngIf="post.comments != []">Comments:</span> <br>
+            <span *ngIf="post.comments.length > 0">Comments:</span> <br>
             <div *ngFor="let comment of post.comments">
               <p>
-                <span *ngIf="comment.user_id === this.loggedInUser._id">
-
-                  <span *ngIf="comment._id !== this.displaySubComment && !this.editing">
-                    {{comment.content}}
+                <span>
+                  <span *ngIf="!this.editing">{{comment.content}}</span>
+                  <span *ngIf="comment._id !== this.displaySubComment && !this.editing && comment.user_id == loggedInUser._id">
                     <button type="button" (click)="toggleSubComment(comment)">
                       <img class="icon" src="../../assets/pencil.png">
                     </button>

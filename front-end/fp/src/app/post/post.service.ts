@@ -19,7 +19,7 @@ export class PostService {
   }
 
   createPost(post){
-    return this.http.post(`${this.baseUrl}/api/posts`,post);
+    return this.http.post(`${this.baseUrl}/api/posts`,post,{withCredentials: true});
   }
 
   getUserPosts(user){
@@ -27,15 +27,15 @@ export class PostService {
   }
 
   deletePost(post_id){
-    return this.http.delete(`${this.baseUrl}/api/posts/${post_id}`);
+    return this.http.delete(`${this.baseUrl}/api/posts/${post_id}`,{withCredentials: true});
   }
 
   updatePost(post_id,post){
-    return this.http.put(`${this.baseUrl}/api/posts/${post_id}`,post);
+    return this.http.put(`${this.baseUrl}/api/posts/${post_id}`,post,{withCredentials: true});
   }
 
   addComment(post_id,comment){
-    return this.http.post(`${this.baseUrl}/api/posts/${post_id}/comment`,comment);
+    return this.http.post(`${this.baseUrl}/api/posts/${post_id}/comment`,comment,{withCredentials: true});
   }
 
 }

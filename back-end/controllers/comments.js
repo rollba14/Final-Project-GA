@@ -49,25 +49,21 @@ function create(req, res) {
 function update(req, res) {
   Post.findById(req.params.post_id, function(err, post){
     if (err) res.send(err);
-    else {
-      let index = post.comments.findIndex(c=>{
-        return c._id = req.params.comment_id
-      })
-      console.log('post is', post);
-      console.log('index is', index);
-      let newComment = new db.Comment(req.body)
-      post.comments[index] = newComment;
+    if(!allowedUser(post.author)) res.status(401).send('You are unauthorized to edit');
 
-      post.save(function(err,newPost){
-        if (err) res.send(err);
-      });
-      console.log('new post is', post);
-      let comment = {
-        index: index,
-        content: newComment.content,
-      }
-      res.json(comment);
+    let index = post.comments.findIndex(c=>{
+      return c._id = req.params.comment_id
+    })
+    let newComment = new db.Comment(req.body)
+    post.comments[index] = newComment;
+    post.save(function(err,newPost){
+      if (err) res.send(err);
+    });
+    let comment = {
+      index: index,
+      content: newComment.content,
     }
+    res.json(comment);
   });
 }
 

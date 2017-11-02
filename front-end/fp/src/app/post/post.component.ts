@@ -59,16 +59,20 @@ export class PostComponent implements OnInit {
   ) {
   }
 
+  ngOnInit() {
+    this.postService.getAllPosts()
+    .subscribe(res=>{
+      this.posts = res.json();
+      this.currPostLength = this.posts.length;
+    })
 
-
-  ngOnChanges(){
-    console.log('testing');
-  }
-
-  ngAfterContentInit(){
-    console.log('after content init');
-    let elements = document.getElementsByClassName('markerInfoWindow');
-    console.log('after init elements are ,',elements);
+    this.userService.getSessionUser()
+    .subscribe(data=>{
+      console.log('logged in is ', data.json());
+      this.loggedInUser = data.json();
+    },err=>{
+      this.loggedInUser = null;
+    })
   }
 
   ngAfterContentChecked(){
@@ -156,36 +160,6 @@ export class PostComponent implements OnInit {
 
         }
 
-      ngAfterViewInit(){
-        console.log('after view init');
-      }
-      // ngAfterViewChecked(){
-      //   console.log('after viewchecked?');
-      // }
-
-      ngOnInit() {
-        this.postService.getAllPosts()
-        .subscribe(res=>{
-          this.posts = res.json();
-          console.log(this.posts);
-          this.currPostLength = this.posts.length;
-        })
-
-        let e = document.getElementById('59f8eef0723a2208a13ae440');
-        console.log('e is ', e);
-
-        this.userService.getSessionUser()
-        .subscribe(data=>{
-          console.log('logged in is ', data.json().username);
-          this.loggedInUser = data.json();
-        },err=>{
-          this.loggedInUser = {
-            _id: "59f55ea0fdd13e0a6cf66077",
-            username: "asd",
-            password: "123",
-          }
-        })
-      }
 
       onMapReady(map) {
         console.log('posts', map.posts);  // to get all posts as an array
@@ -433,6 +407,8 @@ export class PostComponent implements OnInit {
             }
 
             toggleSubComment(comment){
+              console.log(comment);
+              console.log(this.loggedInUser);
               if(this.displaySubComment){
                 this.displaySubComment = "";
                 this.tempSubComment = "";
@@ -450,6 +426,7 @@ export class PostComponent implements OnInit {
               let com = {
                 user_id : this.loggedInUser._id,
                 content : comment,
+
               }
               this.commentService.addComment(post._id,com)
               .subscribe(newComment=>{
@@ -461,6 +438,11 @@ export class PostComponent implements OnInit {
                 toBeUpdatePost.comments.push(newComment.json());
                 console.log('new post is', toBeUpdatePost);
                 console.log('all posts are', this.posts);
+              },err=>{
+                if(!this.loggedInUser){
+                  window.alert('Please log in to add comment')
+                }
+
               })
               this.tempComment = "";
             }

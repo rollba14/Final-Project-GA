@@ -9,10 +9,11 @@ function findSessionUser(req,res){
     User.findById(req.session.passport.user,function(err,user){
       if(err) res.send(err);
       let formatedUser = {
+        _id : user._id,
         username: user.username,
         image_url: user.image_url,
       }
-      res.json(formatedUser);
+      res.json(user);
     })
   }
 }

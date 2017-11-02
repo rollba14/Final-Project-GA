@@ -1,13 +1,18 @@
-<div>
-<h4>Register</h4>
-<p>Username:<input [(ngModel)]="username" type="text" placeholder="username" required></p>
-<p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
-<button type="button" (click)="registerUser()">Register</button>
+<div *ngIf="loggedInUser">
+  Logged in as <strong>{{loggedInUser.username}}</strong>
 </div>
-<div>
-  <a href="http://localhost:3000/login">Login</a>
-  <a href="http://localhost:3000/signup">Sign Up</a>
-  <a href="http://localhost:3000/profile">My Profile</a>
+<div *ngIf="!loggedInUser">
+  <div>
+  <h4>Register</h4>
+  <p>Username:<input [(ngModel)]="username" type="text" placeholder="username" required></p>
+  <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
+  <button type="button" (click)="registerUser()">Register</button>
+  </div>
+  <div>
+    <a href="http://localhost:3000/login">Login</a>
+    <a href="http://localhost:3000/signup">Sign Up</a>
+    <a href="http://localhost:3000/profile">My Profile</a>
+  </div>
 </div>
 <div *ngIf="!loggedInUser">
   <h4>Login</h4>

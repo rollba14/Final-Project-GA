@@ -64,24 +64,24 @@ module.exports = function(app, passport){
   // All posts from all users
   app.get('/api/posts', postsController.index);
   // create
-  app.post('/api/posts/', postsController.create);
+  app.post('/api/posts/',isLoggedIn, postsController.create);
   // show all posts from a user
   app.get('/api/posts/user/:user_id', postsController.showAllPostsFromAUser);
   // show a specific post
   app.get('/api/posts/:post_id', postsController.show);
   // update a specific post
-  app.put('/api/posts/:post_id', postsController.update);
+  app.put('/api/posts/:post_id',isLoggedIn, postsController.update);
   // destroy a specific post
-  app.delete('/api/posts/:post_id', postsController.destroy);
+  app.delete('/api/posts/:post_id',isLoggedIn, postsController.destroy);
 
   //Comment Routes//
   //
   app.get('/api/posts/:post_id/comment', commentsController.show);
   // create a comment for a post
-  app.post('/api/posts/:post_id/comment', commentsController.create);
+  app.post('/api/posts/:post_id/comment',isLoggedIn, commentsController.create);
   // delete a comment for a post
-  app.delete('/api/posts/:post_id/comment/:comment_id', commentsController.destroy);
-  app.put('/api/posts/:post_id/comment/:comment_id', commentsController.update);
+  app.delete('/api/posts/:post_id/comment/:comment_id',isLoggedIn, commentsController.destroy);
+  app.put('/api/posts/:post_id/comment/:comment_id',isLoggedIn, commentsController.update);
 
 }
 

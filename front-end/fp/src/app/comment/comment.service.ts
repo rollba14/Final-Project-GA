@@ -14,15 +14,15 @@ export class CommentService {
   ) { }
 
   addComment(post_id,comment){
-    return this.http.post(`${this.baseUrl}/api/posts/${post_id}/comment`,comment);
+    return this.http.post(`${this.baseUrl}/api/posts/${post_id}/comment`,comment, {withCredentials: true});
   }
 
   deleteSubComment(post_id,comment_id){
-    return this.http.delete(`${this.baseUrl}/api/posts/${post_id}/comment/${comment_id}`,);
+    return this.http.delete(`${this.baseUrl}/api/posts/${post_id}/comment/${comment_id}`,{withCredentials: true});
   }
 
   updateSubComment(post_id,comment_id,content){
-    return this.http.put(`${this.baseUrl}/api/posts/${post_id}/comment/${comment_id}`,content);
+    return this.http.put(`${this.baseUrl}/api/posts/${post_id}/comment/${comment_id}`,content,{withCredentials: true});
   }
 
 

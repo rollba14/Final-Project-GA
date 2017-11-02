@@ -29,8 +29,8 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.userService.getSessionUser()
     .subscribe(user=>{
-      console.log('User was logged in');
-      this.loggedInUser = user.json().username;
+      console.log('User was logged in', user.json());
+      this.loggedInUser = user.json();
     },err=>{
       console.log('User is not signed in');
     })
@@ -39,9 +39,11 @@ export class UserComponent implements OnInit {
   registerUser(){
     this.userService.registerUser(this.username,this.password).subscribe(
       (res)=>{
-      console.log(res);
-      this.loggedInUser = this.username;
-      this.username = "";
+        this.userService.getSessionUser().subscribe(data=>{
+          this.loggedInUser = data.json();
+          console.log('response from signup is', data);
+        });
+        this.username = "";
     },(err)=>{
       console.log('Error');
       window.alert('Username could be taken');
@@ -57,7 +59,11 @@ export class UserComponent implements OnInit {
     this.userService.loginUser(inputUser).subscribe(
       (res)=>{
       console.log('succssfully logged in');
-      this.loggedInUser = this.username;
+
+      this.userService.getSessionUser().subscribe(data=>{
+        this.loggedInUser = data.json();
+        console.log('response from login is', data);
+      });
       this.username = "";
     },(err)=>{
       console.log('err is', err);
