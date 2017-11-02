@@ -1,5 +1,5 @@
 <div *ngIf="loggedInUser">
-  Logged in as <strong>{{loggedInUser.username}}</strong>
+  Hello <strong>{{loggedInUser.username}}</strong>!
 </div>
 <div *ngIf="!loggedInUser">
   <div>
@@ -8,11 +8,6 @@
   <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
   <button type="button" (click)="registerUser()">Register</button>
   </div>
-  <div>
-    <a href="http://localhost:3000/login">Login</a>
-    <a href="http://localhost:3000/signup">Sign Up</a>
-    <a href="http://localhost:3000/profile">My Profile</a>
-  </div>
 </div>
 <div *ngIf="!loggedInUser">
   <h4>Login</h4>
@@ -20,41 +15,3 @@
   <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
   <button type="button" (click)="loginUser()">Login</button>
 </div>
-
-
-
-
-
-<!--
-
-
-<div *ngIf="loggedInUser">
-  <p>Logged in as: {{loggedInUser.username}}</p>
-</div>
-<h4>Add post</h4>
-<div>
-  <p>Title:<input [(ngModel)]="title" type="text" placeholder="title" required></p>
-  <p>Description:<input [(ngModel)]="description" type="text" placeholder="description" required></p>
-  <button type="button" (click)="createPost()">Add Post</button>
-</div>
-
-
-
-<div *ngIf="posts && loggedInUser">
-  <ul *ngFor="let post of posts">
-    <li>{{post.title}}</li>
-    <li>
-      <button type="button" (click)="deletePost(post._id)">Delete</button>
-    </li>
-    <li *ngIf="post._id != editable">
-      <div>{{post.title }} {{post.description}}</div>
-      <button type="button" (click)="toggleEditable(post._id)">Edit</button>
-    </li>
-    <li *ngIf="post._id === editable">
-      <input [(ngModel)]="tempTitle" type="text" placeholder="title">
-      <input [(ngModel)]="tempDescription" type="text" placeholder="description">
-      <button type="button" (click)="toggleEditable(post._id)">Cancel</button>
-      <button type="button" (click)="updatePost(post,tempTitle,tempDescription)">Update</button>
-    </li>
-  </ul>
-</div> -->

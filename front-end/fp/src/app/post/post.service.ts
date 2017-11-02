@@ -30,12 +30,8 @@ export class PostService {
     return this.http.delete(`${this.baseUrl}/api/posts/${post_id}`,{withCredentials: true});
   }
 
-  updatePost(post_id,post){
-    return this.http.put(`${this.baseUrl}/api/posts/${post_id}`,post,{withCredentials: true});
-  }
-
-  addComment(post_id,comment){
-    return this.http.post(`${this.baseUrl}/api/posts/${post_id}/comment`,comment,{withCredentials: true});
+  updatePost(post){
+    return this.http.put(`${this.baseUrl}/api/posts/${post._id}`,post,{withCredentials: true});
   }
 
 }

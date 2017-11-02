@@ -23,8 +23,8 @@ zoom="12"
         <div *ngIf="post._id != editable">
           <div><img src="{{post.place.icon}}" width="16" height="16" id="place-icon">
           <span class="place-title">{{post.title }}</span>
-          </div>
-          <span class="place-description">{{post.description}}</span><br>
+        </div><hr>
+          <p class="place-description">{{post.description}}</p>
           <span class="place-address">{{formatAddress(post.place.address_components)}}</span>
           <div *ngIf="post._id != displayComments && loggedInUser">
             <p>
@@ -62,8 +62,8 @@ zoom="12"
                     </button>
                   </span>
                   <span *ngIf="comment._id === this.displaySubComment && this.editing">
-                    <input [(ngModel)]="tempSubComment" type="text" placeholder="title">
-                    <button type="button" (click)="toggleSubComment(post)">Cancel</button>
+                    <input [(ngModel)]="tempSubComment.content" type="text" placeholder="title">
+                    <button type="button" (click)="toggleSubComment(tempSubComment)">Cancel</button>
                     <button type="button" (click)="updateSubComment(post,tempSubComment)">Update</button>
                   </span>
                 </span>
@@ -72,10 +72,11 @@ zoom="12"
           </div>
         </div>
         <div *ngIf="post._id === editable">
-          <p>Title: <input [(ngModel)]="tempTitle" type="text" placeholder="title"></p>
-          <p> <textarea [(ngModel)]="tempDescription" placeholder="description"></textarea></p>
-          <button type="button" (click)="toggleEditable(post)">Cancel</button>
-          <button type="button" (click)="updatePost(post,tempTitle,tempDescription)">Update</button>
+          <p>Title: </p>
+          <input [(ngModel)]="tempPost.title" type="text" placeholder="title">
+          <p> <textarea [(ngModel)]="tempPost.description" placeholder="description"></textarea></p>
+          <button type="button" (click)="toggleEditable(tempPost)">Cancel</button>
+          <button type="button" (click)="updatePost(tempPost)">Update</button>
         </div>
       </div>
       <marker

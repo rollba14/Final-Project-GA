@@ -13,7 +13,7 @@ function findSessionUser(req,res){
         username: user.username,
         image_url: user.image_url,
       }
-      res.json(user);
+      res.json(formatedUser);
     })
   }
 }

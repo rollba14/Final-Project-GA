@@ -37,22 +37,7 @@ function show(req, res) {
   });
 }
 
-// REQUIRE AUTH //
 function create(req, res) {
-  // PASSPORT VERSION
-  // if(allowedUser(req.body.author)){
-  //   Post.create(req.body, function(err, post){
-  //     if (err) res.end(err);
-  //     else {
-  //       var p = formatPost(post);
-  //       res.json(p);
-  //       }
-  //   });
-  // }else{
-  //   res.send({message:"You are unauthorized."})
-  // }
-
-  // Nonsecured version
   Post.create(req.body, function(err, post){
     if (err) res.end(err);
     else {
@@ -63,58 +48,37 @@ function create(req, res) {
 
 // REQUIRE AUTH //
 function update(req, res) {
-  // if(allowedUser(req.body.author)){
-  //   Post.findByIdAndUpdate(req.params.post_id,
-  //     {$set: req.body}, function(err, post){
-  //     if (err) res.send(err);
-  //     else {
-  //       console.log('updated post is ', post);
-  //       var p = formatPost(post);
-  //       res.json(p);
-  //     }
-  //   });
-  // }else{
-  //   res.send({message:"You are unauthorized."})
-  // }
-
-  Post.findByIdAndUpdate(req.params.post_id,
-    {$set: req.body}, function(err, post){
-    if (err) res.send(err);
-    else {
-      res.json(post);
-    }
-  });
+  if(req.body.user_id == req.session.passport.user){
+    Post.findByIdAndUpdate(req.params.post_id,
+      {$set: req.body}, function(err, post){
+      if (err) res.send(err);
+      else {
+        res.json(post);
+      }
+    });
+  }else{
+    res.status(401).send("You are unauthorized update this post.");
+  }
 }
 
 // REQUIRE AUTH //
 function destroy(req, res) {
-  // if(allowedUser(req.body.author)){
-  //   Post.findByIdAndRemove(req.params.post_id, function(err, post){
-  //     if (err) res.send(err);
-  //     else {
-  //       var p = formatPost(post);
-  //       res.json(p);
-  //     }
-  //   });
-  // } else{
-  //   res.send({message:"You are unauthorized."})
-  // }
-  console.log('inside post controller');
   Post.findByIdAndRemove(req.params.post_id, function(err, post){
     if (err) res.send(err);
-    else {
+    if(post.user_id == req.session.passport.user){
       res.json(post);
+    }else{
+      res.status(401).send("You are unauthorized to delete this post");
     }
   });
-
 }
 
-function allowedUser(post_author){
+function allowedUser(post_author,session_user){
   User.find({username: post_author},function(err,user){
     if (err) res.send(err);
     else {
       // check if user is same as the post they want modify.
-      if(user._id !== req.session.passport.user){
+      if(user._id != session_user){
         return false;
       }else
       return true;
@@ -122,19 +86,6 @@ function allowedUser(post_author){
   });
 };
 
-function formatPost(post){
-  return  {
-    title: post.title,
-    description: post.description,
-    image_url: post.image_url,
-    place: post.place,
-    tags: post.tags,
-    created_date: post.created_date,
-    updated_date: post.updated_date,
-    author: post.author,
-    comments: post.comments,
-  }
-}
 
 module.exports.showAllPostsFromAUser = showAllPostsFromAUser;
 module.exports.index = index;

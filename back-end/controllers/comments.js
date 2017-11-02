@@ -49,16 +49,23 @@ function create(req, res) {
 function update(req, res) {
   Post.findById(req.params.post_id, function(err, post){
     if (err) res.send(err);
-    if(!allowedUser(post.author)) res.status(401).send('You are unauthorized to edit');
-
+    if(allowedUser(post.author,req.session.passport.user)=== false){
+      res.status(401).send('You are unauthorized to update comment');
+      return;
+    }
+    console.log('=====================');
+    console.log('post.comments are ', post.comments);
+    console.log('params is', req.params.comment_id);
+    console.log('=====================');
     let index = post.comments.findIndex(c=>{
-      return c._id = req.params.comment_id
+      return c._id == req.params.comment_id;
     })
     let newComment = new db.Comment(req.body)
     post.comments[index] = newComment;
     post.save(function(err,newPost){
       if (err) res.send(err);
     });
+    console.log('in comments controller');
     let comment = {
       index: index,
       content: newComment.content,
@@ -69,38 +76,38 @@ function update(req, res) {
 
 // REQUIRE AUTH //
 function destroy(req, res) {
-  console.log('inside comment controller');
+  console.log('inside comment controller -- destroy');
+
   Post.findById(req.params.post_id, function(err, post){
     if (err) res.send(err);
     else {
+      console.log('post author is', post.author);
+      console.log('session user is', req.session.passport.user);
+
+      if(allowedUser(post.author,req.session.passport.user)=== false){
+        res.status(401).send('You are unauthorized to delete comment');
+        return;
+      }
       let index = post.comments.findIndex(c=>{
         return c._id == req.params.comment_id
       });
-      console.log(index);
-
-      // post.comments.findByIdAndRemove(req.params.comment_id, function(err, newPost){
-      //   if (err) res.send(err);
-      //   else{
-      //     console.log(post.comments);
-      //     res.json(post);
-      //   }
-      // })
-
       post.comments.splice(index,1);
       post.save();
       console.log(post.comments);
       res.json(post.comments);
     }
   });
-
 }
 
-function allowedUser(post_author){
+function allowedUser(post_author,session_user){
   User.find({username: post_author},function(err,user){
     if (err) res.send(err);
     else {
       // check if user is same as the post they want modify.
-      if(user._id !== req.session.passport.user){
+      console.log('user is', user);
+      console.log('session user is', session_user);
+
+      if(user._id != session_user){
         return false;
       }else
       return true;
