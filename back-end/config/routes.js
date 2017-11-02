@@ -26,7 +26,10 @@ module.exports = function(app, passport){
   });
 
   // process the signup form
-  app.options('*', cors(corsOptions))
+  if(!process.env.DYNO){
+    app.options('*', cors(corsOptions))
+  }
+
   app.post('/signup',passport.authenticate('local-signup'),
   function(req,res){
     console.log('signed up then proceed');

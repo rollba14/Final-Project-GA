@@ -22,7 +22,10 @@ var corsOptions = {
   optionsSuccessStatus: 200,
   credentials: true,
 }
-app.use(cors(corsOptions));
+if(!process.env.DYNO){
+  app.use(cors(corsOptions));
+}
+
 
 
 //CORS setup to allow other ports from this host
