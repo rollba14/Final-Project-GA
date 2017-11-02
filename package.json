@@ -2,7 +2,7 @@
   "name": "",
   "version": "",
   "scripts": {
-    "deploy": "cd front-end && ng build --aot -prod -op ../back-end/dist && cd ..",
+    "deploy": "cd front-end/fp && ng build --aot -prod -op ../back-end/dist && cd ..",
     "start": "node back-end/server.js",
     "postinstall": "cd back-end && npm install"
   }

@@ -14,16 +14,16 @@ import { CommentService } from '../comment/comment.service';
 
 export class PostComponent implements OnInit {
   private loggedInUser;
-  private posts = [];
-  private post;
-  private title = "";
+   posts = [];
+   post;
+   title = "";
   private tempTitle = "";
   private tempDescription = "";
   private tempPost = "";
   private tempComment = "";
   private tempSubComment = "";
-  private description ="";
-  private image_url;
+   description ="";
+   image_url;
   private mapInstance;
   private tempLat = 37.76;
   private tempLng = -122.418;
