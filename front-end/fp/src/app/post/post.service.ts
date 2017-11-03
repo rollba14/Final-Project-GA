@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PostService {
-  private baseUrl = "https://glacial-chamber-79751.herokuapp.com/";
+  private baseUrl = "https://glacial-chamber-79751.herokuapp.com";
   // private baseUrl = "http://localhost:3000";
   private allPosts = "";
   constructor(private http: Http) {
