@@ -22,9 +22,9 @@ var corsOptions = {
   optionsSuccessStatus: 200,
   credentials: true,
 }
-// if(!process.env.DYNO){
+if(!process.env.DYNO){
   app.use(cors(corsOptions));
-// }
+}
 
 
 
