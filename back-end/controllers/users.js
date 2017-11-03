@@ -72,18 +72,7 @@ function destroy(req, res) {
   });
 }
 
-// function allowedUser(IDKYET){
-//   User.find({username: IDKYET},function(err,user){
-//     if (err) res.send(err);
-//     else {
-//       // check if user is same as the post they want modify.
-//       if(user._id !== req.session.passport.user){
-//         return false;
-//       }else
-//       return true;
-//     }
-//   });
-// };
+
 module.exports.findSessionUser = findSessionUser;
 module.exports.index = index;
 module.exports.show = show;

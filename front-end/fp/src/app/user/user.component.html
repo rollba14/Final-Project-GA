@@ -8,21 +8,24 @@
     </ul>
   </nav>
 </div>
+<hr>
 
-<div *ngIf="loggedInUser">
-  Hello <strong>{{loggedInUser.username}}</strong>!
-</div>
-<div *ngIf="!loggedInUser">
-  <div>
-  <h4>Register</h4>
-  <p>Username:<input [(ngModel)]="username" type="text" placeholder="username" required></p>
-  <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
-  <button type="button" (click)="registerUser()">Register</button>
+<div class="body">
+  <div *ngIf="loggedInUser">
+    Hello <strong>{{loggedInUser.username}}</strong>!
   </div>
-</div>
-<div *ngIf="!loggedInUser">
-  <h4>Login</h4>
-  <p>Username:<input [(ngModel)]="username" type="text" placeholder="username" required></p>
-  <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
-  <button type="button" (click)="loginUser()">Login</button>
+  <div *ngIf="!loggedInUser" class="auth">
+    <div>
+    <h4>Register</h4>
+    <p>Username:<input [(ngModel)]="username" type="text" placeholder="username" required></p>
+    <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
+    <button type="button" (click)="registerUser()">Register</button>
+    </div>
+  </div>
+  <div *ngIf="!loggedInUser" class="auth">
+    <h4>Login</h4>
+    <p>Username:<input [(ngModel)]="username" type="text" placeholder="username" required></p>
+    <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
+    <button type="button" (click)="loginUser()">Login</button>
+  </div>
 </div>
