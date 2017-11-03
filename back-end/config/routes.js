@@ -67,7 +67,7 @@ module.exports = function(app, passport){
   // All posts from all users
   app.get('/api/posts', postsController.index);
   // create
-  app.post('/api/posts/',isLoggedIn, postsController.create);
+  app.post('/api/posts',isLoggedIn, postsController.create);
   // show all posts from a user
   app.get('/api/posts/user/:user_id', postsController.showAllPostsFromAUser);
   // show a specific post
