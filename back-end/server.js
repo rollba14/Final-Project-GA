@@ -49,9 +49,9 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 app.use(express.static(__dirname + '/dist'));
 
- app.get('/*', function(req, res) {
-   res.sendFile(path.join(__dirname + '/dist/index.html'));
- });
+ // app.get('/*', function(req, res) {
+ //   res.sendFile(path.join(__dirname + '/dist/index.html'));
+ // });
 
 
 // routes ======================================================================
