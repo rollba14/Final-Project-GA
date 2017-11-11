@@ -61,12 +61,12 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.postService.getAllPosts()
     .subscribe(res=>{
       this.posts = res.json();
       this.currPostLength = this.posts.length;
     })
-
     this.userService.getSessionUser()
     .subscribe(data=>{
       console.log('logged in is ', data.json().username);

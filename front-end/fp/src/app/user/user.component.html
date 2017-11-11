@@ -4,6 +4,7 @@
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/post">Events</a></li>
       <li><a routerLink="/user">User</a></li>
+      <li *ngIf="flashMsg">{{flashMsg}}</li>
     </ul>
   </nav>
 </div>
@@ -11,20 +12,21 @@
 
 <div class="body">
   <div *ngIf="loggedInUser" class="welcome_msg">
-    Hello <strong>{{loggedInUser.username}}</strong>!
+    <p>Hello <strong>{{loggedInUser.username}}</strong>!</p>
+    <button type="button" (click)="logout()">Logout</button>
   </div>
   <div *ngIf="!loggedInUser" class="auth">
     <div>
     <h4>Register</h4>
-    <p>Username:<input [(ngModel)]="username" type="text" placeholder="username" required></p>
-    <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
-    <button type="button" (click)="registerUser()">Register</button>
+    <p>Username:<input [(ngModel)]="registerUsername" type="text" placeholder="username" required></p>
+    <p>Password:<input [(ngModel)]="registerPassword" type="password" placeholder="password" required></p>
+    <button type="button" (click)="registerUser(registerUsername,registerPassword)">Register</button>
     </div>
   </div>
   <div *ngIf="!loggedInUser" class="auth">
     <h4>Login</h4>
-    <p>Username:<input [(ngModel)]="username" type="text" placeholder="username" required></p>
-    <p>Password:<input [(ngModel)]="password" type="password" placeholder="password" required></p>
-    <button type="button" (click)="loginUser()">Login</button>
+    <p>Username:<input [(ngModel)]="tempLoginUsername" type="text" placeholder="username" required></p>
+    <p>Password:<input [(ngModel)]="tempLoginPassword" type="password" placeholder="password" required></p>
+    <button type="button" (click)="loginUser(tempLoginUsername,tempLoginPassword)">Login</button>
   </div>
 </div>

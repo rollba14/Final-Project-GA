@@ -6,8 +6,8 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserService {
-  baseUrl = "https://glacial-chamber-79751.herokuapp.com";
-  // baseUrl = "http://localhost:3000";
+  // baseUrl = "https://glacial-chamber-79751.herokuapp.com";
+  baseUrl = "http://localhost:3000";
   constructor(private http: Http) { }
 
   getSessionUser(){
@@ -23,10 +23,12 @@ export class UserService {
   }
 
   loginUser(inputUser){
-    // var user = JSON.stringify(inputUser);
-    console.log('logging in');
     return this.http.post(`${this.baseUrl}/login`,
       {username: inputUser.username, password: inputUser.password},
+      {withCredentials: true});
+  }
+  logout(){
+    return this.http.get(`${this.baseUrl}/logout`,
       {withCredentials: true});
   }
 }

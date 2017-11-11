@@ -11,14 +11,16 @@ import { ActivatedRoute }   from '@angular/router';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  username="";
-  password="";
-
+  tempLoginUsername = "";
+  tempLoginPassword = "";
+  registerUsername = "";
+  registerPassword = "";
   loggedInUser = "";
   title = "";
   description="";
   posts = [];
   editable;
+  flashMsg= "";
 
   constructor(
     // private route: ActivatedRoute,
@@ -29,31 +31,42 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.userService.getSessionUser()
     .subscribe(user=>{
-      console.log('User was logged in', user.json());
       this.loggedInUser = user.json();
     },err=>{
       console.log('User is not signed in');
     })
   }
 
-  registerUser(){
-    this.userService.registerUser(this.username,this.password).subscribe(
+  registerUser(username,password){
+    this.userService.registerUser(username,password).subscribe(
       (res)=>{
         this.userService.getSessionUser().subscribe(data=>{
           this.loggedInUser = data.json();
           console.log('response from signup is', data);
         });
-        this.username = "";
+        this.registerUsername = "";
+        this.registerPassword = "";
     },(err)=>{
       console.log('Error');
       window.alert('Username could be taken');
     });
   }
 
-  loginUser(){
+  logout(){
+    this.flashMsg = "You have succssfully logged out.";
+    this.userService.logout()
+    .subscribe(res=>{
+      this.loggedInUser = "";
+      this.flashMsg = "You have succssfully logged out.";
+    },err=>{
+      this.flashMsg = "There's an error logging out";
+    });
+  }
+
+  loginUser(username,password){
     let inputUser = {
-      username : this.username,
-      password : this.password,
+      username : username,
+      password : password,
     }
     console.log('new user is ', inputUser);
     this.userService.loginUser(inputUser).subscribe(
@@ -62,13 +75,14 @@ export class UserComponent implements OnInit {
 
       this.userService.getSessionUser().subscribe(data=>{
         this.loggedInUser = data.json();
-        console.log('response from login is', data);
+        this.flashMsg = "Welcome!";
       });
-      this.username = "";
+      this.tempLoginUsername = "";
+      this.tempLoginPassword = "";
     },(err)=>{
       console.log('err is', err);
-      this.username = "";
-      this.password = "";
+      this.tempLoginUsername = "";
+      this.tempLoginPassword = "";
       window.alert('Invalid credentials');
     });
   }

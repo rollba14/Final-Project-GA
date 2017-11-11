@@ -22,7 +22,7 @@ module.exports = function(app, passport){
 
   app.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('http://localhost:4200/');
+    res.status(200).send("Logged out succssfully");
   });
 
   // process the signup form

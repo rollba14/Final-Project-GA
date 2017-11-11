@@ -4,23 +4,15 @@
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/post">Events</a></li>
       <li><a routerLink="/user">User</a></li>
-      <!-- <li>
-        <label for="geoSearch">Location:</label>
-        <input id="geoSearch" types="text"/>
+      <li *ngIf="!loggedInUser">
+        Please log in to add post and comment!
       </li>
-      <li><label for="title">Title:</label>
-      <input [(ngModel)]="title" type="text" id="title" required></li>
-      <li><label for="image_url">Image Url:</label>
-      <input [(ngModel)]="image_url" id="image_url" type="text" required></li>
-      <li><label for="description">Description:</label>
-      <input [(ngModel)]="description" id="description" type="text" required></li>
-      <li><button type="button" (click)="createPost()">Add Post</button></li> -->
     </ul>
   </nav>
 </div>
 
 
-<section class="searchBar">
+<section class="searchBar" *ngIf="loggedInUser">
   <label for="geoSearch">Location:</label>
   <input id="geoSearch" types="text"/>
   <label for="title">Title:</label>
