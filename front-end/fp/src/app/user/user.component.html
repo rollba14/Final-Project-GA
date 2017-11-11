@@ -10,7 +10,7 @@
 <hr>
 
 <div class="body">
-  <div *ngIf="loggedInUser">
+  <div *ngIf="loggedInUser" class="welcome_msg">
     Hello <strong>{{loggedInUser.username}}</strong>!
   </div>
   <div *ngIf="!loggedInUser" class="auth">
