@@ -13,10 +13,10 @@ import { CommentService } from '../comment/comment.service';
 })
 
 export class PostComponent implements OnInit {
-  private loggedInUser;
-   posts = [];
-   post;
-   title = "";
+  loggedInUser;
+  posts = [];
+  post;
+  title = "";
   private tempTitle = "";
   private tempDescription = "";
   private tempPost = "";
