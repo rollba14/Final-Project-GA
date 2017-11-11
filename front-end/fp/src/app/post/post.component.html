@@ -5,24 +5,28 @@
       <li><a routerLink="/post">Events</a></li>
       <li><a routerLink="/user">User</a></li>
       <li *ngIf="!loggedInUser">
-        Please log in to add post and comment!
+        {{flashMsg}}
+      </li>
+      <li *ngIf="loggedInUser">
+        <button type="button" (click)="logout()">Logout</button>
       </li>
     </ul>
   </nav>
 </div>
 
-
-<section class="searchBar" *ngIf="loggedInUser">
-  <label for="geoSearch">Location:</label>
-  <input id="geoSearch" types="text"/>
-  <label for="title">Title:</label>
-  <input [(ngModel)]="title" type="text" id="title" required>
-  <label for="image_url">Image Url:</label>
-  <input [(ngModel)]="image_url" id="image_url" type="text" required>
-  <label for="description">Description:</label>
-  <input [(ngModel)]="description" id="description" type="text" required>
-  <button type="button" (click)="createPost()">Add Post</button>
-</section>
+<div class="search_section">
+  <section class="searchBar" *ngIf="loggedInUser">
+    <label for="geoSearch">Location:</label>
+    <input id="geoSearch" types="text"/>
+    <label for="title">Title:</label>
+    <input [(ngModel)]="title" type="text" id="title" required>
+    <label for="image_url">Image Url:</label>
+    <input [(ngModel)]="image_url" id="image_url" type="text" required>
+    <label for="description">Description:</label>
+    <input [(ngModel)]="description" id="description" type="text" required>
+    <button type="button" (click)="createPost()">Add Post</button>
+  </section>
+</div>
 
 <ngui-map
 (mapReady$)="onMapReady($event)"

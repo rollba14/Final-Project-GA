@@ -35,6 +35,7 @@ export class PostComponent implements OnInit {
   private editing = false;
   private displayComments;
   private displaySubComment;
+  private flashMsg = "";
 
   private currPostLength;
   // private positionList:any = new Set();
@@ -73,7 +74,20 @@ export class PostComponent implements OnInit {
       this.loggedInUser = data.json();
     },err=>{
       this.loggedInUser = null;
+      this.flashMsg = "Please log in to add post and comment!"
     })
+  }
+
+  logout(){
+    this.flashMsg = "You have succssfully logged out.";
+    this.userService.logout()
+    .subscribe(res=>{
+      this.loggedInUser = "";
+      this.flashMsg = "You have succssfully logged out.";
+      console.log("You have succssfully logged out.");
+    },err=>{
+      this.flashMsg = "There's an error logging out";
+    });
   }
 
   ngAfterContentChecked(){

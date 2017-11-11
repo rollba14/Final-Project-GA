@@ -58,6 +58,7 @@ export class UserComponent implements OnInit {
     .subscribe(res=>{
       this.loggedInUser = "";
       this.flashMsg = "You have succssfully logged out.";
+      console.log("You have succssfully logged out.");
     },err=>{
       this.flashMsg = "There's an error logging out";
     });
