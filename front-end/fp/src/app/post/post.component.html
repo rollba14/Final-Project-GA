@@ -8,7 +8,7 @@
         {{flashMsg}}
       </li>
       <li *ngIf="loggedInUser">
-        <button type="button" (click)="logout()">Logout</button>
+        <a href="" (click)="logout($event)">Logout</a>
       </li>
     </ul>
   </nav>
