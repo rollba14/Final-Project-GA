@@ -30,6 +30,13 @@ module.exports = function(app, passport){
     app.options('*', cors(corsOptions))
   }
 
+  app.use(express.static(__dirname + '/dist'));
+
+   app.get('/*', function(req, res) {
+     res.sendFile(path.join(__dirname + '/dist/index.html'));
+   });
+
+
   app.post('/signup',passport.authenticate('local-signup'),
   function(req,res){
     console.log('signed up then proceed');
@@ -52,10 +59,10 @@ module.exports = function(app, passport){
 
   app.get('/login/user', usersController.findSessionUser);
   // User Routes
-  // index
-  app.get('/api/users', usersController.index);
+  // index, get all users
+  app.get('/api/users', isLoggedIn, usersController.index);
   // create
-  app.post('/api/users', usersController.create);
+  // is handled by passport
   // show
   app.get('/api/users/:user_id', isLoggedIn,usersController.show);
   // update

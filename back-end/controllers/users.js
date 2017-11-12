@@ -19,63 +19,59 @@ function findSessionUser(req,res){
 }
 
 function index(req, res) {
+  if(authUser(req.params.user_id) == true){
+    User.find({}, function(err, users) {
+      if (err) res.send(err);
+      else res.json(users);
 
-  User.find({}, function(err, users) {
-    if (err) res.send(err);
-    else res.json(users);
-
-  });
-
-  console.log('session is ',req.session);
-  // res.redirect('https://www.google.com/');
+    });
+  }else
+    res.status(401).send('You are unauthorized to view users');
 }
-
-// ### Dummy func i wrote for login
-// function login(req,res){
-// User.find({username: req.body.username,
-//   password: req.body.password},function(err,user){
-//     if (err) res.send(err);
-//     else {
-//       console.log('server user is ', user);
-//       res.json(user);
-//     }
-//   });
-// }
 
 function show(req, res) {
-  User.findById(req.params.user_id, function(err, user){
-    if (err) res.send(err);
-    else res.json(user);
-  });
-}
-
-function create(req, res) {
-  User.create(req.body, function(err, user){
-    if (err) res.end(err);
-    else res.json(user);
-  });
-}
-
-function update(req, res) {
-
-  User.findByIdAndUpdate(req.params.user_id,
-    {$set: req.body}, function(err, user){
+  if(authUser(req.params.user_id) == true){
+    User.findById(req.params.user_id, function(err, user){
       if (err) res.send(err);
       else res.json(user);
     });
-  }
+  }else
+    res.status(401).send('You are unauthorized to view this user');
+}
+
+function update(req, res) {
+  if(authUser(req.params.user_id) == true){
+    User.findByIdAndUpdate(req.params.user_id,
+    {$set: req.body}, function(err, user){
+      if (err) res.send(err);
+      else
+      res.json(user);
+    });
+  }else
+    res.status(401).send('You are unauthorized to update this user');
+}
 
 function destroy(req, res) {
-  User.findByIdAndRemove(req.params.user_id, function(err, user){
-    if (err) res.send(err);
-    else res.send("user deleted");
-  });
+  if(authUser(req.params.user_id) == true){
+    User.findByIdAndRemove(req.params.user_id, function(err, user){
+      if (err) res.send(err);
+      else res.send("user deleted");
+    });
+  }
+  else
+    res.status(401).send('You are unauthorized to delete this user');
+}
+
+function authUser(input_user_id){
+  // editing target is same as logged in user or is admin.
+  if(input_user_id == req.session.passport.user ||
+    '5a08d1027cc29f0012dbcbb2' == req.session.passport.user) return true;
+  return false;
 }
 
 
 module.exports.findSessionUser = findSessionUser;
 module.exports.index = index;
 module.exports.show = show;
-module.exports.create = create;
 module.exports.update = update;
 module.exports.destroy = destroy;
