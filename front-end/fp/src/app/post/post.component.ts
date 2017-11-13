@@ -240,11 +240,8 @@ export class PostComponent implements OnInit {
 
         toggleInfoWindowState(marker, infoWindow, infoWindowElement){
           if(this.lastMarker === undefined || this.lastMarker === marker){
-            marker.setAnimation(google.maps.Animation.BOUNCE);
             this.lastMarker = marker;
           }else if(this.lastMarker !== marker){
-            this.lastMarker.setAnimation(null);
-            marker.setAnimation(google.maps.Animation.BOUNCE);
             this.lastMarker = marker;
           }
 
@@ -293,7 +290,6 @@ export class PostComponent implements OnInit {
             this.posts.push(newPost);
           });
           if(this.helperInfoWindow) this.helperInfoWindow.close();
-          if(this.lastMarker) this.lastMarker.setAnimation(null);
           this.clearInputFields();
         }
 
@@ -351,7 +347,6 @@ export class PostComponent implements OnInit {
               this.lastInfoWindow.close();
             }
             if(this.helperInfoWindow) this.helperInfoWindow.close();
-            if(this.lastMarker) this.lastMarker.setAnimation(null);
           })
           this.clearTempStates();
         }
