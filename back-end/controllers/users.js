@@ -19,14 +19,14 @@ function findSessionUser(req,res){
 }
 
 function index(req, res) {
-  if(authUser(req.params.user_id) == true){
+  if('5a08d1027cc29f0012dbcbb2' == req.session.passport.user)
     User.find({}, function(err, users) {
       if (err) res.send(err);
       else res.json(users);
-
     });
-  }else
-    res.status(401).send('You are unauthorized to view users');
+  else
+    res.status(401).send('Only admin can view users');
+
 }
 
 function show(req, res) {
@@ -42,10 +42,11 @@ function show(req, res) {
 function update(req, res) {
   if(authUser(req.params.user_id) == true){
     User.findByIdAndUpdate(req.params.user_id,
-    {$set: req.body}, function(err, user){
+      {$set: req.body}, function(err, user){
       if (err) res.send(err);
-      else
-      res.json(user);
+      else {
+        res.json(user);
+      }
     });
   }else
     res.status(401).send('You are unauthorized to update this user');
