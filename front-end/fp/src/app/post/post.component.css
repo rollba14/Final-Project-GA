@@ -51,9 +51,18 @@ hr{
   padding: 0 10px;
 }
 
-.searchBar input:focus{
+/*#nameItem{
+  float: right;
+}*/
+
+.search_section input{
+  width: auto;
+}
+
+.search_section input:focus{
   width: 220px;
 }
+
 
 .search_section{
   width:auto;

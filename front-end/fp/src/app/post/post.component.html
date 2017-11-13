@@ -10,7 +10,9 @@
       <li *ngIf="loggedInUser">
         <a href="" (click)="logout($event)">Logout</a>
       </li>
-
+      <li *ngIf="loggedInUser" id='nameItem'>
+        <strong>{{loggedInUser.username}}</strong>
+      </li>
     </ul>
   </nav>
 </div>

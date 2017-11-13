@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../user/user.service';
 import { PostService } from '../post/post.service';
+import { Router } from "@angular/router";
 
 import { ActivatedRoute }   from '@angular/router';
 
@@ -26,6 +27,7 @@ export class UserComponent implements OnInit {
     // private route: ActivatedRoute,
     private userService: UserService,
     private postService: PostService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -46,6 +48,7 @@ export class UserComponent implements OnInit {
         });
         this.registerUsername = "";
         this.registerPassword = "";
+        this.router.navigate(['/post']);
     },(err)=>{
       console.log('Error');
       window.alert('Username could be taken');
@@ -80,6 +83,7 @@ export class UserComponent implements OnInit {
       });
       this.tempLoginUsername = "";
       this.tempLoginPassword = "";
+      this.router.navigate(['/post']);
     },(err)=>{
       console.log('err is', err);
       this.tempLoginUsername = "";
