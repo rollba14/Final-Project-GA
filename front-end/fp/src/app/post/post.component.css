@@ -56,11 +56,11 @@ hr{
 }*/
 
 .search_section input{
-  width: auto;
+  width: 90px;
 }
 
 .search_section input:focus{
-  width: 220px;
+  width: 200px;
 }
 
 
