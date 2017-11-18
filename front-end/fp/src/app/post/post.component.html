@@ -1,21 +1,14 @@
+<!-- Include at least Bootstrap or Materialize – would benefit from CSS polish. -->
+
 <div class="top-section">
   <nav>
     <ul>
+      <!-- Your nav should not change between the Post and the Home page -->
+      <!-- i.e. You should be able to logout from the Home page's nav as well -->
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/about">About</a></li>
       <li><a routerLink="/post">Events</a></li>
       <li><a routerLink="/user">User</a></li>
-      <!-- <li>
-        <label for="geoSearch">Location:</label>
-        <input id="geoSearch" types="text"/>
-      </li>
-      <li><label for="title">Title:</label>
-      <input [(ngModel)]="title" type="text" id="title" required></li>
-      <li><label for="image_url">Image Url:</label>
-      <input [(ngModel)]="image_url" id="image_url" type="text" required></li>
-      <li><label for="description">Description:</label>
-      <input [(ngModel)]="description" id="description" type="text" required></li>
-      <li><button type="button" (click)="createPost()">Add Post</button></li> -->
     </ul>
   </nav>
 </div>

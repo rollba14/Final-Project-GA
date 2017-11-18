@@ -6,14 +6,9 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PostService {
+  // Could make the baseUrl "https://glacial-chamber-79751.herokuapp.com/api/posts/"
   private baseUrl = "https://glacial-chamber-79751.herokuapp.com";
-  // private baseUrl = "http://localhost:3000";
-  private allPosts = "";
-  constructor(private http: Http) {
-    // this.getAllPosts().subscribe(res=>{
-    //   this.allPosts = res.json();
-    // })
-  }
+  constructor(private http: Http) {}
 
   getAllPosts(){
     return this.http.get(`${this.baseUrl}/api/posts`);
@@ -24,7 +19,7 @@ export class PostService {
   }
 
   getUserPosts(user){
-      return this.http.get(`${this.baseUrl}/api/posts/user/${user._id}`);
+    return this.http.get(`${this.baseUrl}/api/posts/user/${user._id}`);
   }
 
   deletePost(post_id){

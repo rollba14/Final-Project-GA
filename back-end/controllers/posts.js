@@ -7,19 +7,14 @@ function index(req, res) {
     if (err) {
       console.log('inside error');
       res.send(err);
-    }
-    else {
+    } else {
       console.log('all posts with comments: ', posts);
-      // let ps = posts.map(p=>{
-      //   return formatPost(p)
-      // })
       res.json(posts);
     }
   });
 }
 
-
-function showAllPostsFromAUser(req, res) {
+function showAllPostsForUser(req, res) {
   Post.find({user_id: req.params.user_id}, function(err, posts){
     if (err) res.send(err);
     else{
@@ -65,9 +60,9 @@ function update(req, res) {
 function destroy(req, res) {
   Post.findByIdAndRemove(req.params.post_id, function(err, post){
     if (err) res.send(err);
-    if(post.user_id == req.session.passport.user){
+    if (post.user_id == req.session.passport.user){
       res.json(post);
-    }else{
+    } else {
       res.status(401).send("You are unauthorized to delete this post");
     }
   });
@@ -78,16 +73,12 @@ function allowedUser(post_author,session_user){
     if (err) res.send(err);
     else {
       // check if user is same as the post they want modify.
-      if(user._id != session_user){
-        return false;
-      }else
-      return true;
+      return user._id == session_user;
     }
   });
 };
 
-
-module.exports.showAllPostsFromAUser = showAllPostsFromAUser;
+module.exports.showAllPostsForUser = showAllPostsForUser;
 module.exports.index = index;
 module.exports.show = show;
 module.exports.create = create;
