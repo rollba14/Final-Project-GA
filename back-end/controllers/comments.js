@@ -3,40 +3,30 @@ var Post = db.Post;
 var User = db.User;
 var Comment = db.Comment;
 
+// Get rid of console.logs you don't need anymore (esp. because this file is > 100 lines)
 
 function index(req, res) {
   Comment.find({},function(err, comments) {
-    if (err) {
-      console.log('inside error');
-      res.send(err);
-    }
-    else {
-      console.log('all comments ', comments);
-      // let ps = posts.map(p=>{
-      //   return formatPost(p)
-      // })
-      res.json(comments);
-    }
+    if (err) res.send(err);
+    res.json(comments);
   });
 }
 
 function show(req, res) {
   Post.findById(req.params.post_id, function(err, post){
     if (err) res.send(err);
-    else res.json(post.comments);
+    res.json(post.comments);
   });
 }
 
 // REQUIRE AUTH //
 function create(req, res) {
-  // find the post from the post id
-  // add the comment to that post
   Post.findById(req.params.post_id,function(err,post){
-    if(err)res.send(err)
-    let comment = new db.Comment(req.body)
+    if (err) res.send(err)
+    let comment = new db.Comment(req.body);
     post.comments.push(comment);
-    post.save(function(err,savedPost){
-      if(err){
+    post.save(function(err,savedPost) {
+      if (err) {
         console.log('create comment error: ', err);
         res.send(err);
       }
@@ -65,7 +55,6 @@ function update(req, res) {
     post.save(function(err,newPost){
       if (err) res.send(err);
     });
-    console.log('in comments controller');
     let comment = {
       index: index,
       content: newComment.content,
@@ -101,33 +90,17 @@ function destroy(req, res) {
 
 function allowedUser(post_author,session_user){
   User.find({username: post_author},function(err,user){
-    if (err) res.send(err);
-    else {
+    if (err) {
+      res.send(err);
+    } else {
       // check if user is same as the post they want modify.
       console.log('user is', user);
       console.log('session user is', session_user);
 
-      if(user._id != session_user){
-        return false;
-      }else
-      return true;
+      return user._id == session_user;
     }
   });
 };
-
-function formatPost(post){
-  return  {
-    title: post.title,
-    description: post.description,
-    image_url: post.image_url,
-    place: post.place,
-    tags: post.tags,
-    created_date: post.created_date,
-    updated_date: post.updated_date,
-    author: post.author,
-    comments: post.comments,
-  }
-}
 
 module.exports.index = index;
 module.exports.show = show;

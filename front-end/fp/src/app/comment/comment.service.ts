@@ -6,13 +6,10 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CommentService {
+  // Could make the baseUrl "https://glacial-chamber-79751.herokuapp.com/api/comment/"
   private baseUrl = "https://glacial-chamber-79751.herokuapp.com";
-  // private baseUrl = "http://localhost:3000";
-  private allPosts = "";
 
-  constructor(
-    private http: Http
-  ) { }
+  constructor(private http: Http) { }
 
   addComment(post_id,comment){
     return this.http.post(`${this.baseUrl}/api/posts/${post_id}/comment`,comment, {withCredentials: true});

@@ -1,11 +1,8 @@
 header {
   width: 100%;
-  /*background: rgb(204, 236, 252);*/
 }
 
 header nav {
-  /*max-width: 960px;
-  margin: 0 auto;*/
   height: 60px;
   line-height: 60px;
 }

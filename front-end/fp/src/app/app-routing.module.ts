@@ -11,10 +11,12 @@ const routes: Routes = [
         path: '',
         component: HomeComponent
     },
+    // 'events' or 'map' might be more specific / intuitive for what this component is showing
     {
         path: 'post',
         component: PostComponent
     },
+    // Currently no link to access the AboutComponent
     {
         path: 'about',
         component: AboutComponent

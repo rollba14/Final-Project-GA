@@ -1,7 +1,6 @@
 var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
-var Comment = require('./comment');
-
+    Schema   = mongoose.Schema,
+    Comment  = require('./comment');
 
 var PostSchema = new Schema({
   title: String,

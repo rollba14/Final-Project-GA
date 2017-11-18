@@ -2,13 +2,16 @@ let db = require('../models');
 
 db.User.remove({}, function(err, users) {
   console.log('removed all users');
+
+  db.Post.remove({},function(err,posts){
+    console.log('removed all posts');
+    process.exit();
+    // Moved db.Post.remove into db.User.remove's callback fcn, bc otherwise it's possible for
+    // the process.exit() to run before the Users are all removed
+  })
 })
 
-db.Post.remove({},function(err,posts){
-  console.log('removed all posts');
-  process.exit();
-})
-
+// Does this work? If not, add seed code that does, or remove commented out lines altogether
 // this.posts.push(
 //   {
 //     place: {
