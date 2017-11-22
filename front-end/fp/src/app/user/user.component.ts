@@ -55,7 +55,8 @@ export class UserComponent implements OnInit {
     });
   }
 
-  logout(){
+  logout(e){
+    e.preventDefault();
     this.flashMsg = "You have succssfully logged out.";
     this.userService.logout()
     .subscribe(res=>{

@@ -2,17 +2,15 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions  } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-
+import { AppService } from '../app.service';
 
 @Injectable()
 export class PostService {
-  private baseUrl = "https://glacial-chamber-79751.herokuapp.com";
-  // private baseUrl = "http://localhost:3000";
+  private baseUrl = "";
   private allPosts = "";
-  constructor(private http: Http) {
-    // this.getAllPosts().subscribe(res=>{
-    //   this.allPosts = res.json();
-    // })
+
+  constructor(private http: Http, private appService: AppService) {
+    this.baseUrl = appService.getBaseUrl();
   }
 
   getAllPosts(){

@@ -8,11 +8,11 @@ p{
 
 .body{
   height: calc(100vh);
-  width: 95vw;
+  width: 100vw;
   margin: 0 auto;
-  /*background-color: rgb(239, 245, 247);*/
-  padding: 10px;
-  background-image: url('../../assets/background.jpg');
+  padding: 30px 0.1px;
+  /*background-image: url('../../assets/background.jpg');*/
+  /*background: -webkit-radial-gradient(circle, white, rgb(161, 205, 251));*/
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
@@ -23,7 +23,7 @@ p{
   background-color: rgb(230, 243, 247);
   padding: 10px;
   background-color: rgb(230, 243, 247);
-  box-shadow: 5px 5px 5px black;
+  /*box-shadow: 5px 5px 5px black;*/
   border-radius: 5px;
   width: fit-content;
 }
@@ -31,12 +31,13 @@ p{
 .wrapper{
   text-align: center;
 }
+
 .auth{
   display: inline-block;
   padding: 10px;
   margin: 5px 20px 0 0;
   background-color: rgb(230, 243, 247);
-  box-shadow: 5px 5px 5px black;
+  /*box-shadow: 5px 5px 5px black;*/
   border-radius: 5px;
 }
 
@@ -44,11 +45,15 @@ p{
   width: 100%;
 }
 
+.top-section a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 .top-section nav ul {
   height: 40px;
   line-height: 40px;
 }
-
 
 .top-section nav ul li {
   display: inline;
@@ -58,6 +63,7 @@ p{
   float: left;
   padding: 0 10px;
 }
+
 ul{
   margin: 0;
   padding: 0;

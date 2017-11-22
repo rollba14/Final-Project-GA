@@ -4,6 +4,11 @@
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/post">Events</a></li>
       <li><a routerLink="/user">User</a></li>
+      <li *ngIf="loggedInUser">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPost">
+          Add Post
+        </button>
+      </li>
       <li *ngIf="!loggedInUser">
         {{flashMsg}}
       </li>
@@ -13,28 +18,31 @@
       <li *ngIf="loggedInUser" id='nameItem'>
         <strong>{{loggedInUser.username}}</strong>
       </li>
+      <!-- <li>
+        <div class="search_section">
+          <section class="searchBar" *ngIf="loggedInUser">
+            <label for="geoSearch">Location:</label>
+            <input id="geoSearch" types="text"/>
+            <label for="title">Title:</label>
+            <input [(ngModel)]="title" type="text" id="title" required>
+            <label for="image_url">Image Url:</label>
+            <input [(ngModel)]="image_url" id="image_url" type="text" required>
+            <label for="description">Description:</label>
+            <input [(ngModel)]="description" id="description" type="text" required>
+            <button type="button" (click)="createPost()">Add Post</button>
+          </section>
+        </div>
+      </li> -->
     </ul>
   </nav>
 </div>
 
-<div class="search_section">
-  <section class="searchBar" *ngIf="loggedInUser">
-    <label for="geoSearch">Location:</label>
-    <input id="geoSearch" types="text"/>
-    <label for="title">Title:</label>
-    <input [(ngModel)]="title" type="text" id="title" required>
-    <label for="image_url">Image Url:</label>
-    <input [(ngModel)]="image_url" id="image_url" type="text" required>
-    <label for="description">Description:</label>
-    <input [(ngModel)]="description" id="description" type="text" required>
-    <button type="button" (click)="createPost()">Add Post</button>
-  </section>
-</div>
 
 <ngui-map
 (mapReady$)="onMapReady($event)"
 center="San Francisco, California"
 zoom="12"
+mapTypeControl= "false"
 >
 <div id="markers">
   <div *ngIf="posts">
@@ -122,4 +130,41 @@ zoom="12"
   <img src="" width="16" height="16" id="place-icon">
   <span id="place-name"  class="title"></span><br>
   <span id="place-address"></span>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="addPost" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addPostModalLabel">Add a Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="search_section">
+          <section class="searchBar" *ngIf="loggedInUser">
+            <label for="geoSearch">Location:</label>
+            <input id="geoSearch" types="text"/>
+            <br>
+            <label for="title">Title:</label>
+            <input [(ngModel)]="title" type="text" id="title" required>
+            <br>
+            <label for="image_url">Image Url:</label>
+            <input [(ngModel)]="image_url" id="image_url" type="text" required>
+            <br>
+            <label for="description">Description:</label>
+            <textarea [(ngModel)]="description" id="description" type="text" required></textarea>
+            <br>
+          </section>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="createPost()">Add Post</button>
+      </div>
+    </div>
+  </div>
 </div>

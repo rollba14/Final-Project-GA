@@ -4,11 +4,16 @@
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/post">Events</a></li>
       <li><a routerLink="/user">User</a></li>
+      <li *ngIf="loggedInUser">
+        <a href="" (click)="logout($event)">Logout</a>
+      </li>
+      <li *ngIf="loggedInUser" id='nameItem'>
+        <strong>{{loggedInUser.username}}</strong>
+      </li>
       <li *ngIf="flashMsg">{{flashMsg}}</li>
     </ul>
   </nav>
 </div>
-<hr>
 
 <div class="body">
   <div *ngIf="loggedInUser" class="welcome_msg">
@@ -20,13 +25,13 @@
     <h4>Register</h4>
     <p>Username:<input [(ngModel)]="registerUsername" type="text" placeholder="username" required></p>
     <p>Password:<input [(ngModel)]="registerPassword" type="password" placeholder="password" required></p>
-    <button type="button" (click)="registerUser(registerUsername,registerPassword)">Register</button>
+    <button type="button" class="btn btn-primary" (click)="registerUser(registerUsername,registerPassword)">Register</button>
     </div>
   </div>
   <div *ngIf="!loggedInUser" class="auth">
     <h4>Login</h4>
     <p>Username:<input [(ngModel)]="tempLoginUsername" type="text" placeholder="username" required></p>
     <p>Password:<input [(ngModel)]="tempLoginPassword" type="password" placeholder="password" required></p>
-    <button type="button" (click)="loginUser(tempLoginUsername,tempLoginPassword)">Login</button>
+    <button type="button" class="btn btn-primary" (click)="loginUser(tempLoginUsername,tempLoginPassword)">Login</button>
   </div>
 </div>

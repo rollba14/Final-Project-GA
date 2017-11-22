@@ -4,16 +4,22 @@
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/post">Events</a></li>
       <li><a routerLink="/user">User</a></li>
+      <li *ngIf="loggedInUser">
+        <a href="" (click)="logout($event)">Logout</a>
+      </li>
+      <li *ngIf="loggedInUser" id='nameItem'>
+        <strong>{{loggedInUser.username}}</strong>
+      </li>
+      <li *ngIf="flashMsg">{{flashMsg}}</li>
     </ul>
   </nav>
 </div>
-<hr>
+
 <div class="body">
   <div class="wrapper">
     <h2>Welcome to EventsNearMe!</h2>
 
-    <p>This is a site about finding recent events near you. All visually,
-      clearly, and simplistically presented on Google Map. </p>
+    <p>Hello! Find recent events near you – visually and clearly presented on Google Maps.</p>
 
     <a routerLink="/user">Login to get started!</a>
   </div>

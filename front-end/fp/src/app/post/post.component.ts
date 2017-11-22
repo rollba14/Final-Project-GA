@@ -173,7 +173,6 @@ export class PostComponent implements OnInit {
 
 
         onMapReady(map) {
-          console.log('posts', map.posts);  // to get all posts as an array
           this.mapInstance = map;
           this.addCloseInfoWindowOnMapClickEvent();
           var input = <HTMLInputElement>(document.getElementById('geoSearch'));
