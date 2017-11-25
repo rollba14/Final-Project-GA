@@ -5,7 +5,7 @@
       <li><a routerLink="/post">Events</a></li>
       <li><a routerLink="/user">User</a></li>
       <li *ngIf="loggedInUser">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPost">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPostModal">
           Add Post
         </button>
       </li>
@@ -134,7 +134,7 @@ mapTypeControl= "false"
 
 
 <!-- Modal -->
-<div class="modal fade" id="addPost" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
+<div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

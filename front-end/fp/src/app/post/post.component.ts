@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from '../user/user.service';
 import { PostService } from '../post/post.service';
 import { CommentService } from '../comment/comment.service';
+import * as $ from 'jquery';
 
 // import { NguiMapModule} from '@ngui/map';
 
@@ -263,7 +264,10 @@ export class PostComponent implements OnInit {
           }
         }
 
-        createPost(){
+        createPost(event){
+          console.log($('.top-section'));
+          // let modal = document.getElementById('addPostModal');
+          // $('#addPostModal').modal('hide');
           let place = this.inputPlace;
           if(!place){
             window.alert('Its an unrecognized place, please choose from autocomplete');return;
