@@ -1,37 +1,34 @@
-<div class="top-section">
-  <nav>
-    <ul>
-      <li><a routerLink="/">Home</a></li>
-      <li><a routerLink="/post">Events</a></li>
-      <li><a routerLink="/user">User</a></li>
-      <li *ngIf="loggedInUser">
-        <a href="" (click)="logout($event)">Logout</a>
-      </li>
-      <li *ngIf="loggedInUser" id='nameItem'>
-        <strong>{{loggedInUser.username}}</strong>
-      </li>
-      <li *ngIf="flashMsg">{{flashMsg}}</li>
-    </ul>
-  </nav>
-</div>
+<div class="viewBody">
+  <div class="top-section">
+    <nav>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/post">Events</a></li>
+        <li *ngIf="!loggedInUser"><a routerLink="/user">User</a></li>
+        <li *ngIf="loggedInUser"></li>
+        <li></li>
+        <li *ngIf="loggedInUser" id='nameItem'>
+          <strong>{{loggedInUser.username}}  </strong>
+          <a href="" (click)="logout($event)">Logout</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 
-<div class="body">
-  <div *ngIf="loggedInUser" class="welcome_msg">
-    <p>Hello <strong>{{loggedInUser.username}}</strong>!</p>
-    <button type="button" (click)="logout()">Logout</button>
-  </div>
-  <div *ngIf="!loggedInUser" class="auth">
-    <div>
-    <h4>Register</h4>
-    <p>Username:<input [(ngModel)]="registerUsername" type="text" placeholder="username" required></p>
-    <p>Password:<input [(ngModel)]="registerPassword" type="password" placeholder="password" required></p>
-    <button type="button" class="btn btn-primary" (click)="registerUser(registerUsername,registerPassword)">Register</button>
+  <div class="body">
+    <div *ngIf="!loggedInUser" class="auth">
+      <h4>Login</h4>
+      <p>Username:<input [(ngModel)]="tempLoginUsername" type="text" placeholder="username" required></p>
+      <p>Password:<input [(ngModel)]="tempLoginPassword" type="password" placeholder="password" required></p>
+      <button type="button" class="btn btn-dark" (click)="loginUser(tempLoginUsername,tempLoginPassword)">Login</button>
     </div>
-  </div>
-  <div *ngIf="!loggedInUser" class="auth">
-    <h4>Login</h4>
-    <p>Username:<input [(ngModel)]="tempLoginUsername" type="text" placeholder="username" required></p>
-    <p>Password:<input [(ngModel)]="tempLoginPassword" type="password" placeholder="password" required></p>
-    <button type="button" class="btn btn-primary" (click)="loginUser(tempLoginUsername,tempLoginPassword)">Login</button>
+    <div *ngIf="!loggedInUser" class="auth">
+      <div>
+      <h4>Register</h4>
+      <p>Username:<input [(ngModel)]="registerUsername" type="text" placeholder="username" required></p>
+      <p>Password:<input [(ngModel)]="registerPassword" type="password" placeholder="password" required></p>
+      <button type="button" class="btn btn-dark" (click)="registerUser(registerUsername,registerPassword)">Register</button>
+      </div>
+    </div>
   </div>
 </div>

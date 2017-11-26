@@ -3,14 +3,15 @@
     <ul>
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/post">Events</a></li>
-      <li><a routerLink="/user">User</a></li>
+      <li *ngIf="!loggedInUser"><a routerLink="/user">User</a></li>
       <li *ngIf="loggedInUser">
         <a href="" (click)="logout($event)">Logout</a>
       </li>
-      <li *ngIf="loggedInUser" id='nameItem'>
-        <strong>{{loggedInUser.username}}</strong>
+      <li></li>
+      <li *ngIf="loggedInUser" id='nameItem'><strong>{{loggedInUser.username}}  </strong></li>
+      <li *ngIf="!loggedInUser && flashMsg">
+        {{flashMsg}}
       </li>
-      <li *ngIf="flashMsg">{{flashMsg}}</li>
     </ul>
   </nav>
 </div>
@@ -21,6 +22,7 @@
 
     <p>Hello! Find recent events near you – visually and clearly presented on Google Maps.</p>
 
-    <a routerLink="/user">Login to get started!</a>
+    <a *ngIf="!loggedInUser" routerLink="/user" class="btn btn-dark">Login to get started!</a>
+    <a *ngIf="loggedInUser" routerLink="/post" class="btn btn-dark">Let's Go!</a>
   </div>
 </div>

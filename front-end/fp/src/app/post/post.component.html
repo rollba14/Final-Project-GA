@@ -9,14 +9,13 @@
           New
         </p>
       </li>
-      <li *ngIf="loggedInUser"></li>
+      <li *ngIf="loggedInUser">
+        <a href="" (click)="logout($event)">Logout</a>
+      </li>
       <li></li>
+      <li *ngIf="loggedInUser" id='nameItem'><strong>{{loggedInUser.username}}  </strong></li>
       <li *ngIf="!loggedInUser && flashMsg">
         {{flashMsg}}
-      </li>
-      <li *ngIf="loggedInUser" id='nameItem'>
-        <strong>{{loggedInUser.username}}  </strong>
-        <a href="" (click)="logout($event)">Logout</a>
       </li>
     </ul>
   </nav>
@@ -52,8 +51,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="closeModal" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="createPost()">Add Post</button>
+        <button type="button" class="btn btn-dark" id="closeModal" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-dark" (click)="createPost()">Add Post</button>
       </div>
     </div>
   </div>
@@ -96,8 +95,8 @@ mapTypeControl= "false"
             <textarea class="comment_textarea"type="text" [(ngModel)]="tempComment" placeholder="Add a comment">
             </textarea>
             <p>
-              <button type="button" (click)="addComment(post,tempComment)">Submit</button>
-              <button type="button" (click)="toggleComments(post)">Cancel</button>
+              <button type="button" class="myBtn" (click)="addComment(post,tempComment)">Submit</button>
+              <button type="button" class="myBtn" (click)="toggleComments(post)">Cancel</button>
             </p>
             <span *ngIf="post.comments.length > 0">Comments:</span>
             <div *ngFor="let comment of post.comments" >
@@ -113,9 +112,9 @@ mapTypeControl= "false"
                     </button>
                   </span>
                   <span *ngIf="comment._id === this.displaySubComment && this.editing">
-                    <input [(ngModel)]="tempSubComment.content" type="text" placeholder="title">
-                    <button type="button" (click)="toggleSubComment(tempSubComment)">Cancel</button>
-                    <button type="button" (click)="updateSubComment(post,tempSubComment)">Update</button>
+                    <input [(ngModel)]="tempSubComment.content" type="text" placeholder="title"><br>
+                    <button type="button" class="myBtn" (click)="updateSubComment(post,tempSubComment)">Update</button>
+                    <button type="button" class="myBtn" (click)="toggleSubComment(tempSubComment)">Cancel</button>
                   </span>
                 </span>
               </p>
@@ -126,8 +125,8 @@ mapTypeControl= "false"
         <div *ngIf="post._id === editable">
           <input [(ngModel)]="tempPost.title" type="text" placeholder="title">
           <p> <textarea class="comment_textarea"[(ngModel)]="tempPost.description" placeholder="description"></textarea></p>
-          <button type="button" (click)="toggleEditable(tempPost)">Cancel</button>
-          <button type="button" (click)="updatePost(tempPost)">Update</button>
+          <button type="button" class="myBtn" (click)="updatePost(tempPost)">Update</button>
+          <button type="button" class="myBtn" (click)="toggleEditable(tempPost)">Cancel</button>
         </div>
       </div>
       <marker
