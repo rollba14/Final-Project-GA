@@ -20,6 +20,14 @@ hr{
   margin: 2px;
 }
 
+#addPostTag{
+  margin: 0;
+}
+
+#addPostTag:hover{
+  cursor: pointer;
+}
+
 .icon{
   width: 18px;
   height: 18px;
@@ -40,13 +48,14 @@ hr{
 }
 
 .top-section {
-  width: auto;
-  color: black;
+  width: 100vw;
+  color: rgb(17, 231, 255);
   /*background: rgb(44, 147, 249);*/
   /*background: rgb(235, 232, 223);*/
   /*background: rgb(201, 230, 170);*/
   position: absolute;
   z-index: 1;
+  background-color: rgba(0,0,0,.8);
 }
 
 .top-section a {
@@ -62,13 +71,14 @@ hr{
 .top-section nav ul li {
   display: inline;
   list-style-type: none;
-  height: 34px;
-  line-height: 40px;
+  height: auto;
+  padding: 3px 6px;
   float: left;
-  padding: 0 10px;
-  margin: 0;
-  background-color: rgb(201, 230, 170);
+  /*margin: 5px;*/
   /*border: rgb(211, 235, 183) solid 2px;*/
+}
+.top-section nav ul li:last-child {
+  float: right;
 }
 
 .top-section nav ul li:hover {

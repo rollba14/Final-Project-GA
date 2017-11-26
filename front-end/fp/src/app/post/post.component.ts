@@ -1,8 +1,12 @@
 import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+
 import { UserService } from '../user/user.service';
 import { PostService } from '../post/post.service';
 import { CommentService } from '../comment/comment.service';
+
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as $ from 'jquery';
 
 // import { NguiMapModule} from '@ngui/map';
@@ -36,11 +40,12 @@ export class PostComponent implements OnInit {
   private editing = false;
   private displayComments;
   private displaySubComment;
-  private flashMsg = "";
+  private flashMsg;
 
   private currPostLength;
-  // private positionList:any = new Set();
   private positionList = [];
+
+  modalRef: BsModalRef;
 
   clearTempStates(){
     this.tempTitle = "";
@@ -59,6 +64,7 @@ export class PostComponent implements OnInit {
     private userService: UserService,
     private postService: PostService,
     private commentService: CommentService,
+    private modalService: BsModalService,
   ) {
   }
 
@@ -75,7 +81,6 @@ export class PostComponent implements OnInit {
       this.loggedInUser = data.json();
     },err=>{
       this.loggedInUser = null;
-      this.flashMsg = "Please log in to add post and comment!"
     })
   }
 
@@ -90,6 +95,10 @@ export class PostComponent implements OnInit {
     },err=>{
       this.flashMsg = "There's an error logging out";
     });
+  }
+
+  openModal(template){
+    this.modalRef = this.modalService.show(template);
   }
 
   ngAfterContentChecked(){
@@ -177,7 +186,9 @@ export class PostComponent implements OnInit {
           this.mapInstance = map;
           this.addCloseInfoWindowOnMapClickEvent();
           var input = <HTMLInputElement>(document.getElementById('geoSearch'));
+          console.log(input);
           var autocomplete = new google.maps.places.Autocomplete(input);
+          console.log(autocomplete);
           autocomplete.bindTo('bounds', map);
 
           var infowindow = new google.maps.InfoWindow();
@@ -266,8 +277,9 @@ export class PostComponent implements OnInit {
 
         createPost(event){
           console.log($('.top-section'));
-          // let modal = document.getElementById('addPostModal');
-          // $('#addPostModal').modal('hide');
+          // var addPostModal:any = $('#addPostModal');
+          // addPostModal.modal('hide');
+          document.getElementById('closeModal').click();
           let place = this.inputPlace;
           if(!place){
             window.alert('Its an unrecognized place, please choose from autocomplete');return;
@@ -294,6 +306,7 @@ export class PostComponent implements OnInit {
           });
           if(this.helperInfoWindow) this.helperInfoWindow.close();
           this.clearInputFields();
+
         }
 
         updatePost(post){

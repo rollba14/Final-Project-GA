@@ -9,6 +9,7 @@ import { CommentModule } from './comment/comment.module';
 import { PostModule } from './post/post.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -31,6 +32,7 @@ import { AppService } from './app.service';
     HttpModule,
     PostModule,
     BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDxS0WfhuJFYdqmPYgfJgt6L1PJ-ffJQ8k&libraries=places'}),
   ],
   providers: [AppService],
