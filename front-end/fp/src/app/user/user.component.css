@@ -3,7 +3,7 @@ hr{
 }
 
 p{
-  margin: 5px;
+  margin: 10px;
 }
 
 .body{
@@ -11,7 +11,7 @@ p{
   width: 100vw;
   text-align: center;
   margin: 0 auto;
-  padding: 20px;
+  padding: 60px 20px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
@@ -32,8 +32,8 @@ p{
 
 .auth{
   display: inline-block;
-  padding: 20px 20px;
-  margin: 5px 10px 0 0px;
+  padding: 20px 40px;
+  margin: 5px 15px 0 15px;
   background-color: rgb(230, 243, 247);
   /*box-shadow: 5px 5px 5px black;*/
   border-radius: 5px;
@@ -42,11 +42,8 @@ p{
 .top-section {
   width: 100vw;
   color: rgb(17, 231, 255);
-  /*background: rgb(44, 147, 249);*/
-  /*background: rgb(235, 232, 223);*/
-  /*background: rgb(201, 230, 170);*/
-  /*position: absolute;*/
   z-index: 1;
+  position: absolute;
   background-color: rgba(0,0,0,.8);
 }
 
@@ -67,8 +64,13 @@ p{
   padding: 3px 6px;
   float: left;
 }
+
 .top-section nav ul li:last-child {
   float: right;
+}
+
+#nameItem{
+  float:right;
 }
 
 .top-section nav ul li:hover {
@@ -90,16 +92,17 @@ ul{
 
 @media only screen and (max-width: 667px) and (max-height: 375px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     line-height: 2;
   }
 
   .body{
-    padding: 0;
+    padding: 50px 0;
   }
 
   .auth{
     padding: 10px 0 ;
+    font-size: 1.3rem;
     margin: 15px 10px 15px 10px;
     border-radius: 5px;
     width: 90%;
@@ -112,16 +115,17 @@ ul{
 
 @media only screen and (max-width: 375px) and (max-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     line-height: 2;
   }
 
   .body{
-    padding: 0;
+    padding: 50px 0;
   }
 
   .auth{
     padding: 20px 0 ;
+    font-size: 1.3rem;
     margin: 15px 0px 15px 0;
     border-radius: 5px;
     width: 90%;

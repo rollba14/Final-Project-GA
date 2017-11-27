@@ -40,7 +40,7 @@ export class PostComponent implements OnInit {
   private editing = false;
   private displayComments;
   private displaySubComment;
-  private flashMsg;
+  flashMsg;
 
   private currPostLength;
   private positionList = [];
@@ -67,8 +67,36 @@ export class PostComponent implements OnInit {
     private modalService: BsModalService,
   ) {
   }
+// <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+// <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+   url1 = {src: 'https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity: "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"};
+   url2 = {src: "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js", integrity: "sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"};
+   url3 = {src: "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js", integrity: "sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"};
+   urls = [this.url1,this.url2,this.url3];
+
+   loadScript() {
+     console.log('preparing to load...')
+     for(var i = 1; i <= 3; i ++){
+       let node:any = document.createElement('script');
+       node.src =  this.urls[i].src;
+       node.integrity = this.urls[i].integrity;
+       node.crossorigin = "anonymous";
+       node.type = 'text/javascript';
+       node.async = true;
+       node.charset = 'utf-8';
+       document.getElementsByTagName('head')[0].appendChild(node);
+     }
+
+   }
+
+   loadAPI: Promise<any>;
 
   ngOnInit() {
+    // this.loadAPI = new Promise((resolve)=>{
+    //   this.loadScript();
+    // });
 
     this.postService.getAllPosts()
     .subscribe(res=>{
@@ -230,7 +258,7 @@ export class PostComponent implements OnInit {
           if(post.image_url){
             marker.setIcon({
               url: post.image_url,
-              scaledSize: new google.maps.Size(40, 40),
+              scaledSize: new google.maps.Size(55, 55),
             });
           }
           if(markerInfoWinElement){
@@ -275,11 +303,7 @@ export class PostComponent implements OnInit {
           }
         }
 
-        createPost(event){
-          console.log($('.top-section'));
-          // var addPostModal:any = $('#addPostModal');
-          // addPostModal.modal('hide');
-          document.getElementById('closeModal').click();
+        createPost(){
           let place = this.inputPlace;
           if(!place){
             window.alert('Its an unrecognized place, please choose from autocomplete');return;
@@ -303,6 +327,7 @@ export class PostComponent implements OnInit {
           .subscribe((post)=>{
             let newPost = post.json()
             this.posts.push(newPost);
+            document.getElementById('closeModal').click();
           });
           if(this.helperInfoWindow) this.helperInfoWindow.close();
           this.clearInputFields();

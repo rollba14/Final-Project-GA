@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'variables';
-@import '../node_modules/bootstrap/scss/bootstrap';
+ @import 'variables';
+ @import '../node_modules/bootstrap/scss/bootstrap';
 
 html, body{
   padding: 0;
@@ -21,4 +21,16 @@ body{
 
 .btn:hover{
   cursor: pointer;
+}
+
+.gm-style .gm-style-iw {
+  font-size: 1rem;
+}
+
+@media only screen and (max-width: 375px) and (max-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+  .gm-style .gm-style-iw {
+    font-size: 1.2rem;
+    width: 50px;
+  }
+
 }

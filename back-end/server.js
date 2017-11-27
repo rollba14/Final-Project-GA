@@ -46,13 +46,13 @@ app.use(passport.initialize());
 app.use(passport.session()); //persisten login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-
+ console.log('app is ',app);
+  console.log('app is ',app.get);
 app.use(express.static(__dirname + '/dist'));
- // 
+ //
  // app.get('/*', function(req, res) {
  //   res.sendFile(path.join(__dirname + '/dist/index.html'));
  // });
-
 
 // routes ======================================================================
 router(app, passport); // load our routes and pass in our app and fully configured passport

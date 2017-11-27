@@ -1,154 +1,154 @@
-<div class="top-section">
-  <nav>
-    <ul>
-      <li><a routerLink="/">Home</a></li>
-      <li><a routerLink="/post">Events</a></li>
-      <li *ngIf="!loggedInUser"><a routerLink="/user">User</a></li>
-      <li *ngIf="loggedInUser">
-        <p id="addPostTag" data-toggle="modal" data-target="#addPostModal">
-          New
-        </p>
-      </li>
-      <li *ngIf="loggedInUser">
-        <a href="" (click)="logout($event)">Logout</a>
-      </li>
-      <li></li>
-      <li *ngIf="loggedInUser" id='nameItem'><strong>{{loggedInUser.username}}  </strong></li>
-      <li *ngIf="!loggedInUser && flashMsg">
-        {{flashMsg}}
-      </li>
-    </ul>
-  </nav>
-</div>
+<div class="viewBody">
+  <div class="top-section">
+    <nav>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/post">Events</a></li>
+        <li *ngIf="!loggedInUser"><a routerLink="/user">User</a></li>
+        <li *ngIf="loggedInUser">
+          <a href="" (click)="logout($event)">Logout</a>
+        </li>
+        <li *ngIf="loggedInUser">
+          <p id="addPostTag" data-toggle="modal" data-target="#addPostModal">
+            New
+          </p>
+        </li>
+        <li></li>
+        <li *ngIf="loggedInUser" id='nameItem'><strong>{{loggedInUser.username}}  </strong></li>
+        <li *ngIf="!loggedInUser && flashMsg">
+          {{flashMsg}}
+        </li>
+      </ul>
+    </nav>
+  </div>
 
 
-
-<div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addPostModalLabel">Add a Post</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="search_section">
-          <section class="searchBar" *ngIf="loggedInUser">
-            <label for="geoSearch">Location:</label>
-            <input id="geoSearch" types="text"/>
-            <br>
-            <label for="title">Title:</label>
-            <input [(ngModel)]="title" type="text" id="title" required>
-            <br>
-            <label for="image_url">Image Url:</label>
-            <input [(ngModel)]="image_url" id="image_url" type="text" required>
-            <br>
-            <label for="description">Description:</label>
-            <textarea [(ngModel)]="description" id="description" type="text" required></textarea>
-            <br>
-          </section>
+  <div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addPostModalLabel">Add a Post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark" id="closeModal" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-dark" (click)="createPost()">Add Post</button>
+        <div class="modal-body">
+          <div class="search_section">
+            <section class="searchBar" *ngIf="loggedInUser">
+              <label for="geoSearch">Location:</label>
+              <input id="geoSearch" types="text"/>
+              <br>
+              <label for="title">Title:</label>
+              <input [(ngModel)]="title" type="text" id="title" required>
+              <br>
+              <label for="image_url">Image Url:</label>
+              <input [(ngModel)]="image_url" id="image_url" type="text" required>
+              <br>
+              <label for="description">Description:</label>
+              <textarea [(ngModel)]="description" id="description" type="text" required></textarea>
+              <br>
+            </section>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" id="closeModal" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-dark" (click)="createPost()">Add Post</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<ngui-map
-(mapReady$)="onMapReady($event)"
-center="San Francisco, California"
-zoom="12"
-mapTypeControl= "false"
->
-<div id="markers">
-  <div *ngIf="posts">
-    <div *ngFor="let post of posts" >
+  <ngui-map
+  (mapReady$)="onMapReady($event)"
+  center="San Francisco, California"
+  zoom="12"
+  mapTypeControl= "false"
+  >
+  <div id="markers">
+    <div *ngIf="posts">
+      <div *ngFor="let post of posts" >
 
-      <div class="markerInfoWindow" id="{{post._id}}">
-        <div *ngIf="post._id != editable">
-          <div><img src="{{post.place.icon}}" width="16" height="16" id="place-icon">
-          <span class="place-title">{{post.title }}</span>
-        </div><hr>
-          <div class="place-description">{{post.description}}</div><br>
-          <span class="place-address"><i>{{formatAddress(post.place.address_components)}}</i></span>
-          <div *ngIf="post._id != displayComments && loggedInUser">
-            <p>
-              <span *ngIf="post.author == loggedInUser.username">
-                <button type="button" (click)="deletePost(post._id)" class="iconBtn">
-                  <img class="icon" src="../../assets/bin.png">
-                </button>
-                <button type="button" (click)="toggleEditable(post)" class="iconBtn">
-                  <img class="icon" src="../../assets/pencil.png">
-                </button>
-              </span>
-              <button type="button" (click)="toggleComments(post)" class="iconBtn">
-                <img class="icon" src="../../assets/comment.png">
-              </button>
-            </p>
-          </div>
-          <div *ngIf="post._id === displayComments && loggedInUser">
-            <textarea class="comment_textarea"type="text" [(ngModel)]="tempComment" placeholder="Add a comment">
-            </textarea>
-            <p>
-              <button type="button" class="myBtn" (click)="addComment(post,tempComment)">Submit</button>
-              <button type="button" class="myBtn" (click)="toggleComments(post)">Cancel</button>
-            </p>
-            <span *ngIf="post.comments.length > 0">Comments:</span>
-            <div *ngFor="let comment of post.comments" >
-              <p class="comments">
-                <span >
-                  <span *ngIf="!this.editing">{{comment.content}}</span>
-                  <span *ngIf="comment._id !== this.displaySubComment && !this.editing && comment.user_id == loggedInUser._id">
-                    <button type="button" (click)="deleteSubComment(post,comment)" class="iconBtn">
-                      <img class="icon" src="../../assets/bin.png">
-                    </button>
-                    <button type="button" (click)="toggleSubComment(comment)" class="iconBtn">
-                      <img class="icon" src="../../assets/pencil.png">
-                    </button>
-                  </span>
-                  <span *ngIf="comment._id === this.displaySubComment && this.editing">
-                    <input [(ngModel)]="tempSubComment.content" type="text" placeholder="title"><br>
-                    <button type="button" class="myBtn" (click)="updateSubComment(post,tempSubComment)">Update</button>
-                    <button type="button" class="myBtn" (click)="toggleSubComment(tempSubComment)">Cancel</button>
-                  </span>
+        <div class="markerInfoWindow" id="{{post._id}}">
+          <div *ngIf="post._id != editable">
+            <div><img src="{{post.place.icon}}" width="16" height="16" id="place-icon">
+            <span class="place-title">{{post.title }}</span>
+          </div><hr>
+            <div class="place-description">{{post.description}}</div><br>
+            <span class="place-address"><i>{{formatAddress(post.place.address_components)}}</i></span>
+            <div *ngIf="post._id != displayComments && loggedInUser">
+              <p>
+                <span *ngIf="post.author == loggedInUser.username">
+                  <button type="button" (click)="deletePost(post._id)" class="iconBtn">
+                    <img class="icon" src="../../assets/bin.png">
+                  </button>
+                  <button type="button" (click)="toggleEditable(post)" class="iconBtn">
+                    <img class="icon" src="../../assets/pencil.png">
+                  </button>
                 </span>
+                <button type="button" (click)="toggleComments(post)" class="iconBtn">
+                  <img class="icon" src="../../assets/comment.png">
+                </button>
               </p>
             </div>
+            <div *ngIf="post._id === displayComments && loggedInUser">
+              <textarea class="comment_textarea"type="text" [(ngModel)]="tempComment" placeholder="Add a comment">
+              </textarea>
+              <p>
+                <button type="button" class="myBtn" (click)="addComment(post,tempComment)">Submit</button>
+                <button type="button" class="myBtn" (click)="toggleComments(post)">Cancel</button>
+              </p>
+              <span *ngIf="post.comments.length > 0">Comments:</span>
+              <div *ngFor="let comment of post.comments" >
+                <p class="comments">
+                  <span >
+                    <span *ngIf="!this.editing">{{comment.content}}</span>
+                    <span *ngIf="comment._id !== this.displaySubComment && !this.editing && comment.user_id == loggedInUser._id">
+                      <button type="button" (click)="deleteSubComment(post,comment)" class="iconBtn">
+                        <img class="icon" src="../../assets/bin.png">
+                      </button>
+                      <button type="button" (click)="toggleSubComment(comment)" class="iconBtn">
+                        <img class="icon" src="../../assets/pencil.png">
+                      </button>
+                    </span>
+                    <span *ngIf="comment._id === this.displaySubComment && this.editing">
+                      <input [(ngModel)]="tempSubComment.content" type="text" placeholder="title"><br>
+                      <button type="button" class="myBtn" (click)="updateSubComment(post,tempSubComment)">Update</button>
+                      <button type="button" class="myBtn" (click)="toggleSubComment(tempSubComment)">Cancel</button>
+                    </span>
+                  </span>
+                </p>
+              </div>
 
+            </div>
+          </div>
+          <div *ngIf="post._id === editable">
+            <input [(ngModel)]="tempPost.title" type="text" placeholder="title">
+            <p> <textarea class="comment_textarea"[(ngModel)]="tempPost.description" placeholder="description"></textarea></p>
+            <button type="button" class="myBtn" (click)="updatePost(tempPost)">Update</button>
+            <button type="button" class="myBtn" (click)="toggleEditable(tempPost)">Cancel</button>
           </div>
         </div>
-        <div *ngIf="post._id === editable">
-          <input [(ngModel)]="tempPost.title" type="text" placeholder="title">
-          <p> <textarea class="comment_textarea"[(ngModel)]="tempPost.description" placeholder="description"></textarea></p>
-          <button type="button" class="myBtn" (click)="updatePost(tempPost)">Update</button>
-          <button type="button" class="myBtn" (click)="toggleEditable(tempPost)">Cancel</button>
-        </div>
+        <marker
+          position="{{post.place.geometry.location.lat}},{{post.place.geometry.location.lng}}"
+          (initialized$)=
+          "onMarkerInit($event,post)"
+          draggable="false"
+          animation="DROP"
+          >
+        </marker>
       </div>
-      <marker
-        position="{{post.place.geometry.location.lat}},{{post.place.geometry.location.lng}}"
-        (initialized$)=
-        "onMarkerInit($event,post)"
-        draggable="false"
-        animation="DROP"
-        >
-      </marker>
-
     </div>
   </div>
-</div>
-</ngui-map>
+  </ngui-map>
 
 
-<div id="groupInfoWindowContent">
-</div>
+  <div id="groupInfoWindowContent">
+  </div>
 
-<div id="infowindow-content">
-  <img src="" width="16" height="16" id="place-icon">
-  <span id="place-name"  class="title"></span><br>
-  <span id="place-address"></span>
+  <div id="infowindow-content">
+    <img src="" width="16" height="16" id="place-icon">
+    <span id="place-name"  class="title"></span><br>
+    <span id="place-address"></span>
+  </div>
 </div>

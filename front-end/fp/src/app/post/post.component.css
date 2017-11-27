@@ -3,9 +3,13 @@ ul{
   padding: 0;
 }
 
+.viewBody{
+  font: 1.2rem;
+}
+
 .markerInfoWindow{
   display: none;
-  max-width: 300px;
+  max-width: 376px;
   max-height: 250px;
   padding: 5px 10px 5px 10px;
   margin: 10px;
@@ -156,8 +160,52 @@ ngui-map .myBtn {
   background-color: rgb(239, 245, 247);
 }
 
+@media only screen and (max-width: 667px) and (max-height: 375px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+  .viewBody{
+    font-size: 1.5rem;
+    line-height: 2.3;
+  }
 
-html, body{
-  padding: 0;
-  margin: 0;
+  .body{
+    padding: 50px 0;
+  }
+
+  p{
+    margin: 8px;
+  }
+
+  .markerInfoWindow{
+    max-width: 375px;
+    max-height: 220px;
+    width: calc(100vw - 100px);
+    /*padding: 2px 5px 2px 5px;*/
+    padding: 10px;
+    margin: 0;
+    overflow: scroll;
+  }
+}
+
+@media only screen and (max-width: 375px) and (max-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+  .viewBody{
+    font-size: 1.5rem;
+    line-height: 2.3;
+  }
+
+  .body{
+    padding: 50px 0;
+  }
+
+  p{
+    margin: 0px 0 ;
+  }
+
+  .markerInfoWindow{
+    max-width: 375px;
+    max-height: 250px;
+    width: calc(100vw - 100px);
+    /*padding: 2px 5px 2px 5px;*/
+    padding: 10px;
+    margin: 0;
+    overflow: scroll;
+  }
 }

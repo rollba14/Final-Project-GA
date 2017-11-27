@@ -30,11 +30,6 @@ module.exports = function(app, passport){
     app.options('*', cors(corsOptions))
   }
 
-  //  app.get('/*', function(req, res) {
-  //    res.sendFile(path.join(__dirname + '/dist/index.html'));
-  //  });
-
-
   app.post('/signup',passport.authenticate('local-signup'),
   function(req,res){
     console.log('signed up then proceed');
