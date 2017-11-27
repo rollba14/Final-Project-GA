@@ -212,6 +212,10 @@ export class PostComponent implements OnInit {
 
         onMapReady(map) {
           this.mapInstance = map;
+          this.mapInstance.setOptions(
+            {
+              gestureHandling: 'greedy'
+            });
           this.addCloseInfoWindowOnMapClickEvent();
           var input = <HTMLInputElement>(document.getElementById('geoSearch'));
           console.log(input);

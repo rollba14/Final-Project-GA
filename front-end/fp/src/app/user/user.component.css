@@ -92,8 +92,10 @@ ul{
 
 @media only screen and (max-width: 667px) and (max-height: 375px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 2;
+    overflow: scroll;
+    height: calc(100vh - 40px);
   }
 
   .body{
@@ -115,8 +117,10 @@ ul{
 
 @media only screen and (max-width: 375px) and (max-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 2;
+    overflow: scroll;
+    height: calc(100vh - 40px);
   }
 
   .body{
