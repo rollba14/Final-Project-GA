@@ -96,10 +96,10 @@ html, body{
 }
 
 
-@media only screen and (max-width: 667px) and (max-height: 375px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
+@media only screen and (max-width: 550px) and (max-height: 375px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
-    font-size: 1.3rem;
-    line-height: 2;
+    font-size: 1.2rem;
+    line-height: 1.5;
   }
 
   p{
@@ -107,10 +107,10 @@ html, body{
   }
 }
 
-@media only screen and (max-width: 375px) and (max-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+@media only screen and (max-width: 375px) and (max-height: 550px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
-    font-size: 1.3rem;
-    line-height: 2;
+    font-size: 1.2rem;
+    line-height: 1.5;
   }
 
 

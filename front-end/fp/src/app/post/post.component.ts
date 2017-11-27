@@ -184,10 +184,10 @@ export class PostComponent implements OnInit {
 
         onMapReady(map) {
           this.mapInstance = map;
-          this.mapInstance.setOptions(
-            {
-              gestureHandling: 'greedy'
-            });
+          // this.mapInstance.setOptions(
+          //   {
+          //     gestureHandling: 'greedy'
+          //   });
           this.addCloseInfoWindowOnMapClickEvent();
           this.nguimap = document.getElementsByTagName('ngui-map');
           var input = <HTMLInputElement>(document.getElementById('geoSearch'));
