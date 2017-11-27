@@ -41,6 +41,7 @@ export class PostComponent implements OnInit {
   private displayComments;
   private displaySubComment;
   flashMsg;
+  nguimap;
 
   private currPostLength;
   private positionList = [];
@@ -67,37 +68,8 @@ export class PostComponent implements OnInit {
     private modalService: BsModalService,
   ) {
   }
-// <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-// <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-
-   url1 = {src: 'https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity: "sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"};
-   url2 = {src: "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js", integrity: "sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"};
-   url3 = {src: "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js", integrity: "sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"};
-   urls = [this.url1,this.url2,this.url3];
-
-   loadScript() {
-     console.log('preparing to load...')
-     for(var i = 1; i <= 3; i ++){
-       let node:any = document.createElement('script');
-       node.src =  this.urls[i].src;
-       node.integrity = this.urls[i].integrity;
-       node.crossorigin = "anonymous";
-       node.type = 'text/javascript';
-       node.async = true;
-       node.charset = 'utf-8';
-       document.getElementsByTagName('head')[0].appendChild(node);
-     }
-
-   }
-
-   loadAPI: Promise<any>;
 
   ngOnInit() {
-    // this.loadAPI = new Promise((resolve)=>{
-    //   this.loadScript();
-    // });
-
     this.postService.getAllPosts()
     .subscribe(res=>{
       this.posts = res.json();
@@ -118,10 +90,10 @@ export class PostComponent implements OnInit {
     this.userService.logout()
     .subscribe(res=>{
       this.loggedInUser = "";
-      this.flashMsg = "You have succssfully logged out.";
+      this.flashMsg = "Success!";
       console.log("You have succssfully logged out.");
     },err=>{
-      this.flashMsg = "There's an error logging out";
+      this.flashMsg = "Error";
     });
   }
 
@@ -217,6 +189,7 @@ export class PostComponent implements OnInit {
               gestureHandling: 'greedy'
             });
           this.addCloseInfoWindowOnMapClickEvent();
+          this.nguimap = document.getElementsByTagName('ngui-map');
           var input = <HTMLInputElement>(document.getElementById('geoSearch'));
           console.log(input);
           var autocomplete = new google.maps.places.Autocomplete(input);
@@ -255,6 +228,7 @@ export class PostComponent implements OnInit {
             }
             // there was setting children null field;
           });
+          // debugger;
         }
 
         onMarkerInit(marker,post) {
@@ -266,18 +240,35 @@ export class PostComponent implements OnInit {
             });
           }
           if(markerInfoWinElement){
-            var markerInfoWindow = new google.maps.InfoWindow();
+            var markerInfoWindow = new google.maps.InfoWindow({
+              disableAutoPan: true,
+            });
+            // markerInfoWindow.className += " hellothere ";
             markerInfoWindow.setContent(markerInfoWinElement);
           }else{
             let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
             markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
             markerInfoWinElement.id= post._id;
-            var markerInfoWindow = new google.maps.InfoWindow();
+            var markerInfoWindow = new google.maps.InfoWindow({
+              disableAutoPan: true,
+            });
             markerInfoWindow.setContent(markerInfoWinElement);
           }
           marker.addListener('click', ()=> {
             this.clearTempStates();
             this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
+          });
+        }
+
+        setViewPortCenter(marker){
+          let mapCenterLat = this.mapInstance.getCenter().lat();
+          let lowerYBound = this.mapInstance.getBounds().f.b;
+          let offset = 0;
+          let markerLat = marker.position.lat();
+          offset = (markerLat - mapCenterLat) + ((mapCenterLat - lowerYBound)*(6.5/10));
+          this.mapInstance.setCenter({
+            lat: mapCenterLat + offset,
+            lng: marker.position.lng(),
           });
         }
 
@@ -292,15 +283,18 @@ export class PostComponent implements OnInit {
             this.lastInfoWindow = infoWindow;
 
             infoWindow.open(this.mapInstance, marker);
+            this.setViewPortCenter(marker);
           }else if(this.lastInfoWindow !== infoWindow){
             this.lastInfoWindow.close();
             this.lastInfoWindow = infoWindow;
 
             infoWindow.open(this.mapInstance, marker);
+            this.setViewPortCenter(marker);
           }else {
             this.lastInfoWindow = infoWindow;
 
             infoWindow.open(this.mapInstance, marker);
+            this.setViewPortCenter(marker);
           }
           if(infoWindowElement){
             infoWindowElement.style.display ="block";

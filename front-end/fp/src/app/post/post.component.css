@@ -10,7 +10,8 @@ ul{
 .markerInfoWindow{
   display: none;
   max-width: 376px;
-  max-height: 250px;
+  max-height: 280px;
+  min-width: 300px;
   padding: 5px 10px 5px 10px;
   margin: 10px;
   word-wrap: break-word;
@@ -75,6 +76,10 @@ ngui-map button:hover{
   cursor: pointer;
 }
 
+ngui-map textarea{
+  min-height: 70px;
+}
+
 ngui-map input{
   line-height: 2px !important;
 }
@@ -92,6 +97,7 @@ ngui-map .btn-dark{
 ngui-map .myBtn {
   padding: 1px 3px;
   line-height: normal;
+  background: white;
 }
 
 .top-section a {
@@ -176,11 +182,27 @@ ngui-map .myBtn {
   }
 
   .markerInfoWindow{
-    max-width: 375px;
-    max-height: 220px;
+    /*max-width: 375px;
+    max-height: 200px;
     width: calc(100vw - 100px);
     padding: 10px;
     margin: 0;
+    overflow: scroll;*/
+    max-height: 200px;
+    min-width: 320px;
+    max-width: 380px;
+    padding: 0;
+    margin: 0;
+    overflow: scroll;
+  }
+
+  .icon{
+    width: 26px;
+    height: 26px;
+  }
+
+  .modal{
+    height: 100vh;
     overflow: scroll;
   }
 }
@@ -203,12 +225,30 @@ ngui-map .myBtn {
     font-size: 1.1rem;
   }
 
+  ngui-map{
+    height: calc(100vh - 50px);
+  }
+
   .markerInfoWindow{
-    max-width: 290px;
     max-height: 350px;
-    width: calc(100vw - 100px);
-    padding: 10px;
+    min-width: 270px;
+    max-width: 270px;
+    padding: 0;
     margin: 0;
     overflow: scroll;
+  }
+
+  .icon{
+    width: 26px;
+    height: 26px;
+  }
+
+  .modal{
+    height: 667px;
+    overflow: scroll;
+  }
+
+  .search_section textarea{
+    min-height: 50px;
   }
 }
