@@ -11,7 +11,7 @@ p{
   width: 100vw;
   text-align: center;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 20px 20px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
@@ -43,7 +43,7 @@ p{
   width: 100vw;
   color: rgb(17, 231, 255);
   z-index: 1;
-  position: absolute;
+  position: relative;
   background-color: rgba(0,0,0,.8);
 }
 
@@ -61,7 +61,7 @@ p{
   display: inline;
   list-style-type: none;
   height: auto;
-  padding: 3px 6px;
+  padding: 0px 6px;
   float: left;
 }
 
@@ -92,21 +92,21 @@ ul{
 
 @media only screen and (max-width: 550px) and (max-height: 375px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
-    font-size: 1.2rem;
-    line-height: 2;
+    font-size: 1rem;
+    line-height: 1.5;
     overflow: scroll;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 30px);
   }
 
   .body{
-    padding: 50px 0;
+    padding: 5px 0;
   }
 
   .auth{
     padding: 10px 0 ;
-    font-size: 1rem;
+    font-size: 1.3rem;
     line-height: 1.5;
-    margin: 15px 10px 15px 10px;
+    margin: 5px 0px 5px 0;
     border-radius: 5px;
     width: 90%;
   }
@@ -114,30 +114,38 @@ ul{
   p{
     margin: 15px;
   }
+
+  .login-label{
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 375px) and (max-height: 550px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
-    font-size: 1.2rem;
-    line-height: 2;
+    font-size: 1rem;
+    line-height: 1.5;
     overflow: scroll;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 30px);
   }
 
   .body{
-    padding: 50px 0;
+    padding: 5px 0;
   }
 
   .auth{
     padding: 20px 0 ;
     font-size: 1rem;
     line-height: 1.5;
-    margin: 15px 0px 15px 0;
+    margin: 5px 0px 5px 0;
     border-radius: 5px;
     width: 90%;
   }
 
   p{
     margin: 15px 0 ;
+  }
+
+  .login-label{
+    display: none;
   }
 }

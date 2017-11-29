@@ -30,15 +30,16 @@ body{
 @media only screen and (max-width: 375px) and (max-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
   .gm-style .gm-style-iw {
     font-size: 1rem;
-    // width: 350px;
-    padding: 0 15px;
-  }
+    min-width: 270px;
+    max-width: 270px;
 
+  }
 }
 
 @media only screen and (max-width: 667px) and (max-height: 375px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
   .gm-style .gm-style-iw {
     font-size: 1rem;
-    padding: 0 15px;
+    min-width: 320px;
+    max-width: 380px;
   }
 }

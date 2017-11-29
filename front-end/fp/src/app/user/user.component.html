@@ -18,15 +18,15 @@
   <div class="body">
     <div *ngIf="!loggedInUser" class="auth">
       <h4>Login</h4>
-      <p>Username:<input [(ngModel)]="tempLoginUsername" type="text" placeholder="username" required></p>
-      <p>Password:<input [(ngModel)]="tempLoginPassword" type="password" placeholder="password" required></p>
+      <p><span class="login-label">Username:</span><input [(ngModel)]="tempLoginUsername" type="text" placeholder="username" required></p>
+      <p><span class="login-label">Password:</span><input [(ngModel)]="tempLoginPassword" type="password" placeholder="password" required></p>
       <button type="button" class="btn btn-dark" (click)="loginUser(tempLoginUsername,tempLoginPassword)">Login</button>
     </div>
     <div *ngIf="!loggedInUser" class="auth">
       <div>
       <h4>Register</h4>
-      <p>Username:<input [(ngModel)]="registerUsername" type="text" placeholder="username" required></p>
-      <p>Password:<input [(ngModel)]="registerPassword" type="password" placeholder="password" required></p>
+      <p><span class="login-label">Username:</span><input [(ngModel)]="registerUsername" type="text" placeholder="username" required></p>
+      <p><span class="login-label">Password:</span><input [(ngModel)]="registerPassword" type="password" placeholder="password" required></p>
       <button type="button" class="btn btn-dark" (click)="registerUser(registerUsername,registerPassword)">Register</button>
       </div>
     </div>

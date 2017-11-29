@@ -50,7 +50,7 @@ hr{
 .top-section {
   width: 100vw;
   color: rgb(17, 231, 255);
-  position: absolute;
+  position: relative;
   z-index: 1;
   background-color: rgba(0,0,0,.8);
 }
@@ -64,7 +64,7 @@ hr{
 }
 
 ngui-map{
-  height: 100vh;
+  height: calc(100vh - 40px);
 }
 
 ngui-map p{
@@ -114,7 +114,7 @@ ngui-map .myBtn {
   display: inline;
   list-style-type: none;
   height: auto;
-  padding: 3px 6px;
+  padding: 0px 6px;
   float: left;
 }
 
@@ -124,6 +124,7 @@ ngui-map .myBtn {
 
 #nameItem{
   float:right;
+  padding: 0 6px;
 }
 
 .top-section nav ul li:hover {
@@ -169,7 +170,7 @@ ngui-map .myBtn {
 
 @media only screen and (max-width: 550px) and (max-height: 375px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
-    font-size: 1.3rem;
+    font-size: 1rem;
     line-height: 2.3;
   }
 
@@ -182,13 +183,7 @@ ngui-map .myBtn {
   }
 
   .markerInfoWindow{
-    /*max-width: 375px;
-    max-height: 200px;
-    width: calc(100vw - 100px);
-    padding: 10px;
-    margin: 0;
-    overflow: scroll;*/
-    max-height: 200px;
+    max-height: 140px;
     min-width: 320px;
     max-width: 380px;
     padding: 0;
@@ -197,8 +192,8 @@ ngui-map .myBtn {
   }
 
   .icon{
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
 
   .iconBtn{
@@ -206,16 +201,27 @@ ngui-map .myBtn {
   }
 
   .modal{
-    top: 55px;
-    height: 480px;
+    top: 2px;
+    height: 95vh;
     overflow: scroll;
     line-height: normal;
   }
+
+  .modal-header, .modal-body{
+    padding: 2px 5px;
+  }
+
+  .modal-footer {
+    padding: 10px 10px;
+    text-align: center;
+    display: initial;
+  }
+
 }
 
 @media only screen and (max-width: 375px) and (max-height: 550px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
-    font-size: 1.3rem;
+    font-size: 1rem;
     line-height: 2.3;
   }
 
@@ -236,17 +242,18 @@ ngui-map .myBtn {
   }
 
   .markerInfoWindow{
-    max-height: 350px;
-    min-width: 270px;
-    max-width: 270px;
+    max-height: 310px;
+    min-width: 170px;
+    max-width: 170px;
+    width: 500px;
     padding: 0;
     margin: 0;
     overflow: scroll;
   }
 
   .icon{
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
 
   .iconBtn{
@@ -254,10 +261,20 @@ ngui-map .myBtn {
   }
 
   .modal{
-    top: 55px;
-    height: 480px;
+    top: 37px;
+    height: 500px;
     overflow: scroll;
     line-height: normal;
+  }
+
+  .modal-header, .modal-body{
+    padding: 10px 10px;
+  }
+
+  .modal-footer {
+    padding: 10px 10px;
+    text-align: center;
+    display: initial;
   }
 
   .search_section textarea{
