@@ -178,7 +178,7 @@ export class PostComponent implements OnInit {
     this.mapInstance = map;
     this.mapInstance.setOptions(
       {
-        gestureHandling: 'cooperative'
+        gestureHandling: 'auto'
       });
     this.addCloseInfoWindowOnMapClickEvent();
     this.nguimap = document.getElementsByTagName('ngui-map');
