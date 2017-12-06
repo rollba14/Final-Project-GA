@@ -40,6 +40,9 @@ body{
   .markerInfoWindow[_ngcontent-c1]{
     padding: 0 !important;
     margin: 0 !important;
+    max-height: 290px;
+    height: auto;
+    overflow: scroll;
   }
 }
 
@@ -49,10 +52,13 @@ body{
     min-width: 320px;
     max-width: 380px;
     max-height: 200px;
+    overflow: scroll;
   }
 
   .markerInfoWindow[_ngcontent-c1]{
     padding: 0 !important;
     margin: 0 !important;
+    max-height: 200px;
+    overflow: scroll;
   }
 }
