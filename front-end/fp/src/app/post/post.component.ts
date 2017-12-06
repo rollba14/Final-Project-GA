@@ -59,6 +59,9 @@ export class PostComponent implements OnInit {
     this.editing = false;
     this.displayComments="";
     this.displaySubComment="";
+    this.mapInstance.setOptions({
+      gestureHandling: 'auto'
+    });
   }
 
   constructor(
@@ -280,17 +283,24 @@ export class PostComponent implements OnInit {
 
       infoWindow.open(this.mapInstance, marker);
       this.setViewPortCenter(marker);
+      this.mapInstance.setOptions({
+          gestureHandling: 'none'
+        });
     }else if(this.lastInfoWindow !== infoWindow){
       this.lastInfoWindow.close();
       this.lastInfoWindow = infoWindow;
-
       infoWindow.open(this.mapInstance, marker);
       this.setViewPortCenter(marker);
+      this.mapInstance.setOptions({
+          gestureHandling: 'none'
+        });
     }else {
       this.lastInfoWindow = infoWindow;
-
       infoWindow.open(this.mapInstance, marker);
       this.setViewPortCenter(marker);
+      this.mapInstance.setOptions({
+          gestureHandling: 'none'
+        });
     }
     if(infoWindowElement){
       infoWindowElement.style.display ="block";
@@ -379,10 +389,13 @@ export class PostComponent implements OnInit {
     this.mapInstance.addListener('click',()=>{
       if(this.lastInfoWindow){
         this.lastInfoWindow.close();
+        this.clearTempStates();
       }
-      if(this.helperInfoWindow) this.helperInfoWindow.close();
+      if(this.helperInfoWindow){
+        this.helperInfoWindow.close();
+        this.clearTempStates();
+      }
     })
-    this.clearTempStates();
   }
 
   createNewMarker(position){
