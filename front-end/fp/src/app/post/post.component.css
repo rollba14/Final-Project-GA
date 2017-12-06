@@ -5,8 +5,8 @@ ul{
 
 .viewBody{
   font: 1.2rem;
-  /*height: 100vh;
-  width: 100vw;*/
+  height: 100vh;
+  width: 100vw;
   overflow: scroll;
 }
 
@@ -165,7 +165,9 @@ ngui-map .myBtn {
 
 
 .comments_section{
-
+  margin-top: 10px;
+  max-height: 170px;
+  overflow: scroll;
 }
 
 .comments{
