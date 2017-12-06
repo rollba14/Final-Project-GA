@@ -19,6 +19,11 @@ ul{
   margin: 10px;
   word-wrap: break-word;
 }
+
+.markerInfoWindow input{
+  width: 100%;
+}
+
 hr{
   margin: 2px;
 }
@@ -174,16 +179,17 @@ ngui-map .myBtn {
   width: 100%;
   height: 35px;
   line-height: 30px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   vertical-align: middle;
 }
 
 .comments span{
   display: inline-block;
+  float:right;
 }
 
 .comments span:first-child{
-  width: 70%;
+  float:left;
   height:100%;
   vertical-align: middle;
 }
