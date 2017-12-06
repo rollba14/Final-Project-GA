@@ -170,8 +170,23 @@ ngui-map .myBtn {
 }
 
 .comments{
+  width: 100%;
+  height: 35px;
   line-height: 30px;
+  margin-bottom: 5px;
+  vertical-align: middle;
 }
+
+.comments span{
+  display: inline-block;
+}
+
+.comments span:first-child{
+  width: 70%;
+  height:100%;
+  vertical-align: middle;
+}
+
 
 .light-bg{
   background-color: rgb(239, 245, 247);
@@ -237,7 +252,7 @@ ngui-map .myBtn {
 
 }
 
-@media only screen and (max-width: 375px) and (max-height: 550px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
+@media only screen and (max-width: 450px) and (max-height: 750px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
   .viewBody{
     font-size: 1rem;
     line-height: 2.3;
