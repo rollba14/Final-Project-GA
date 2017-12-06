@@ -70,6 +70,9 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit() {
+    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
     this.postService.getAllPosts()
     .subscribe(res=>{
       this.posts = res.json();
@@ -178,6 +181,7 @@ export class PostComponent implements OnInit {
     this.mapInstance = map;
     this.mapInstance.setOptions(
       {
+        disableDefaultUI: true,
         gestureHandling: 'auto'
       });
     this.addCloseInfoWindowOnMapClickEvent();
