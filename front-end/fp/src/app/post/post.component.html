@@ -99,7 +99,7 @@
                 <button type="button" class="myBtn" (click)="toggleComments(post)">Cancel</button>
               </p>
               <span *ngIf="post.comments.length > 0">Comments:</span>
-              <div *ngFor="let comment of post.comments.reverse()" >
+              <div *ngFor="let comment of post.comments" >
                 <p class="comments">
                   <span >
                     <span *ngIf="!this.editing">{{comment.content}}</span>
