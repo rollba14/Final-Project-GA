@@ -2,15 +2,23 @@
   <div class="top-section">
     <nav>
       <ul>
-        <li><a routerLink="/">Home</a></li>
-        <li><a routerLink="/post">Events</a></li>
-        <li *ngIf="!loggedInUser"><a routerLink="/user">User</a></li>
+        <li><a routerLink="/">
+          <img class="navBtn" src="../../assets/home.png">
+        </a></li>
+        <li><a routerLink="/post">
+          <img class="navBtn" src="../../assets/event.png">
+        </a></li>
+        <li *ngIf="!loggedInUser"><a routerLink="/user">
+          <img class="navBtn" src="../../assets/user.png">
+        </a></li>
         <li *ngIf="loggedInUser">
-          <a href="" (click)="logout($event)">Logout</a>
+          <a href="" (click)="logout($event)">
+            <img class="navBtn" src="../../assets/logout.png">
+          </a>
         </li>
         <li *ngIf="loggedInUser">
           <p id="addPostTag" data-toggle="modal" data-target="#addPostModal">
-            New
+            <img class="navBtn" src="../../assets/new.png">
           </p>
         </li>
         <li></li>
