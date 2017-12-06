@@ -176,10 +176,10 @@ export class PostComponent implements OnInit {
 
   onMapReady(map) {
     this.mapInstance = map;
-    // this.mapInstance.setOptions(
-    //   {
-    //     gestureHandling: 'greedy'
-    //   });
+    this.mapInstance.setOptions(
+      {
+        gestureHandling: 'cooperative'
+      });
     this.addCloseInfoWindowOnMapClickEvent();
     this.nguimap = document.getElementsByTagName('ngui-map');
     var input = <HTMLInputElement>(document.getElementById('geoSearch'));
@@ -230,18 +230,20 @@ export class PostComponent implements OnInit {
       });
     }
     if(markerInfoWinElement){
-      var markerInfoWindow = new google.maps.InfoWindow({
+      var markerInfoWindow:any = new google.maps.InfoWindow({
         disableAutoPan: true,
       });
       // markerInfoWindow.className += " hellothere ";
       markerInfoWindow.setContent(markerInfoWinElement);
+      markerInfoWindow.className += " testing ";
     }else{
       let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
       markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
       markerInfoWinElement.id= post._id;
-      var markerInfoWindow = new google.maps.InfoWindow({
+      var markerInfoWindow:any = new google.maps.InfoWindow({
         disableAutoPan: true,
       });
+      markerInfoWindow.className += " testing ";
       markerInfoWindow.setContent(markerInfoWinElement);
     }
     marker.addListener('click', ()=> {
