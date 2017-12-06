@@ -279,7 +279,7 @@ ngui-map .myBtn {
   }
 
   .markerInfoWindow{
-    height: 290px;
+    height: auto;
     min-width: 170px;
     /*max-width: 170px;*/
     padding: 0;
