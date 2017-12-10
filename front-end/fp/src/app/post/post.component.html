@@ -101,7 +101,7 @@
             </div>
             <span *ngIf="post.comments.length > 0">Comments:</span>
             <!--  -->
-              <!-- <div *ngFor="let comment of post.comments" >
+              <div *ngFor="let comment of post.comments" >
                 <p class="comments">
 
                     <span *ngIf="!this.editing">{{comment.content}}</span>
@@ -120,7 +120,7 @@
 
 
                 </p>
-              </div> -->
+              </div>
             <!--  -->
             <div class="comments_section">
               <div *ngIf="post._id === displayComments && loggedInUser">
