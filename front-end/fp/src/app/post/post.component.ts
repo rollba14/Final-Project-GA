@@ -184,7 +184,7 @@ export class PostComponent implements OnInit {
     this.mapInstance = map;
     this.mapInstance.setOptions(
       {
-        disableDefaultUI: true,
+        // disableDefaultUI: true,
         gestureHandling: 'auto'
       });
     this.addCloseInfoWindowOnMapClickEvent();
