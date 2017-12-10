@@ -99,6 +99,29 @@
                 </button>
               </p>
             </div>
+            <span *ngIf="post.comments.length > 0">Comments:</span>
+            <!--  -->
+              <!-- <div *ngFor="let comment of post.comments" >
+                <p class="comments">
+
+                    <span *ngIf="!this.editing">{{comment.content}}</span>
+
+                      <button type="button" (click)="deleteSubComment(post,comment)" class="iconBtn">
+                        <img class="icon" src="../../assets/bin.png">
+                      </button>
+                      <button type="button" (click)="toggleSubComment(comment)" class="iconBtn">
+                        <img class="icon" src="../../assets/pencil.png">
+                      </button>
+
+
+                      <input [(ngModel)]="tempSubComment.content" type="text" placeholder="title"><br>
+                      <button type="button" class="myBtn" (click)="updateSubComment(post,tempSubComment)">Update</button>
+                      <button type="button" class="myBtn" (click)="toggleSubComment(tempSubComment)">Cancel</button>
+
+
+                </p>
+              </div> -->
+            <!--  -->
             <div class="comments_section">
               <div *ngIf="post._id === displayComments && loggedInUser">
                 <textarea class="comment_textarea"type="text" [(ngModel)]="tempComment" placeholder="Add a comment">
