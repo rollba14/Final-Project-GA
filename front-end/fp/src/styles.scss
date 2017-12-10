@@ -23,14 +23,14 @@ body{
   cursor: pointer;
 }
 
-.gm-style .gm-style-iw {
-  font-size: 1rem;
-  max-height: 350px;
-}
-
-.markerInfoWindow[_ngcontent-c1]{
-  max-height: 350px;
-}
+// .gm-style .gm-style-iw {
+//   font-size: 1rem;
+//   max-height: 350px;
+// }
+//
+// .markerInfoWindow[_ngcontent-c1]{
+//   max-height: 350px;
+// }
 
 @media only screen and (max-width: 450px) and (max-height: 750px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
   // .gm-style .gm-style-iw {
