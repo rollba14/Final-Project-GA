@@ -110,22 +110,24 @@
                       <button type="button" class="myBtn" (click)="toggleComments(post)">Cancel</button>
                     </p>
                   </div>
-                  <span *ngIf="post.comments.length > 0">COMMENTS:</span>
+                  <span *ngIf="post.comments.length > 0" class="bold">COMMENTS:</span>
                   <!--  -->
                     <div *ngFor="let comment of post.comments" >
                       <p class="comments">
 
                           <span *ngIf="!this.editing">{{comment.content}}</span>
                           <span *ngIf="comment._id !== this.displaySubComment && !this.editing && comment.user_id == loggedInUser._id">
-                            <button type="button" (click)="deleteSubComment(post,comment)" class="iconBtn">
-                              <img class="icon" src="../../assets/bin.png">
-                            </button>
-                            <button type="button" (click)="toggleSubComment(comment)" class="iconBtn">
-                              <img class="icon" src="../../assets/pencil.png">
-                            </button>
+                            <span class="btnSpan">
+                              <button type="button" (click)="deleteSubComment(post,comment)" class="iconBtn">
+                                <img class="icon" src="../../assets/bin.png">
+                              </button>
+                              <button type="button" (click)="toggleSubComment(comment)" class="iconBtn">
+                                <img class="icon" src="../../assets/pencil.png">
+                              </button>
+                            </span>
                           </span>
-                          <span *ngIf="comment._id === this.displaySubComment && this.editing">
-                            <input [(ngModel)]="tempSubComment.content" type="text" placeholder="title"><br>
+                          <span class="sub_comment" *ngIf="comment._id === this.displaySubComment && this.editing">
+                            <textarea [(ngModel)]="tempSubComment.content" type="text" placeholder="title"></textarea><br>
                             <button type="button" class="myBtn" (click)="updateSubComment(post,tempSubComment)">Update</button>
                             <button type="button" class="myBtn" (click)="toggleSubComment(tempSubComment)">Cancel</button>
                           </span>
