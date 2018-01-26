@@ -19,7 +19,6 @@ ul{
   max-height: 280px;
   min-width: 350px;
   padding: 5px 10px 5px 10px;
-  /*margin: 10px;*/
   word-wrap: break-word;
 }
 
@@ -93,7 +92,7 @@ p textarea {
 
 .main-post {
   background: rgb(230, 243, 247);
-  padding: 7px 12px 15px 12px;
+  padding: 15px 15px 22px 15px;
   border-radius: 0px 0px 0 0;
 }
 
