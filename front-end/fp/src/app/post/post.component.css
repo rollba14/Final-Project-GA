@@ -15,7 +15,7 @@ ul{
   max-height: 280px;
   min-width: 350px;
   padding: 5px 10px 5px 10px;
-  margin: 10px;
+  /*margin: 10px;*/
   word-wrap: break-word;
 }
 
@@ -54,8 +54,24 @@ hr{
 }
 
 .comment_textarea{
-  width: 100%;
+  display: inline;
   padding: 7px 5px;
+  width:70%;
+}
+
+.comment_textarea_wrapper {
+  display: inline;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background: white;
+}
+
+.comment_textarea_wrapper button {
+  display: inline;
+  float: right;
+  width: 20%;
 }
 
 p textarea {
@@ -67,14 +83,18 @@ p textarea {
 }
 
 .place-title {
-  background: rgb(230, 243, 247);
+  /*background: white;*/
   padding: 6px;
 }
 
 .place-description {
+  padding: 6px 6px;
+}
+
+.main-post {
   background: rgb(230, 243, 247);
-  margin: 7px 0 0 0;
-  padding: 12px 6px;
+  padding: 7px 12px 15px 12px;
+  border-radius: 0px 0px 0 0;
 }
 
 .top-section {
@@ -195,6 +215,7 @@ ngui-map .myBtn {
 .comments_section{
   margin-top: 10px;
   max-height: 170px;
+  position: relative;
   /*overflow: scroll;*/
 }
 

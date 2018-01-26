@@ -79,12 +79,13 @@
 
         <div class="markerInfoWindow" id="{{post._id}}">
           <div *ngIf="post._id != editable">
-              <div class="place-title"><img src="{{post.place.icon}}" width="16" height="16" id="place-icon">
-              <span >{{post.title }}</span>
+              <div class="main-post">
+                <div class="place-title"><img src="{{post.place.icon}}" width="16" height="16" id="place-icon">
+                <span >{{post.title }}</span>
+                </div><hr>
+                <div *ngIf="post.description" class="place-description">{{post.description}}</div><br>
+                <span class="place-address"><i>{{formatAddress(post.place.address_components)}}</i></span>
               </div>
-
-              <div *ngIf="post.description" class="place-description">{{post.description}}</div><br>
-              <span class="place-address"><i>{{formatAddress(post.place.address_components)}}</i></span>
               <div *ngIf="post._id != displayComments && loggedInUser">
                 <p>
                   <span *ngIf="post.author == loggedInUser.username">
@@ -102,13 +103,14 @@
               </div>
               <div class="comments_section">
                 <div *ngIf="post._id === displayComments && loggedInUser">
-                  <textarea class="comment_textarea"type="text" [(ngModel)]="tempComment" placeholder="Add a comment">
-                  </textarea>
-                  <p>
-                    <button type="button" class="myBtn" (click)="addComment(post,tempComment)">Submit</button>
-                    <button type="button" class="myBtn" (click)="toggleComments(post)">Cancel</button>
-                  </p>
-                  <span *ngIf="post.comments.length > 0"><br>COMMENTS:</span>
+                  <div class="comment_textarea_wrapper">
+                    <p>
+                    <input class="comment_textarea"type="text" [(ngModel)]="tempComment" placeholder="Add a comment">
+                      <button type="button" class="myBtn" (click)="addComment(post,tempComment)">Submit</button>
+                      <button type="button" class="myBtn" (click)="toggleComments(post)">Cancel</button>
+                    </p>
+                  </div>
+                  <span *ngIf="post.comments.length > 0">COMMENTS:</span>
                   <!--  -->
                     <div *ngFor="let comment of post.comments" >
                       <p class="comments">
