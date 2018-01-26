@@ -13,7 +13,7 @@ ul{
   display: none;
   max-width: 376px;
   max-height: 280px;
-  min-width: 300px;
+  min-width: 350px;
   padding: 5px 10px 5px 10px;
   margin: 10px;
   word-wrap: break-word;
@@ -41,17 +41,40 @@ hr{
 }
 
 .iconBtn{
-  background-color: white;
   border: none;
   float: right;
+  height: 35px;
+  width: 35px;
+  line-height: 35px;
+  vertical-align: middle;
+}
+
+.comments .iconBtn {
+  background: rgb(235, 243, 247);
 }
 
 .comment_textarea{
   width: 100%;
+  padding: 7px 5px;
+}
+
+p textarea {
+  margin: 10px 0;
 }
 
 .wrapper{
   text-align: center;
+}
+
+.place-title {
+  background: rgb(230, 243, 247);
+  padding: 6px;
+}
+
+.place-description {
+  background: rgb(230, 243, 247);
+  margin: 7px 0 0 0;
+  padding: 12px 6px;
 }
 
 .top-section {
@@ -79,7 +102,7 @@ ngui-map p{
   margin-bottom: 5px;
 }
 
-ngui-map button:hover{
+.comments .iconBtn:hover, ngui-map button:hover{
   background: yellow;
   cursor: pointer;
 }
@@ -90,6 +113,7 @@ ngui-map textarea{
 
 ngui-map input{
   line-height: 2px !important;
+  padding: 7px 5px;
 }
 
 ngui-map .btn{
@@ -164,7 +188,7 @@ ngui-map .myBtn {
 
 .description_area{
   padding: 5px 10px;
-  min-height: 30px;
+  min-height: 35px;
 }
 
 
@@ -174,12 +198,14 @@ ngui-map .myBtn {
   /*overflow: scroll;*/
 }
 
-/*.comments{
+.comments{
   width: 100%;
   height: 35px;
-  line-height: 30px;
+  line-height: 35px;
   margin-bottom: 10px;
   vertical-align: middle;
+  background: rgb(230, 243, 247);
+  padding: 0 0 0 5px;
 }
 
 .comments span{
@@ -191,7 +217,7 @@ ngui-map .myBtn {
   float:left;
   height:100%;
   vertical-align: middle;
-}*/
+}
 
 
 .light-bg{
@@ -229,6 +255,11 @@ ngui-map .myBtn {
 
   .iconBtn{
     padding: 7px;
+    background: white;
+  }
+
+  .comments .iconBtn {
+    background: rgb(235, 243, 247);
   }
 
   .modal{
@@ -295,7 +326,13 @@ ngui-map .myBtn {
   }
 
   .iconBtn{
-    padding: 7px;
+    width: 35px;
+    height: 35px;
+    background: white;
+  }
+
+  .comments .iconBtn {
+    background: rgb(235, 243, 247);
   }
 
   .modal{
