@@ -21,7 +21,7 @@ a {
   background-repeat: no-repeat;
   background-position: top;
   background-attachment: fixed;
-  background-color: white;
+  background-color: black;
 }
 
 .wrapper{
@@ -33,6 +33,7 @@ a {
   border-radius: 5px;
   width: fit-content;
   margin: 0px auto;
+  z-index: 1;
 }
 
 .wrapper h1, h2, h3{

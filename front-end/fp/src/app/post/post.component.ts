@@ -145,37 +145,37 @@ export class PostComponent implements OnInit {
         let groupInfoWindowContent:any = document.createElement('div');
         groupInfoWindowContent.className = "markerInfoWindow";
         helperDiv.append(groupInfoWindowContent);
-        for(var i = 0; i < posts.length-1; i++){
-          if(posts[i].place.geometry.location.lat == newPost.place.geometry.location.lat && posts[i].place.geometry.location.lng == newPost.place.geometry.location.lng){
-            // match, hide all the overlay markers, push their info window divs to one, so they will display as one
-            // this.mapInstance.markers[i].setVisible(false);
-            let infowindow = document.getElementById(posts[i]._id);
-            groupInfoWindowContent.prepend(infowindow);
-            this.mapInstance.markers[i].setMap(null);
-            hasOverlay = true;
-          }
-        }
+        // for(var i = 0; i < posts.length-1; i++){
+        //   if(posts[i].place.geometry.location.lat == newPost.place.geometry.location.lat && posts[i].place.geometry.location.lng == newPost.place.geometry.location.lng){
+        //     // match, hide all the overlay markers, push their info window divs to one, so they will display as one
+        //     // this.mapInstance.markers[i].setVisible(false);
+        //     let infowindow = document.getElementById(posts[i]._id);
+        //     groupInfoWindowContent.prepend(infowindow);
+        //     this.mapInstance.markers[i].setMap(null);
+        //     hasOverlay = true;
+        //   }
+        // }
 
-        if(hasOverlay){
-          var newlyAddedMarker = this.mapInstance.markers[this.mapInstance.markers.length-1];
-          google.maps.event.clearListeners(newlyAddedMarker,'click');
-          groupInfoWindowContent.className += " "+newPost.place.geometry.location.lat.toString()+newPost.place.geometry.location.lng.toString();
-
-          groupInfoWindowContent.prepend(newlyAddedInfoContent);
-          var groupInfoWindow = new google.maps.InfoWindow();
-          groupInfoWindow.setContent(groupInfoWindowContent);
-          let position = { lat: newPost.place.geometry.location.lat,
-            lng: newPost.place.geometry.location.lng};
-            this.positionList.push(position);
-            newlyAddedMarker.addListener('click',()=>{
-              this.clearTempStates();
-              this.toggleInfoWindowState(newlyAddedMarker,groupInfoWindow,groupInfoWindowContent)
-              if(groupInfoWindowContent){
-                for(var i =0 ; i < groupInfoWindowContent.children.length; i ++ ){
-                  groupInfoWindowContent.children[i].style.display = "block";}
-                }
-            });
-        } // end of overlay if
+        // if(hasOverlay){
+        //   var newlyAddedMarker = this.mapInstance.markers[this.mapInstance.markers.length-1];
+        //   google.maps.event.clearListeners(newlyAddedMarker,'click');
+        //   groupInfoWindowContent.className += " "+newPost.place.geometry.location.lat.toString()+newPost.place.geometry.location.lng.toString();
+        //
+        //   groupInfoWindowContent.prepend(newlyAddedInfoContent);
+        //   var groupInfoWindow = new google.maps.InfoWindow();
+        //   groupInfoWindow.setContent(groupInfoWindowContent);
+        //   let position = { lat: newPost.place.geometry.location.lat,
+        //     lng: newPost.place.geometry.location.lng};
+        //     this.positionList.push(position);
+        //     newlyAddedMarker.addListener('click',()=>{
+        //       this.clearTempStates();
+        //       this.toggleInfoWindowState(newlyAddedMarker,groupInfoWindow,groupInfoWindowContent)
+        //       if(groupInfoWindowContent){
+        //         for(var i =0 ; i < groupInfoWindowContent.children.length; i ++ ){
+        //           groupInfoWindowContent.children[i].style.display = "block";}
+        //         }
+        //     });
+        // } // end of overlay if
       }
     }
   }
