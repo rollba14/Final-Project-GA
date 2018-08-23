@@ -375,6 +375,7 @@ export class PostComponent implements OnInit {
     this.title = "";
     this.description = "";
     this.image_url = "";
+    this.inputPlace = "";
     var infowindowContent = document.getElementById('infowindow-content');
     if(infowindowContent){
       if(infowindowContent.children){
