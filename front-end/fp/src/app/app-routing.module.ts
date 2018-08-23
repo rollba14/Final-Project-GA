@@ -22,6 +22,10 @@ const routes: Routes = [
     {
       path: 'user',
       component: UserComponent
+    },
+    {
+      path: '**',
+      component: HomeComponent
     }
 ];
 
