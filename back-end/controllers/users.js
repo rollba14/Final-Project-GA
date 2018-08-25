@@ -1,4 +1,5 @@
 var db = require('../models');
+var url = require('url');
 var User = db.User;
 
 function findSessionUser(req,res){
