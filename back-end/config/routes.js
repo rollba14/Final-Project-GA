@@ -86,6 +86,11 @@ module.exports = function(app, passport){
   app.delete('/api/posts/:post_id/comment/:comment_id',isLoggedIn, commentsController.destroy);
   app.put('/api/posts/:post_id/comment/:comment_id',isLoggedIn, commentsController.update);
 
+  app.get('/*', function(req,res){
+    console.log('request is',req);
+    res.redirect('http://localhost:4200');
+  });
+
 }
 
 function isLoggedIn(req, res, next) {
