@@ -88,7 +88,7 @@ module.exports = function(app, passport){
 
   app.get('/*', function(req,res){
     console.log('request is',req);
-    res.redirect('http://localhost:4200');
+    res.redirect('https://glacial-chamber-79751.herokuapp.com');
   });
 
 }
