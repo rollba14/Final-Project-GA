@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +12,11 @@ export class HomeComponent implements OnInit {
   flashMsg;
   constructor(
     private userService: UserService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
+    console.log(this.router.url);
     this.userService.getSessionUser()
     .subscribe(user=>{
       this.loggedInUser = user.json();

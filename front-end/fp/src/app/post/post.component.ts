@@ -8,6 +8,7 @@ import { CommentService } from '../comment/comment.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as $ from 'jquery';
+import { Router } from '@angular/router';
 
 // import { NguiMapModule} from '@ngui/map';
 
@@ -69,13 +70,15 @@ export class PostComponent implements OnInit {
     private postService: PostService,
     private commentService: CommentService,
     private modalService: BsModalService,
+    private router: Router,
   ) {
   }
 
   ngOnInit() {
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-
+    console.log(this.router.url);
+    
     this.postService.getAllPosts()
     .subscribe(res=>{
       this.posts = res.json();
