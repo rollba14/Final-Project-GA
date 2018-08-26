@@ -50,7 +50,7 @@ module.exports = function(app, passport){
   });
   //////////////////////////////////////////
 
-  app.get('/login/user', usersController.findSessionUser);
+  app.get('/:var(login/user|user)', usersController.findSessionUser);
   // User Routes
   // index, get all users
   app.get('/api/users', isLoggedIn, usersController.index);
@@ -65,7 +65,8 @@ module.exports = function(app, passport){
 
   //Post Routes//
   // All posts from all users
-  app.get('/api/posts', postsController.index);
+  // app.get('/api/posts', postsController.index);
+  app.get('/:var(api/posts|post)', postsController.index);
   // create
   app.post('/api/posts',isLoggedIn, postsController.create);
   // show all posts from a user
@@ -86,10 +87,10 @@ module.exports = function(app, passport){
   app.delete('/api/posts/:post_id/comment/:comment_id',isLoggedIn, commentsController.destroy);
   app.put('/api/posts/:post_id/comment/:comment_id',isLoggedIn, commentsController.update);
 
-  // app.get('/*', function(req,res){
-  //   console.log('im in the backend');
-  //   res.redirect(`https://glacial-chamber-79751.herokuapp.com${req.url}`);
-  // });
+  app.get('/*', function(req,res){
+    console.log('im in the backend');
+    res.redirect(`https://glacial-chamber-79751.herokuapp.com${req.url}`);
+  });
 
 }
 
