@@ -4,6 +4,7 @@ var User = db.User;
 
 function index(req, res) {
   Post.find({},function(err, posts) {
+    console.log('request is ', req.url);
     if (err) {
       console.log('inside error');
       res.send(err);

@@ -77,7 +77,7 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    console.log(this.router.url);
+    console.log('url path is', this.router.url);
     
     this.postService.getAllPosts()
     .subscribe(res=>{

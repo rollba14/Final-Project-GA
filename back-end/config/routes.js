@@ -86,9 +86,9 @@ module.exports = function(app, passport){
   app.delete('/api/posts/:post_id/comment/:comment_id',isLoggedIn, commentsController.destroy);
   app.put('/api/posts/:post_id/comment/:comment_id',isLoggedIn, commentsController.update);
 
-  app.get('/*', function(req,res){
-    res.redirect(`https://glacial-chamber-79751.herokuapp.com${req.url}`);
-  });
+  // app.get('/*', function(req,res){
+  //   res.redirect(`https://glacial-chamber-79751.herokuapp.com${req.url}`);
+  // });
 
 }
 

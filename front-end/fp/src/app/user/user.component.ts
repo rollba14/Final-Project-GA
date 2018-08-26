@@ -34,6 +34,7 @@ export class UserComponent implements OnInit {
     this.userService.getSessionUser()
     .subscribe(user=>{
       this.loggedInUser = user.json();
+      this.router.navigate(['/post']);
     },err=>{
       console.log('User is not signed in');
     })
