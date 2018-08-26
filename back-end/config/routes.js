@@ -4,6 +4,7 @@ var usersController = require('../controllers/users.js');
 var postsController = require('../controllers/posts.js');
 var commentsController = require('../controllers/comments.js');
 var cors = require('cors');
+const path = require('path');
 
 var jwt = require('express-jwt');
 var auth = jwt({
@@ -86,9 +87,13 @@ module.exports = function(app, passport){
   app.delete('/api/posts/:post_id/comment/:comment_id',isLoggedIn, commentsController.destroy);
   app.put('/api/posts/:post_id/comment/:comment_id',isLoggedIn, commentsController.update);
 
-  app.get('/*', function(req,res){
-    console.log('full request is', req);
-    res.redirect(`https://glacial-chamber-79751.herokuapp.com${req.url}`);
+  // app.get('/*', function(req,res){
+  //   console.log('full request is', req);
+  //   res.redirect(`https://glacial-chamber-79751.herokuapp.com`);
+  // });
+
+  app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/dist/index.html'));
   });
 
 }
