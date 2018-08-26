@@ -23,14 +23,14 @@ const routes: Routes = [
       path: 'user',
       component: UserComponent
     },
-    {
-      path: 'api/posts',
-      component: PostComponent
-    },
-    {
-      path: 'login/user',
-      component: UserComponent
-    },
+    // {
+    //   path: 'api/posts',
+    //   component: PostComponent
+    // },
+    // {
+    //   path: 'login/user',
+    //   component: UserComponent
+    // },
     {
       path: '**',
       component: HomeComponent
