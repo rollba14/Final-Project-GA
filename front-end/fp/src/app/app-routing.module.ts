@@ -33,7 +33,7 @@ const routes: Routes = [
     // },
     {
       path: '**',
-      component: PostComponent
+      component: HomeComponent
     },
 ];
 
