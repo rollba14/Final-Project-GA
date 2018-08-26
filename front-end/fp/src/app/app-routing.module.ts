@@ -24,7 +24,7 @@ const routes: Routes = [
       component: UserComponent
     },
     {
-      path: 'api/post',
+      path: 'api/posts',
       component: PostComponent
     },
     {
