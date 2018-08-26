@@ -92,9 +92,9 @@ module.exports = function(app, passport){
   //   res.redirect(`https://glacial-chamber-79751.herokuapp.com`);
   // });
 
-  app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname + '/dist/index.html'));
-  });
+  // app.get('/*', function(req, res) {
+  //   res.sendFile(path.join(__dirname + '/dist/index.html'));
+  // });
 
 }
 

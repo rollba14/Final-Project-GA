@@ -50,13 +50,13 @@ app.use(flash()); // use connect-flash for flash messages stored in session
   console.log('app is ',app.get);
 app.use(express.static(__dirname + '/dist'));
  //
- // app.get('/*', function(req, res) {
- //   res.sendFile(path.join(__dirname + '/dist/index.html'));
- // });
 
 // routes ======================================================================
 router(app, passport); // load our routes and pass in our app and fully configured passport
 ////////////////////////////////////////////////////////////
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname + '/dist/index.html'));
+});
 
 let port = process.env.PORT || 3000;
 app.listen(port, function() {
