@@ -244,6 +244,8 @@ export class PostComponent implements OnInit {
 
   onMarkerInit(marker,post) {
     console.log('marker initiating');
+    console.log('posts are ', this.posts);
+    console.log('parameter post is', post);
     var markerInfoWinElement: any = document.getElementById(`${post._id}`);
     if(post.image_url){
       marker.setIcon({
