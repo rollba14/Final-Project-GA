@@ -260,27 +260,34 @@ export class PostComponent implements OnInit {
       // markerInfoWindow.className += " hellothere ";
       markerInfoWindow.setContent(markerInfoWinElement);
       markerInfoWindow.className += " testing ";
-    }/*else{
+      marker.addListener('click', ()=> {
+        this.clearTempStates();
+        this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
+      });
+    }else{
       // the problem here is when marker first init, it loads post content into there
       // info window, but after fully loaded and and you came back to the page, it uses
       // previous length and set everything to the last infowindow since posts length now is max,
       // not when it first load it.
-      let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
-      console.log('infoWindowDivs are',infoWindowDivs);
-      markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
-      // markerInfoWinElement = document.getElementById(`${post._id}`);
-      console.log('inside else statement and markerInfoWinElement is',markerInfoWinElement);
-      // markerInfoWinElement.id= post._id;
-      var markerInfoWindow:any = new google.maps.InfoWindow({
-        disableAutoPan: true,
-      });
-      markerInfoWindow.setContent(markerInfoWinElement);
-      markerInfoWindow.className += " testing ";
-    }*/
-    marker.addListener('click', ()=> {
-      this.clearTempStates();
-      this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
-    });
+      setTimeout(function(){
+        // let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
+        // console.log('infoWindowDivs are',infoWindowDivs);
+        // markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
+        markerInfoWinElement = document.getElementById(`${post._id}`);
+        console.log('inside else statement and markerInfoWinElement is',markerInfoWinElement);
+        markerInfoWinElement.id= post._id;
+        var markerInfoWindow:any = new google.maps.InfoWindow({
+          disableAutoPan: true,
+        });
+        markerInfoWindow.setContent(markerInfoWinElement);
+        markerInfoWindow.className += " testing ";
+        marker.addListener('click', ()=> {
+          this.clearTempStates();
+          this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
+        });
+      }, 1500);
+    }
+
   }
 
   setViewPortCenter(marker){
