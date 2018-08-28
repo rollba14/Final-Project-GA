@@ -265,8 +265,9 @@ export class PostComponent implements OnInit {
       // info window, but after fully loaded and and you came back to the page, it uses
       // previous length and set everything to the last infowindow since posts length now is max,
       // not when it first load it.
-      let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
-      markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
+      // let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
+      // markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
+      markerInfoWinElement = document.getElementById(`${post._id}`);
       console.log('inside else statement and markerInfoWinElement is',markerInfoWinElement);
       markerInfoWinElement.id= post._id;
       var markerInfoWindow:any = new google.maps.InfoWindow({
