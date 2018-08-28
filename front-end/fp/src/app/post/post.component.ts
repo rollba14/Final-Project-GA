@@ -278,7 +278,7 @@ export class PostComponent implements OnInit {
         markerInfoWinElement.id= post._id;
         markerInfoWindow.setContent(markerInfoWinElement);
         markerInfoWindow.className += " testing ";
-      }, 2000);
+      }, 500);
       marker.addListener('click', ()=> {
         this.clearTempStates();
         this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
