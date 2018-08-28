@@ -245,7 +245,7 @@ export class PostComponent implements OnInit {
   onMarkerInit(marker,post) {
     console.log('marker initiating');
     console.log('posts are ', this.posts);
-    console.log('parameter post is', post);
+    // console.log('parameter post is', post);
     var markerInfoWinElement: any = document.getElementById(`${post._id}`);
     if(post.image_url){
       marker.setIcon({
@@ -265,16 +265,17 @@ export class PostComponent implements OnInit {
       // info window, but after fully loaded and and you came back to the page, it uses
       // previous length and set everything to the last infowindow since posts length now is max,
       // not when it first load it.
-      // let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
-      // markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
-      markerInfoWinElement = document.getElementById(`${post._id}`);
+      let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
+      console.log('infoWindowDivs are',infoWindowDivs);
+      markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
+      // markerInfoWinElement = document.getElementById(`${post._id}`);
       console.log('inside else statement and markerInfoWinElement is',markerInfoWinElement);
-      markerInfoWinElement.id= post._id;
+      // markerInfoWinElement.id= post._id;
       var markerInfoWindow:any = new google.maps.InfoWindow({
         disableAutoPan: true,
       });
-      markerInfoWindow.className += " testing ";
       markerInfoWindow.setContent(markerInfoWinElement);
+      markerInfoWindow.className += " testing ";
     }
     marker.addListener('click', ()=> {
       this.clearTempStates();
@@ -295,15 +296,6 @@ export class PostComponent implements OnInit {
   }
 
   toggleInfoWindowState(marker, infoWindow, infoWindowElement){
-    console.log('posts are ', this.posts);
-    if(this.lastMarker) {
-      console.log('this lastMarker lat is', this.lastMarker.position.lat());
-      console.log('this lastMarker lng is', this.lastMarker.position.lng());
-    }
-    if(marker) {
-      console.log('marker lat from parameter is', marker.position.lat());
-      console.log('marker lng from parameter is', marker.position.lng())
-    }
     if(this.lastMarker === undefined ){
       this.lastMarker = marker;
     }else if(this.lastMarker !== marker){
