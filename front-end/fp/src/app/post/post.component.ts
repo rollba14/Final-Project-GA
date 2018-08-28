@@ -247,6 +247,9 @@ export class PostComponent implements OnInit {
     console.log('posts are ', this.posts);
     // console.log('parameter post is', post);
     var markerInfoWinElement: any = document.getElementById(`${post._id}`);
+    var markerInfoWindow:any = new google.maps.InfoWindow({
+      disableAutoPan: true,
+    });
     if(post.image_url){
       marker.setIcon({
         url: post.image_url,
@@ -254,9 +257,6 @@ export class PostComponent implements OnInit {
       });
     }
     if(markerInfoWinElement){
-      var markerInfoWindow:any = new google.maps.InfoWindow({
-        disableAutoPan: true,
-      });
       // markerInfoWindow.className += " hellothere ";
       markerInfoWindow.setContent(markerInfoWinElement);
       markerInfoWindow.className += " testing ";
@@ -276,9 +276,6 @@ export class PostComponent implements OnInit {
         markerInfoWinElement = document.getElementById(`${post._id}`);
         console.log('inside else statement and markerInfoWinElement is',markerInfoWinElement);
         markerInfoWinElement.id= post._id;
-        var markerInfoWindow:any = new google.maps.InfoWindow({
-          disableAutoPan: true,
-        });
         markerInfoWindow.setContent(markerInfoWinElement);
         markerInfoWindow.className += " testing ";
       }, 2000);
