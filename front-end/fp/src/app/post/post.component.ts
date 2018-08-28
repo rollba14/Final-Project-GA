@@ -260,7 +260,7 @@ export class PostComponent implements OnInit {
       // markerInfoWindow.className += " hellothere ";
       markerInfoWindow.setContent(markerInfoWinElement);
       markerInfoWindow.className += " testing ";
-    }else{
+    }/*else{
       // the problem here is when marker first init, it loads post content into there
       // info window, but after fully loaded and and you came back to the page, it uses
       // previous length and set everything to the last infowindow since posts length now is max,
@@ -276,7 +276,7 @@ export class PostComponent implements OnInit {
       });
       markerInfoWindow.setContent(markerInfoWinElement);
       markerInfoWindow.className += " testing ";
-    }
+    }*/
     marker.addListener('click', ()=> {
       this.clearTempStates();
       this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
