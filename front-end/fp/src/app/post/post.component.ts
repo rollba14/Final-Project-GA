@@ -243,6 +243,7 @@ export class PostComponent implements OnInit {
   }
 
   onMarkerInit(marker,post) {
+    console.log('marker initiating');
     var markerInfoWinElement: any = document.getElementById(`${post._id}`);
     if(post.image_url){
       marker.setIcon({
@@ -264,6 +265,7 @@ export class PostComponent implements OnInit {
       // not when it first load it.
       let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
       markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
+      console.log('inside else statement and markerInfoWinElement is',markerInfoWinElement);
       markerInfoWinElement.id= post._id;
       var markerInfoWindow:any = new google.maps.InfoWindow({
         disableAutoPan: true,
