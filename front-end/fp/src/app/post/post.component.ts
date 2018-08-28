@@ -78,7 +78,8 @@ export class PostComponent implements OnInit {
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     console.log('url path is', this.router.url);
-    
+    console.log('on init\n');
+
     this.postService.getAllPosts()
     .subscribe(res=>{
       this.posts = res.json();
@@ -90,6 +91,14 @@ export class PostComponent implements OnInit {
     },err=>{
       this.loggedInUser = null;
     })
+  }
+
+  ngAfterContentInit() {
+    console.log('content init\n');
+  }
+
+  ngAfterViewInit(){
+    console.log('view init\n');
   }
 
   logout(e){
@@ -275,6 +284,15 @@ export class PostComponent implements OnInit {
   }
 
   toggleInfoWindowState(marker, infoWindow, infoWindowElement){
+    console.log('posts are ', this.posts);
+    if(this.lastMarker) {
+      console.log('this lastMarker lat is', this.lastMarker.position.lat());
+      console.log('this lastMarker lng is', this.lastMarker.position.lng());
+    }
+    if(marker) {
+      console.log('marker lat from parameter is', marker.position.lat());
+      console.log('marker lng from parameter is', marker.position.lng())
+    }
     if(this.lastMarker === undefined || this.lastMarker === marker){
       this.lastMarker = marker;
     }else if(this.lastMarker !== marker){

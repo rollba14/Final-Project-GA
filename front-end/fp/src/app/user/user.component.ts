@@ -74,11 +74,9 @@ export class UserComponent implements OnInit {
       username : username,
       password : password,
     }
-    console.log('new user is ', inputUser);
     this.userService.loginUser(inputUser).subscribe(
       (res)=>{
       console.log('succssfully logged in');
-
       this.userService.getSessionUser().subscribe(data=>{
         this.loggedInUser = data.json();
         this.flashMsg = "Welcome!";
