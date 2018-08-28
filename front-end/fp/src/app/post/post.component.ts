@@ -60,6 +60,8 @@ export class PostComponent implements OnInit {
     this.editing = false;
     this.displayComments="";
     this.displaySubComment="";
+    // this.lastInfoWindow = undefined;
+    // this.helperInfoWindow = undefined;
     this.mapInstance.setOptions({
       gestureHandling: 'auto'
     });
@@ -256,6 +258,10 @@ export class PostComponent implements OnInit {
       markerInfoWindow.setContent(markerInfoWinElement);
       markerInfoWindow.className += " testing ";
     }else{
+      // the problem here is when marker first init, it loads post content into there
+      // info window, but after fully loaded and and you came back to the page, it uses
+      // previous length and set everything to the last infowindow since posts length now is max,
+      // not when it first load it.
       let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
       markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
       markerInfoWinElement.id= post._id;
@@ -293,7 +299,7 @@ export class PostComponent implements OnInit {
       console.log('marker lat from parameter is', marker.position.lat());
       console.log('marker lng from parameter is', marker.position.lng())
     }
-    if(this.lastMarker === undefined || this.lastMarker === marker){
+    if(this.lastMarker === undefined ){
       this.lastMarker = marker;
     }else if(this.lastMarker !== marker){
       this.lastMarker = marker;
@@ -316,7 +322,8 @@ export class PostComponent implements OnInit {
           gestureHandling: 'none'
         });
     }else {
-      this.lastInfoWindow = infoWindow;
+      // enable the last infowindow to reopen
+      // this.lastInfoWindow = infoWindow;
       infoWindow.open(this.mapInstance, marker);
       this.setViewPortCenter(marker);
       this.mapInstance.setOptions({
