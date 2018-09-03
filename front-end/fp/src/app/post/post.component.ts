@@ -79,8 +79,7 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    console.log('url path is', this.router.url);
-    console.log('on init\n');
+    console.log('posts are',this.posts);
 
     this.postService.getAllPosts()
     .subscribe(res=>{
@@ -243,8 +242,6 @@ export class PostComponent implements OnInit {
   }
 
   onMarkerInit(marker,post) {
-    console.log('marker initiating');
-    console.log('posts are ', this.posts);
     // console.log('parameter post is', post);
     var markerInfoWinElement: any = document.getElementById(`${post._id}`);
     var markerInfoWindow:any = new google.maps.InfoWindow({
@@ -265,16 +262,11 @@ export class PostComponent implements OnInit {
         this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
       });
     }else{
-      // the problem here is when marker first init, it loads post content into there
-      // info window, but after fully loaded and and you came back to the page, it uses
-      // previous length and set everything to the last infowindow since posts length now is max,
-      // not when it first load it.
       setTimeout(function(){
         // let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
         // console.log('infoWindowDivs are',infoWindowDivs);
         // markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
         markerInfoWinElement = document.getElementById(`${post._id}`);
-        console.log('inside else statement and markerInfoWinElement is',markerInfoWinElement);
         markerInfoWinElement.id= post._id;
         markerInfoWindow.setContent(markerInfoWinElement);
         markerInfoWindow.className += " testing ";
@@ -358,7 +350,8 @@ export class PostComponent implements OnInit {
 
     this.postService.createPost(post)
     .subscribe((post)=>{
-      let newPost = post.json()
+      let newPost = post.json();
+      this.currPostLength++;
       this.posts.push(newPost);
       document.getElementById('closeModal').click();
     });
@@ -385,6 +378,7 @@ export class PostComponent implements OnInit {
       let index = this.posts.findIndex(function(p){
         return p._id == post.json()._id;
       });
+      this.currPostLength--;
       this.posts.splice(index,1);
       this.lastMarker.setVisible(false);
       // this.lastInfoWindow.close();

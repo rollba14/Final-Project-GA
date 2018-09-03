@@ -74,7 +74,7 @@
   mapTypeControl= "false"
   >
   <div id="markers">
-    <div *ngIf="posts">
+    <div *ngIf="posts.length !== 0 && posts.length === currPostLength">
       <div *ngFor="let post of posts" >
 
         <div class="markerInfoWindow" id="{{post._id}}">
