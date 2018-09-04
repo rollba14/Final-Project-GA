@@ -43,6 +43,8 @@ export class PostComponent implements OnInit {
   private displaySubComment;
   flashMsg;
   nguimap;
+  bindGeoSearch = false;
+  autocomplete;
 
   currPostLength;
   private positionList = [];
@@ -110,130 +112,145 @@ export class PostComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
+  // ngAfterContentChecked(){
+  //   if(this.mapInstance && this.mapInstance.markers){
+  //     if(this.currPostLength < this.mapInstance.markers.length){
+  //       let elements = document.getElementsByClassName('markerInfoWindow');
+  //       this.currPostLength =  this.mapInstance.markers.length
+  //       /* BEFORE all of this, i need to write generate a hidden profile template
+  //       that has div for img src, angular on click on img src,
+  //       */
+  //       // after new divs and markers have added to the DOM
+  //       // for each posts check if that new markers's lat lng is in one of the posts' lat lng
+  //       // if so, we know that marker is on map and need to hide and render a new marker
+  //
+  //       var posts = this.posts;
+  //       let hasOverlay = false;
+  //       var newPost = posts[posts.length-1];
+  //       var newlyAddedInfoContent = document.getElementById(newPost._id)
+  //
+  //       // if it has overlay, gotta first find the latlng is already in the set.
+  //       // if it does, just find that div and append the newInfoWindow to that groupWindow
+  //       var obj:object = {
+  //         lat: newPost.place.geometry.location.lat,
+  //         lng: newPost.place.geometry.location.lng,
+  //       }
+  //       for(var i = 0; i < this.positionList.length; i ++)
+  //       if(this.positionList[i].toString() == obj.toString()){
+  //         var identifer = newPost.place.geometry.location.lat.toString() + newPost.place.geometry.location.lng.toString();
+  //         var oldGroupInfoWindowContent:any = document.getElementsByClassName(`${identifer}`)[0];
+  //         oldGroupInfoWindowContent.prepend(newlyAddedInfoContent);
+  //         // it does find it, but gotta remove it the marker after
+  //         this.clearTempStates();
+  //         this.lastInfoWindow.close();
+  //         this.lastInfoWindow.open();
+  //         this.mapInstance.markers[posts.length-1].setMap(null);
+  //         return;
+  //       }
+  //       var helperDiv:any = document.getElementById('groupInfoWindowContent');
+  //       let groupInfoWindowContent:any = document.createElement('div');
+  //       groupInfoWindowContent.className = "markerInfoWindow";
+  //       helperDiv.append(groupInfoWindowContent);
+  //       for(var i = 0; i < posts.length-1; i++){
+  //         if(posts[i].place.geometry.location.lat == newPost.place.geometry.location.lat && posts[i].place.geometry.location.lng == newPost.place.geometry.location.lng){
+  //           // match, hide all the overlay markers, push their info window divs to one, so they will display as one
+  //           // this.mapInstance.markers[i].setVisible(false);
+  //           let infowindow = document.getElementById(posts[i]._id);
+  //           groupInfoWindowContent.prepend(infowindow);
+  //           this.mapInstance.markers[i].setMap(null);
+  //           hasOverlay = true;
+  //         }
+  //       }
+  //
+  //       if(hasOverlay){
+  //         var newlyAddedMarker = this.mapInstance.markers[this.mapInstance.markers.length-1];
+  //         google.maps.event.clearListeners(newlyAddedMarker,'click');
+  //         groupInfoWindowContent.className += " "+newPost.place.geometry.location.lat.toString()+newPost.place.geometry.location.lng.toString();
+  //
+  //         groupInfoWindowContent.prepend(newlyAddedInfoContent);
+  //         var groupInfoWindow = new google.maps.InfoWindow();
+  //         groupInfoWindow.setContent(groupInfoWindowContent);
+  //         let position = { lat: newPost.place.geometry.location.lat,
+  //           lng: newPost.place.geometry.location.lng};
+  //           this.positionList.push(position);
+  //           newlyAddedMarker.addListener('click',()=>{
+  //             this.clearTempStates();
+  //             this.toggleInfoWindowState(newlyAddedMarker,groupInfoWindow,groupInfoWindowContent)
+  //             if(groupInfoWindowContent){
+  //               for(var i =0 ; i < groupInfoWindowContent.children.length; i ++ ){
+  //                 groupInfoWindowContent.children[i].style.display = "block";}
+  //               }
+  //           });
+  //       } // end of overlay if
+  //     }
+  //   }
+  // }
+
+
   ngAfterContentChecked(){
-    if(this.mapInstance && this.mapInstance.markers){
-      if(this.currPostLength < this.mapInstance.markers.length){
-        let elements = document.getElementsByClassName('markerInfoWindow');
-        this.currPostLength =  this.mapInstance.markers.length
-        /* BEFORE all of this, i need to write generate a hidden profile template
-        that has div for img src, angular on click on img src,
-        */
-        // after new divs and markers have added to the DOM
-        // for each posts check if that new markers's lat lng is in one of the posts' lat lng
-        // if so, we know that marker is on map and need to hide and render a new marker
-
-        var posts = this.posts;
-        let hasOverlay = false;
-        var newPost = posts[posts.length-1];
-        var newlyAddedInfoContent = document.getElementById(newPost._id)
-
-        // if it has overlay, gotta first find the latlng is already in the set.
-        // if it does, just find that div and append the newInfoWindow to that groupWindow
-        var obj:object = {
-          lat: newPost.place.geometry.location.lat,
-          lng: newPost.place.geometry.location.lng,
+    if(this.bindGeoSearch === false) {
+      try{
+        var input = <HTMLInputElement>(document.getElementById('geoSearch'));
+        if(input) {
+          this.autocomplete = new google.maps.places.Autocomplete(input);
         }
-        for(var i = 0; i < this.positionList.length; i ++)
-        if(this.positionList[i].toString() == obj.toString()){
-          var identifer = newPost.place.geometry.location.lat.toString() + newPost.place.geometry.location.lng.toString();
-          var oldGroupInfoWindowContent:any = document.getElementsByClassName(`${identifer}`)[0];
-          oldGroupInfoWindowContent.prepend(newlyAddedInfoContent);
-          // it does find it, but gotta remove it the marker after
-          this.clearTempStates();
-          this.lastInfoWindow.close();
-          this.lastInfoWindow.open();
-          this.mapInstance.markers[posts.length-1].setMap(null);
-          return;
-        }
-        var helperDiv:any = document.getElementById('groupInfoWindowContent');
-        let groupInfoWindowContent:any = document.createElement('div');
-        groupInfoWindowContent.className = "markerInfoWindow";
-        helperDiv.append(groupInfoWindowContent);
-        for(var i = 0; i < posts.length-1; i++){
-          if(posts[i].place.geometry.location.lat == newPost.place.geometry.location.lat && posts[i].place.geometry.location.lng == newPost.place.geometry.location.lng){
-            // match, hide all the overlay markers, push their info window divs to one, so they will display as one
-            // this.mapInstance.markers[i].setVisible(false);
-            let infowindow = document.getElementById(posts[i]._id);
-            groupInfoWindowContent.prepend(infowindow);
-            this.mapInstance.markers[i].setMap(null);
-            hasOverlay = true;
+      }catch(err){
+        console.log('Catched an err in binding autocomplete input field');
+      }finally {}
+      if(input && this.bindGeoSearch === false && this.autocomplete !== undefined && this.mapInstance !== undefined) {
+        this.bindGeoSearch = true;
+        this.autocomplete.bindTo('bounds', this.mapInstance);
+        var infowindow = new google.maps.InfoWindow();
+        this.helperInfoWindow = infowindow;
+        var infowindowContent = document.getElementById('infowindow-content');
+        infowindow.setContent(infowindowContent);
+
+        // For directing location after inputted a location.
+        let helperMarker = this.createNewMarker(null);
+        this.autocomplete.addListener('place_changed', ()=> {
+          infowindow.close();
+          helperMarker.setVisible(false);
+          var place = this.autocomplete.getPlace();
+          var infowindowContent = document.getElementById('infowindow-content');
+          this.inputPlace = place;
+          if (!place.geometry) {
+            window.alert("No details available for input: '" + place.name + "'"); return;
           }
-        }
+          // If the place has a geometry, then present it on a map.
+          if (place.geometry.viewport) {
+            this.mapInstance.fitBounds(place.geometry.viewport);
+          } else {
+            this.mapInstance.setCenter(place.geometry.location);
+            this.mapInstance.setZoom(20);
+          }
+          helperMarker.setPosition(place.geometry.location);
 
-        if(hasOverlay){
-          var newlyAddedMarker = this.mapInstance.markers[this.mapInstance.markers.length-1];
-          google.maps.event.clearListeners(newlyAddedMarker,'click');
-          groupInfoWindowContent.className += " "+newPost.place.geometry.location.lat.toString()+newPost.place.geometry.location.lng.toString();
+          var address = '';
+          if (place.address_components) {
+            address = this.formatAddress(place.address_components);
+          }
+          // there was setting children null field;
+        });
+        // debugger;
 
-          groupInfoWindowContent.prepend(newlyAddedInfoContent);
-          var groupInfoWindow = new google.maps.InfoWindow();
-          groupInfoWindow.setContent(groupInfoWindowContent);
-          let position = { lat: newPost.place.geometry.location.lat,
-            lng: newPost.place.geometry.location.lng};
-            this.positionList.push(position);
-            newlyAddedMarker.addListener('click',()=>{
-              this.clearTempStates();
-              this.toggleInfoWindowState(newlyAddedMarker,groupInfoWindow,groupInfoWindowContent)
-              if(groupInfoWindowContent){
-                for(var i =0 ; i < groupInfoWindowContent.children.length; i ++ ){
-                  groupInfoWindowContent.children[i].style.display = "block";}
-                }
-            });
-        } // end of overlay if
+      } else {
+        input = undefined;
+        this.autocomplete = undefined;
       }
     }
   }
 
   onMapReady(map) {
     this.mapInstance = map;
-    this.mapInstance.setOptions(
-      {
+    this.mapInstance.setOptions({
         disableDefaultUI: true,
         gestureHandling: 'auto'
-      });
-    this.addCloseInfoWindowOnMapClickEvent();
-    this.nguimap = document.getElementsByTagName('ngui-map');
-    var input = <HTMLInputElement>(document.getElementById('geoSearch'));
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.bindTo('bounds', map);
-
-    var infowindow = new google.maps.InfoWindow();
-    this.helperInfoWindow = infowindow;
-    var infowindowContent = document.getElementById('infowindow-content');
-    infowindow.setContent(infowindowContent);
-
-    // For directing location after inputted a location.
-    let helperMarker = this.createNewMarker(null);
-
-    autocomplete.addListener('place_changed', ()=> {
-      infowindow.close();
-      helperMarker.setVisible(false);
-      var place = autocomplete.getPlace();
-      var infowindowContent = document.getElementById('infowindow-content');
-      this.inputPlace = place;
-      if (!place.geometry) {
-        window.alert("No details available for input: '" + place.name + "'"); return;
-      }
-      // If the place has a geometry, then present it on a map.
-      if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
-      } else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(20);
-      }
-      helperMarker.setPosition(place.geometry.location);
-
-      var address = '';
-      if (place.address_components) {
-        address = this.formatAddress(place.address_components);
-      }
-      // there was setting children null field;
     });
-    // debugger;
     var currThis = this;
+    this.addCloseInfoWindowOnMapClickEvent();
     setTimeout(function(){
       currThis.createAndRenderMarkers();
-    }, 500);
+    }, 300);
   }
 
   createAndRenderMarkers(){
