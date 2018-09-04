@@ -284,21 +284,14 @@ export class PostComponent implements OnInit {
         scaledSize: new google.maps.Size(55, 55),
       });
     }
-    // setTimeout(function(){
-      console.log('post id is', post._id);
-      console.log('post is', post);
-      console.log('marker div is', document.getElementById('markers'));
-      markerInfoWinElement = document.getElementById(`${post._id}`);
-      console.log('markerInfoWinElement is',markerInfoWinElement);
-      markerInfoWinElement.id= post._id;
-      markerInfoWindow.setContent(markerInfoWinElement);
-      markerInfoWindow.className += " testing ";
-    // }, 500);
+    markerInfoWinElement = document.getElementById(`${post._id}`);
+    markerInfoWinElement.id= post._id;
+    markerInfoWindow.setContent(markerInfoWinElement);
+    markerInfoWindow.className += " testing ";
     marker.addListener('click', ()=> {
       this.clearTempStates();
       this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
     });
-
   }
 
   setViewPortCenter(marker){
