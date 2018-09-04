@@ -407,7 +407,7 @@ export class PostComponent implements OnInit {
       this.posts.splice(index,1);
       this.lastMarker.setVisible(false);
       this.currPostLength--;
-      // this.lastInfoWindow.close();
+      this.lastInfoWindow.close();
     },err=>{
       console.log('error deleting a post');
       window.alert('Sorry, theres an error for processing your delete.');
