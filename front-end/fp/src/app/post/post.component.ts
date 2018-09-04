@@ -255,17 +255,21 @@ export class PostComponent implements OnInit {
 
   createAndRenderMarkers(){
     this.posts.forEach((post)=>{
-      var marker = new google.maps.Marker({
-        position: {
-          lat: post.place.geometry.location.lat,
-          lng: post.place.geometry.location.lng,
-        },
-        map: this.mapInstance,
-        title: post.title,
-        draggable: false,
-      });
+      var marker = this.makeNewMarker(post);
       this.initMarkers(marker,post);
     })
+  }
+
+  makeNewMarker(post){
+    return new google.maps.Marker({
+      position: {
+        lat: post.place.geometry.location.lat,
+        lng: post.place.geometry.location.lng,
+      },
+      map: this.mapInstance,
+      title: post.title,
+      draggable: false,
+    });
   }
 
   // onMarkerInit(marker,post) {
