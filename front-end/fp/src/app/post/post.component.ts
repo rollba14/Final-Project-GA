@@ -285,7 +285,11 @@ export class PostComponent implements OnInit {
       });
     }
     // setTimeout(function(){
+      console.log('post id is', post._id);
+      console.log('post is', post);
+      console.log('marker div is', document.getElementById('markers'));
       markerInfoWinElement = document.getElementById(`${post._id}`);
+      console.log('markerInfoWinElement is',markerInfoWinElement);
       markerInfoWinElement.id= post._id;
       markerInfoWindow.setContent(markerInfoWinElement);
       markerInfoWindow.className += " testing ";
@@ -368,9 +372,13 @@ export class PostComponent implements OnInit {
 
     this.postService.createPost(post)
     .subscribe((post)=>{
-      let newPost = post.json();
+      var newPost = post.json();
       this.posts.push(newPost);
       this.currPostLength++;
+      var marker = this.makeNewMarker(newPost);
+      setTimeout((e)=>{
+        this.initMarkers(marker,newPost);
+      }, 300);
       document.getElementById('closeModal').click();
     });
     if(this.helperInfoWindow) this.helperInfoWindow.close();
