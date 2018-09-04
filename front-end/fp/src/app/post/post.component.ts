@@ -230,7 +230,10 @@ export class PostComponent implements OnInit {
       // there was setting children null field;
     });
     // debugger;
-    this.createAndRenderMarkers();
+    var currThis = this;
+    setTimeout(function(){
+      currThis.createAndRenderMarkers();
+    }, 500);
   }
 
   createAndRenderMarkers(){
