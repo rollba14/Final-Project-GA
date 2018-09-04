@@ -256,7 +256,6 @@ export class PostComponent implements OnInit {
         draggable: false,
       });
       this.initMarkers(marker,post);
-      marker.setMap(this.mapInstance);
     })
   }
 
@@ -272,7 +271,7 @@ export class PostComponent implements OnInit {
         scaledSize: new google.maps.Size(55, 55),
       });
     }
-    setTimeout(function(){
+    // setTimeout(function(){
       // let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
       // console.log('infoWindowDivs are',infoWindowDivs);
       // markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
@@ -280,7 +279,7 @@ export class PostComponent implements OnInit {
       markerInfoWinElement.id= post._id;
       markerInfoWindow.setContent(markerInfoWinElement);
       markerInfoWindow.className += " testing ";
-    }, 500);
+    // }, 500);
     marker.addListener('click', ()=> {
       this.clearTempStates();
       this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
