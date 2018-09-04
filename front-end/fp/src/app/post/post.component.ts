@@ -200,6 +200,8 @@ export class PostComponent implements OnInit {
         disableDefaultUI: true,
         gestureHandling: 'auto'
       });
+    console.log(this.mapInstance);
+    console.log(map);
     this.addCloseInfoWindowOnMapClickEvent();
     this.nguimap = document.getElementsByTagName('ngui-map');
     var input = <HTMLInputElement>(document.getElementById('geoSearch'));
@@ -239,11 +241,28 @@ export class PostComponent implements OnInit {
       // there was setting children null field;
     });
     // debugger;
+    this.createAndRenderMarkers();
   }
 
-  onMarkerInit(marker,post) {
-    // console.log('parameter post is', post);
-    var markerInfoWinElement: any = document.getElementById(`${post._id}`);
+  createAndRenderMarkers(){
+    this.posts.forEach((post)=>{
+      var marker = new google.maps.Marker({
+        position: {
+          lat: post.place.geometry.location.lat,
+          lng: post.place.geometry.location.lng,
+        },
+        map: this.mapInstance,
+        title: post.title,
+        draggable: false,
+      });
+      this.initMarkers(marker,post);
+      marker.setMap(this.mapInstance);
+    })
+  }
+
+  // onMarkerInit(marker,post) {
+  initMarkers(marker, post) {
+    var markerInfoWinElement;
     var markerInfoWindow:any = new google.maps.InfoWindow({
       disableAutoPan: true,
     });
@@ -253,29 +272,19 @@ export class PostComponent implements OnInit {
         scaledSize: new google.maps.Size(55, 55),
       });
     }
-    if(markerInfoWinElement){
-      // markerInfoWindow.className += " hellothere ";
+    setTimeout(function(){
+      // let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
+      // console.log('infoWindowDivs are',infoWindowDivs);
+      // markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
+      markerInfoWinElement = document.getElementById(`${post._id}`);
+      markerInfoWinElement.id= post._id;
       markerInfoWindow.setContent(markerInfoWinElement);
       markerInfoWindow.className += " testing ";
-      marker.addListener('click', ()=> {
-        this.clearTempStates();
-        this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
-      });
-    }else{
-      setTimeout(function(){
-        // let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
-        // console.log('infoWindowDivs are',infoWindowDivs);
-        // markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
-        markerInfoWinElement = document.getElementById(`${post._id}`);
-        markerInfoWinElement.id= post._id;
-        markerInfoWindow.setContent(markerInfoWinElement);
-        markerInfoWindow.className += " testing ";
-      }, 500);
-      marker.addListener('click', ()=> {
-        this.clearTempStates();
-        this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
-      });
-    }
+    }, 500);
+    marker.addListener('click', ()=> {
+      this.clearTempStates();
+      this.toggleInfoWindowState(marker,markerInfoWindow,markerInfoWinElement);
+    });
 
   }
 
@@ -351,8 +360,8 @@ export class PostComponent implements OnInit {
     this.postService.createPost(post)
     .subscribe((post)=>{
       let newPost = post.json();
-      this.currPostLength++;
       this.posts.push(newPost);
+      this.currPostLength++;
       document.getElementById('closeModal').click();
     });
     if(this.helperInfoWindow) this.helperInfoWindow.close();
@@ -378,9 +387,9 @@ export class PostComponent implements OnInit {
       let index = this.posts.findIndex(function(p){
         return p._id == post.json()._id;
       });
-      this.currPostLength--;
       this.posts.splice(index,1);
       this.lastMarker.setVisible(false);
+      this.currPostLength--;
       // this.lastInfoWindow.close();
     },err=>{
       console.log('error deleting a post');
