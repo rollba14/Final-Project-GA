@@ -44,7 +44,7 @@ export class PostComponent implements OnInit {
   flashMsg;
   nguimap;
 
-  private currPostLength;
+  currPostLength;
   private positionList = [];
 
   modalRef: BsModalRef;
