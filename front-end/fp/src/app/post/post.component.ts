@@ -79,7 +79,6 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    console.log('posts are',this.posts);
 
     this.postService.getAllPosts()
     .subscribe(res=>{
@@ -92,14 +91,6 @@ export class PostComponent implements OnInit {
     },err=>{
       this.loggedInUser = null;
     })
-  }
-
-  ngAfterContentInit() {
-    console.log('content init\n');
-  }
-
-  ngAfterViewInit(){
-    console.log('view init\n');
   }
 
   logout(e){
@@ -200,8 +191,6 @@ export class PostComponent implements OnInit {
         disableDefaultUI: true,
         gestureHandling: 'auto'
       });
-    console.log(this.mapInstance);
-    console.log(map);
     this.addCloseInfoWindowOnMapClickEvent();
     this.nguimap = document.getElementsByTagName('ngui-map');
     var input = <HTMLInputElement>(document.getElementById('geoSearch'));
@@ -272,9 +261,6 @@ export class PostComponent implements OnInit {
       });
     }
     // setTimeout(function(){
-      // let infoWindowDivs = document.getElementsByClassName(`markerInfoWindow`);
-      // console.log('infoWindowDivs are',infoWindowDivs);
-      // markerInfoWinElement = infoWindowDivs[infoWindowDivs.length-1];
       markerInfoWinElement = document.getElementById(`${post._id}`);
       markerInfoWinElement.id= post._id;
       markerInfoWindow.setContent(markerInfoWinElement);
@@ -500,7 +486,6 @@ export class PostComponent implements OnInit {
     }
     this.commentService.addComment(post._id,com)
     .subscribe(newComment=>{
-      console.log('new comment came back is', newComment.json());
       let toBeUpdatePost = this.posts.find(p=>{
         return p._id === post._id
       });
@@ -517,12 +502,10 @@ export class PostComponent implements OnInit {
   deleteSubComment(post,comment){
     this.commentService.deleteSubComment(post._id,comment._id)
     .subscribe(updatedComments=>{
-      console.log('posts are', this.posts);
       let postIndex = this.posts.findIndex(p=>{
         return p._id == post._id
       });
       this.posts[postIndex].comments = updatedComments.json();
-      console.log(this.posts);
     });
   }
 
