@@ -189,6 +189,7 @@ export class PostComponent implements OnInit {
 
   ngAfterContentChecked(){
     if(this.bindGeoSearch === false) {
+      console.log('inside checking');
       try{
         var input = <HTMLInputElement>(document.getElementById('geoSearch'));
         if(input) {
@@ -509,11 +510,13 @@ export class PostComponent implements OnInit {
       user_id : this.loggedInUser._id,
       content : comment,
     }
+    console.log('comment sending is', com);
     this.commentService.addComment(post._id,com)
     .subscribe(newComment=>{
       let toBeUpdatePost = this.posts.find(p=>{
         return p._id === post._id
       });
+      console.log('comment receiving is', toBeUpdatePost);
       toBeUpdatePost.comments.push(newComment.json());
     },err=>{
       if(!this.loggedInUser){
