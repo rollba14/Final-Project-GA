@@ -242,11 +242,10 @@ export class PostComponent implements OnInit {
         disableDefaultUI: true,
         gestureHandling: 'auto'
     });
-    var currThis = this;
     this.addCloseInfoWindowOnMapClickEvent();
     setTimeout(function(){
-      currThis.createAndRenderMarkers();
-    }, 1000);
+      this.createAndRenderMarkers();
+    }, 700);
   }
 
   createAndRenderMarkers(){
