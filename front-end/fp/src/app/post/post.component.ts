@@ -62,8 +62,6 @@ export class PostComponent implements OnInit {
     this.editing = false;
     this.displayComments="";
     this.displaySubComment="";
-    // this.lastInfoWindow = undefined;
-    // this.helperInfoWindow = undefined;
     this.mapInstance.setOptions({
       gestureHandling: 'auto'
     });
@@ -189,7 +187,6 @@ export class PostComponent implements OnInit {
 
   ngAfterContentChecked(){
     if(this.bindGeoSearch === false && this.loggedInUser !== null) {
-      console.log('inside checking');
       try{
         var input = <HTMLInputElement>(document.getElementById('geoSearch'));
         if(input) {
@@ -230,9 +227,7 @@ export class PostComponent implements OnInit {
           if (place.address_components) {
             address = this.formatAddress(place.address_components);
           }
-          // there was setting children null field;
         });
-        // debugger;
 
       } else {
         input = undefined;
@@ -251,7 +246,7 @@ export class PostComponent implements OnInit {
     this.addCloseInfoWindowOnMapClickEvent();
     setTimeout(function(){
       currThis.createAndRenderMarkers();
-    }, 300);
+    }, 1000);
   }
 
   createAndRenderMarkers(){
@@ -510,14 +505,11 @@ export class PostComponent implements OnInit {
       user_id : this.loggedInUser._id,
       content : comment,
     }
-    console.log('comment sending is', com);
     this.commentService.addComment(post._id,com)
     .subscribe(newComment=>{
-      console.log('new comment received is', newComment);
       let toBeUpdatePost = this.posts.find(p=>{
         return p._id === post._id
       });
-      console.log('comment pushing in is', toBeUpdatePost);
       toBeUpdatePost.comments.push(newComment.json());
     },err=>{
       if(!this.loggedInUser){
