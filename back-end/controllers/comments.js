@@ -34,13 +34,12 @@ function create(req, res) {
   Post.findById(req.params.post_id,function(err,post){
     if(err)res.send(err)
     let comment = new db.Comment(req.body)
-    post.comments.push(comment);
+    post.comments = post.comments.concat([comment]);
     post.save(function(err,savedPost){
       if(err){
         console.log('create comment error: ', err);
         res.send(err);
-      }
-      res.json(comment);
+      }else res.json(comment);
     });
   });
 };
