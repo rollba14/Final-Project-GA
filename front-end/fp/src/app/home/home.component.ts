@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('url path is', this.router.url);
     this.userService.getSessionUser()
     .subscribe(user=>{
       this.loggedInUser = user.json();
