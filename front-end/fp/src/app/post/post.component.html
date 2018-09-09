@@ -115,9 +115,9 @@
                     <span class="bold">COMMENTS:</span>
                     <!--  -->
                       <div *ngFor="let comment of post.comments" >
-                        <p class="comments">
+                        <div class="comments">
 
-                            <span *ngIf="!this.editing">{{comment.content}}</span>
+                            <div *ngIf="!this.editing">{{comment.content}}</div>
                             <span *ngIf="comment._id !== this.displaySubComment && !this.editing && comment.user_id == loggedInUser._id">
                               <span class="btnSpan">
                                 <button type="button" (click)="deleteSubComment(post,comment)" class="iconBtn">
@@ -134,7 +134,7 @@
                               <button type="button" class="myBtn" (click)="toggleSubComment(tempSubComment)">Cancel</button>
                             </span>
 
-                        </p>
+                        </div>
                       </div>
                     <!--  -->
                   </div>

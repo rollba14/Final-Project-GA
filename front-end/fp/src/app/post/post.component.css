@@ -238,6 +238,10 @@ ngui-map .myBtn {
   float:right;
 }
 
+.comments div{
+  display: inline-block;
+}
+
 .comments .sub_comment textarea{
   clear: both !important;
   display: inline-block !important;
