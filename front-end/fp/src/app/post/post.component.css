@@ -14,9 +14,9 @@ ul{
 }
 
 .markerInfoWindow{
-  /* display: none;
+  display: none;
   max-width: 376px;
-  max-height: 280px; */
+  max-height: 280px;
   min-width: 350px;
   padding: 5px 10px 5px 10px;
   word-wrap: break-word;
@@ -336,12 +336,12 @@ ngui-map .myBtn {
   }
 
   .markerInfoWindow{
-    /* height: auto;
+    height: auto;
     min-width: 170px;
     width: calc(100vw - 60px) !important;
     padding: 0;
     margin: 0;
-    overflow-y: scroll; */
+    overflow-y: scroll;
   }
 
   .icon{
