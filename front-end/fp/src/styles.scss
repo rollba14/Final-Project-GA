@@ -39,7 +39,7 @@ body{
     // max-width: 270px;
     width: calc(100vw - 60px) !important;
     max-height: calc(100vh - 250px);
-    overflow: scroll;
+    overflow-y: scroll;
   }
   //
   // .markerInfoWindow{
@@ -58,7 +58,7 @@ body{
     min-width: 320px;
     max-width: 380px;
     max-height: 200px;
-    overflow: scroll;
+    overflow-y: scroll;
   }
   //
   // .markerInfoWindow[_ngcontent-c1]{
