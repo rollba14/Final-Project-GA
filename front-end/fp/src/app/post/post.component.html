@@ -109,6 +109,9 @@
                         <button type="button" class="myBtn" (click)="toggleComments(post)">Cancel</button>
                       </p>
                     </div>
+                    <div *ngFor="let comment of post.comments" >
+                      <div *ngIf="!this.editing">{{comment.content}}</div>
+                    </div>
                     <span class="bold">COMMENTS:</span>
                     <!--  -->
                       <div *ngFor="let comment of post.comments" >
