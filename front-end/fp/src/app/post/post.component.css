@@ -217,7 +217,7 @@ ngui-map .myBtn {
 
 .comments_section{
   margin-top: 10px;
-  max-height: 170px;
+  /* max-height: 170px; */
   position: relative;
   /*overflow: scroll;*/
 }
