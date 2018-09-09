@@ -223,7 +223,7 @@ ngui-map .myBtn {
 }
 
 .comments{
-  width: 100%;
+  width: calc(100vw - 50px);
   display: inline-block;
   height: auto;
   margin: 5px 0 10px 0;
