@@ -336,7 +336,7 @@ ngui-map .myBtn {
   }
 
   ngui-map{
-    height: calc(100vh - 43px);
+    height: calc(100vh - 87px);
   }
 
   .markerInfoWindow{
