@@ -240,6 +240,7 @@ export class PostComponent implements OnInit {
     this.mapInstance = map;
     this.mapInstance.setOptions({
         streetViewControl: true,
+        mapTypeControl: false,
         scaleControl: true,
         rotateControl: true,
         fullscreenControl: true,
