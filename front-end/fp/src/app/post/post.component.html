@@ -1,3 +1,37 @@
+<div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addPostModalLabel">Add a Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="search_section">
+          <section class="searchBar" *ngIf="loggedInUser">
+            <label for="geoSearch">Location:</label>
+            <input id="geoSearch" types="text"/>
+            <br>
+            <label for="title">Title:</label>
+            <input [(ngModel)]="title" type="text" id="title" required>
+            <br>
+            <label for="image_url">Image Url:</label>
+            <input [(ngModel)]="image_url" id="image_url" type="text" required>
+            <br>
+            <label for="description">Description:</label>
+            <textarea [(ngModel)]="description" id="description" type="text" required></textarea>
+            <br>
+          </section>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" id="closeModal" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-dark" (click)="createPost()">Add Post</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="viewBody">
   <div class="top-section">
     <nav>
@@ -30,41 +64,6 @@
     </nav>
   </div>
 
-
-  <div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addPostModalLabel">Add a Post</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="search_section">
-            <section class="searchBar" *ngIf="loggedInUser">
-              <label for="geoSearch">Location:</label>
-              <input id="geoSearch" types="text"/>
-              <br>
-              <label for="title">Title:</label>
-              <input [(ngModel)]="title" type="text" id="title" required>
-              <br>
-              <label for="image_url">Image Url:</label>
-              <input [(ngModel)]="image_url" id="image_url" type="text" required>
-              <br>
-              <label for="description">Description:</label>
-              <textarea [(ngModel)]="description" id="description" type="text" required></textarea>
-              <br>
-            </section>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-dark" id="closeModal" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-dark" (click)="createPost()">Add Post</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
   <ngui-map
