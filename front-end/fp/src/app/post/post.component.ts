@@ -77,10 +77,7 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit() {
-    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    console.log(`viewport height is ${h} and width is ${w}`);
-    
+
     this.postService.getAllPosts()
     .subscribe(res=>{
       this.posts = res.json();
@@ -301,7 +298,10 @@ export class PostComponent implements OnInit {
     let lowerYBound = this.mapInstance.getBounds().f.b;
     let offset = 0;
     let markerLat = marker.position.lat();
-    offset = (markerLat - mapCenterLat) + ((mapCenterLat - lowerYBound)*(8.75/10));
+    let screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    var viewHeightRatio = 6.75;
+    if(screenHeight < 520) var viewHeightRatio = 8.75
+    offset = (markerLat - mapCenterLat) + ((mapCenterLat - lowerYBound)*(viewHeightRatio/10));
     this.mapInstance.setCenter({
       lat: mapCenterLat + offset,
       lng: marker.position.lng(),
