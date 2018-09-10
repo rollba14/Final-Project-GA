@@ -244,7 +244,12 @@ export class PostComponent implements OnInit {
   onMapReady(map) {
     this.mapInstance = map;
     this.mapInstance.setOptions({
-        disableDefaultUI: true,
+        streetViewControl: true,
+        mapTypeControl: true,
+        scaleControl: true,
+        rotateControl: true,
+        fullscreenControl: true,
+        zoomControl: false,
         gestureHandling: 'auto'
     });
     var currThis = this;
