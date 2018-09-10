@@ -79,7 +79,8 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-
+    console.log(`viewport height is ${h} and width is ${w}`);
+    
     this.postService.getAllPosts()
     .subscribe(res=>{
       this.posts = res.json();
