@@ -300,7 +300,7 @@ export class PostComponent implements OnInit {
     let lowerYBound = this.mapInstance.getBounds().f.b;
     let offset = 0;
     let markerLat = marker.position.lat();
-    offset = (markerLat - mapCenterLat) + ((mapCenterLat - lowerYBound)*(6.5/10));
+    offset = (markerLat - mapCenterLat) + ((mapCenterLat - lowerYBound)*(8.75/10));
     this.mapInstance.setCenter({
       lat: mapCenterLat + offset,
       lng: marker.position.lng(),
