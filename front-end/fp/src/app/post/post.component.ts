@@ -80,7 +80,7 @@ export class PostComponent implements OnInit {
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
-    document.body.addEventListener("touchmove", function(event) {
+    document.addEventListener("touchmove", function(event) {
       event.preventDefault();
       event.stopPropagation();
     }, false);
