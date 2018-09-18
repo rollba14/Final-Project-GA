@@ -509,6 +509,7 @@ export class PostComponent implements OnInit {
 
   addComment(post,comment){
     let com = {
+      username: this.loggedInUser.username,
       user_id : this.loggedInUser._id,
       content : comment,
     }
