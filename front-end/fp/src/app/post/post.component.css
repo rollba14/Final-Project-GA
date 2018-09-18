@@ -60,7 +60,7 @@ hr{
 }
 
 .comments .iconBtn {
-  background: rgb(235, 243, 247);
+  background: rgb(230, 243, 247);
 }
 
 .comment_textarea{
@@ -298,7 +298,7 @@ ngui-map .myBtn {
   }
 
   .comments .iconBtn {
-    background: rgb(235, 243, 247);
+    background: rgb(230, 243, 247)
   }
 
   .modal{
@@ -371,7 +371,7 @@ ngui-map .myBtn {
   }
 
   .comments .iconBtn {
-    background: rgb(235, 243, 247);
+    background: rgb(230, 243, 247);
   }
 
   .modal{
