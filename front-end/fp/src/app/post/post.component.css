@@ -37,6 +37,10 @@ hr{
   cursor: pointer;
 }
 
+.blue-ft {
+  color: darkblue;
+}
+
 .icon{
   width: 18px;
   height: 18px;
@@ -49,6 +53,10 @@ hr{
   width: 35px;
   line-height: 35px;
   vertical-align: middle;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
 
 .comments .iconBtn {

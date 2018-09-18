@@ -113,7 +113,7 @@
                       <div *ngFor="let comment of post.comments" >
                         <div class="comments">
 
-                            <div *ngIf="!this.editing">{{comment.username}}: {{comment.content}}</div>
+                            <div *ngIf="!this.editing"><b class='bold blue-ft capitalize'>{{comment.username}}:</b> {{comment.content}}</div>
                             <span *ngIf="comment._id !== this.displaySubComment && !this.editing && comment.user_id == loggedInUser._id">
                               <span class="btnSpan">
                                 <button type="button" (click)="deleteSubComment(post,comment)" class="iconBtn">
