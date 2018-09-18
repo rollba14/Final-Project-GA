@@ -52,10 +52,6 @@ function update(req, res) {
       res.status(401).send('You are unauthorized to update comment');
       return;
     }
-    console.log('=====================');
-    console.log('post.comments are ', post.comments);
-    console.log('params is', req.params.comment_id);
-    console.log('=====================');
     let index = post.comments.findIndex(c=>{
       return c._id == req.params.comment_id;
     })
