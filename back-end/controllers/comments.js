@@ -56,16 +56,18 @@ function update(req, res) {
       return c._id == req.params.comment_id;
     })
     let newComment = new db.Comment(req.body)
-    post.comments[index] = post.comments.concat([newComment]);
+    post.comments[index] = newComment;
     post.save(function(err,newPost){
       if (err) res.send(err);
+      else {
+        let comment = {
+          index: index,
+          content: newComment.content,
+        }
+        res.json(comment);
+      }
     });
     console.log('in comments controller');
-    let comment = {
-      index: index,
-      content: newComment.content,
-    }
-    res.json(comment);
   });
 }
 

@@ -540,6 +540,7 @@ export class PostComponent implements OnInit {
 
   updateSubComment(post,comment){
     let newCom = {
+      username: this.loggedInUser.username,
       user_id: post.user_id,
       content: comment.content,
       _id: comment._id,
