@@ -56,7 +56,7 @@ function update(req, res) {
       return c._id == req.params.comment_id;
     })
     let newComment = new db.Comment(req.body)
-    post.comments[index] = newComment;
+    post.comments[index] = post.comments.concat([newComment]);
     post.save(function(err,newPost){
       if (err) res.send(err);
     });
