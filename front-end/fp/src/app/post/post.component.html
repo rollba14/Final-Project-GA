@@ -126,7 +126,7 @@
                             </span>
                             <span class="sub_comment" *ngIf="comment._id === this.displaySubComment && this.editing">
                               <textarea [(ngModel)]="tempSubComment.content" type="text" placeholder="title"></textarea><br>
-                              <button type="button" class="myBtn" (click)="updateSubComment(post,tempSubComment)">Update</button>
+                              <button type="button" class="myBtn" (click)="updateSubComment(post,comment)">Update</button>
                               <button type="button" class="myBtn" (click)="toggleSubComment(tempSubComment)">Cancel</button>
                             </span>
 
