@@ -3,27 +3,17 @@ var Post = db.Post;
 var User = db.User;
 
 function index(req, res) {
-  // Post.find({},function(err, posts) {
-  //   console.log('request is ', req.url);
-  //   if (err) {
-  //     console.log('inside error');
-  //     res.send(err);
-  //   }
-  //   else {
-  //     console.log('all posts with comments: ', posts);
-  //     // let ps = posts.map(p=>{
-  //     //   return formatPost(p)
-  //     // })
-  //     res.json(posts);
-  //   }
-  // });
-  Post.find({}).populate('user_id', 'username').exec(function(err, posts) {
+  Post.find({},function(err, posts) {
     console.log('request is ', req.url);
     if (err) {
       console.log('inside error');
       res.send(err);
     }
     else {
+      console.log('all posts with comments: ', posts);
+      // let ps = posts.map(p=>{
+      //   return formatPost(p)
+      // })
       res.json(posts);
     }
   });
