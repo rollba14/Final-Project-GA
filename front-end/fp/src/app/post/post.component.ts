@@ -295,7 +295,7 @@ export class PostComponent implements OnInit {
 
   setViewPortCenter(marker){
     let mapCenterLat = this.mapInstance.getCenter().lat();
-    let lowerYBound = this.mapInstance.getBounds().l.j;
+    let lowerYBound = this.mapInstance.getBounds().getSouthWest().lat();
     let offset = 0;
     let markerLat = marker.position.lat();
     let screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
