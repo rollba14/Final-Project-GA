@@ -15,6 +15,6 @@ https://glacial-chamber-79751.herokuapp.com
   * Javascript
   * Bootstrap
 
-## Special thanks to instructors:
+## Special thanks to:
 #### Michelle Ferreirae
 #### Esther Weon
