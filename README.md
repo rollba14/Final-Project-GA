@@ -2,7 +2,7 @@
 
 ## Hello!
 
-Welcome to EventsNearMe, my final project for General Assembly. This is an app for finding recent events near you, with controls and display all combined on one Google Map.
+Welcome to EventsNearMe. This is an app for finding recent events near you, with controls and display all combined on one Google Map.
 
 To experience the site, visit:  
 https://glacial-chamber-79751.herokuapp.com
